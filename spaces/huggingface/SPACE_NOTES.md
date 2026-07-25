@@ -28,8 +28,8 @@ Publication plan:
 
 ## Published instance
 
-- Space: https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay
-- Direct app: https://bimaiblend-semantic-xaibim-replay.hf.space
+- Space: https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay
+- Direct app: https://XAIBIM-semantic-xaibim-replay.hf.space
 - Status: published and running
 
 ---

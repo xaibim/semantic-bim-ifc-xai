@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/BIMAIBlendgineer/semantic-bim-ifc-xai/sample20/schema_public_sample20_v2.json",
+  "$id": "https://github.com/xaibim/semantic-bim-ifc-xai/sample20/schema_public_sample20_v2.json",
   "title": "Semantic BIM Public Sample20 Record v2",
   "description": "Strict schema for the XAIBIM public sample20 v2. Records represent stored model/reference agreement, not live inference.",
   "type": "object",

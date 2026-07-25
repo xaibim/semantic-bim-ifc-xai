@@ -1,21 +1,36 @@
 # Licenses
 
-## Code
+This repository separates code, documentation and public sample data licensing.
+Private material is not distributed and is not licensed by this public
+repository.
 
-- Code in this repository is MIT-licensed under the repository root [LICENSE](LICENSE) file.
+## Code / software
 
-## Documentation
+- `SPDX-License-Identifier: MIT`
+- Code in this repository is MIT-licensed under the repository root
+  [LICENSE](LICENSE) file.
 
-- Public documentation in this repository is intended to be licensed under CC-BY-4.0 for academic reuse with attribution.
+## Public documentation
 
-## Public Sample Data
+- `SPDX-License-Identifier: CC-BY-4.0`
+- Public documentation in this repository is licensed under CC-BY-4.0 for
+  academic reuse with attribution.
 
-- The public sample20 data is intended to be licensed under CC-BY-4.0 for academic reuse with attribution.
+## Public sample data (`sample20`)
 
-## Exclusions
+- `SPDX-License-Identifier: CC-BY-4.0`
+- The public `sample20` data is licensed under CC-BY-4.0 for academic reuse
+  with attribution.
 
-- Private datasets, private checkpoints, adapters, internal logs, and non-public artifacts are not included in this repository and are not licensed by this repository.
-- Private datasets are not included.
-- Private checkpoints and adapters are not included.
-- Private runtime payloads are not included.
-- Secret material and local workspace paths are not included.
+## Exclusions (not distributed)
+
+The following are **not included** in this public repository and are **not
+licensed** by it:
+
+- Private datasets;
+- Private adapters and checkpoints;
+- Private runtime payloads and internal logs;
+- Non-public artifacts and secret material;
+- Local workspace paths.
+
+Excluded private material is not licensed by the public repository.

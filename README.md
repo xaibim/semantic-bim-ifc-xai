@@ -1,54 +1,57 @@
-# Semantic BIM/IFC Evidence-Grounded Harness
+# Semantic BIM/IFC Evidence-Grounded Research Artifact
 
-[![Public sample20 validation][sample20-badge]][sample20-workflow]
+[![Public sample20 v2 validation][sample20-badge]][sample20-workflow]
 
-This repository is an academic research artifact for public sample validation, traceable semantic BIM/IFC replay, and evidence-grounded AI benchmarking.
+This repository is a public academic research artifact for evidence-grounded
+semantic BIM/IFC sample validation, traceable replay, and reproducible
+benchmarking. It is **not** a certification tool, a production BIM service, or
+an institutional endorsement. It contains only public synthetic or sanitized
+examples.
 
-This is an academic research artifact. It is not a certification tool, production BIM service, or institutional endorsement. It contains only public synthetic or sanitized examples.
+The badge confirms that the public sanitized `sample20` replay validates the
+**strict public `sample20` v2 contract (JSON Schema Draft 2020-12)**, the
+forbidden-pattern scan, and the Hugging Face Space self-tests. It is not a
+certification, a production-readiness claim, or a final benchmark.
 
-The badge validates the public sanitized `sample20` replay, minimal public schema contract, forbidden-pattern scan and public Hugging Face harness self-test. It is not a certification, production readiness claim, or final benchmark.
+## Summary
 
-## What this project studies
+- **Problem**: Natural-language AECO/BIM requests are ambiguous and
+  domain-constrained. Free-form LLM or RAG outputs for BIM/IFC reasoning tend to
+  hallucinate IFC classes, property sets, and relationships without a
+  contract-level, replayable, evidence-grounded evaluation.
+- **Scientific contribution**: A structured, schema-validated semantic contract
+  that turns ambiguous BIM/IFC requests into inspectable, replayable,
+  evidence-traceable records suitable for benchmarking.
+- **Public scope**: A minimal, sanitized `sample20` reproducibility sample, the
+  strict v2 schema, deterministic replay, integrity verification, and a
+  preliminary QLoRA compute-feasibility experiment.
+- **Status**: Preliminary research artifact. The comparative multi-model
+  benchmark (`A1`) is planned, not executed.
 
-This repository supports the broader research objective of explainable AI-assisted semantic BIM/IFC interpretation for Civil Engineering. Its technical focus is narrower and measurable: converting BIM/AECO requests and IFC-related runtime context into structured IFC-aware semantic records with validation, evidence traceability and reproducible replay.
+## Research Contributions
 
-This repository is not a generic BIM chatbot and does not claim to provide a complete BIM automation product.
-
-It studies a narrower research task: **semantic BIM compilation**. The task is to convert natural-language AECO/BIM requests into structured IFC-aware semantic records that can be validated, replayed, compared and traced through evidence.
-
-In practical terms, the project investigates a prompt-to-IFC contract:
-
-```text
-human BIM request
-+ runtime BIM context
-+ safety and evidence constraints
-        ↓
-structured IFC-aware semantic record
-        ↓
-schema validation
-        ↓
-IFC class / Pset / relationship checks
-        ↓
-evidence traceability
-        ↓
-reproducible replay and benchmark
-```
-
-The public repository provides a minimal reproducibility sample and documentation of the protocol. The larger curated synthetic/controlled dataset and systematic benchmark are the subject of the advanced computing access work.
-
-The positioning can be read as follows:
-
-```text
-BIM 3D/IFC is the technical object.
-Semantic compilation is the computational task.
-Traceability and evidence are the XAI criterion.
-The chat interface is the user-facing surface.
-The benchmark is the evaluation method.
-```
+- **Structured BIM/IFC semantic contract**: a fixed field schema connecting
+  natural-language requests to IFC class / Pset / relationship mappings.
+- **Strict `sample20` v2 schema**: JSON Schema Draft 2020-12 contract with
+  required fields, enumerations, and forbidden states.
+- **Expected-negative handling**: records whose correct outcome is a canonical
+  rejection are recorded and validated as such.
+- **Evidence traceability**: every record carries an `evidence_trace` linking
+  the output to input context.
+- **Deterministic replay**: a reproducible harness re-runs records and checks
+  schema/conformance consistency.
+- **Integrity verification**: three-copy schema/JSONL integrity, a forbidden
+  scan, and a deterministic QLoRA aggregate verifier.
+- **Preliminary QLoRA compute calibration**: bounded GPU-hour / VRAM calibration
+  from a private, controlled, synthetic pilot (not a public result).
+- **Planned comparative benchmark (`A1`)**: a baseline matrix (rule/schema
+  lookup, prompt-only LLM, retrieved-context LLM, QLoRA-adapted, optional
+  graph/ontology retrieval) to be executed, not yet reported.
 
 ## Why not just IfcOpenShell + LLM + RAG?
 
-IfcOpenShell, LLMs and retrieval-augmented generation are useful components, but they do not by themselves define an evaluable BIM semantic compilation task.
+IfcOpenShell, LLMs, and retrieval-augmented generation are useful components,
+but they do not by themselves define an evaluable BIM semantic compilation task.
 
 | Component | What it provides | What remains unresolved |
 | --- | --- | --- |
@@ -57,13 +60,15 @@ IfcOpenShell, LLMs and retrieval-augmented generation are useful components, but
 | RAG | Retrieval of relevant context fragments | Retrieval alone does not guarantee structured output, schema conformance or field-level evaluation. |
 | This protocol | Structured IFC-aware semantic records, validation, evidence and replay | It turns the interaction into a measurable benchmark task. |
 
-The contribution is therefore not another combination of existing tools. The contribution is the definition and evaluation of a structured semantic contract for BIM/IFC reasoning.
+The contribution is therefore not another combination of existing tools. It is
+the definition and evaluation of a structured semantic contract for BIM/IFC
+reasoning.
 
 ## What "semantic" means here
 
 In this repository, "semantic" does not mean only embeddings or semantic search.
-
-It means that a BIM request is decomposed into explicit, inspectable fields, including:
+It means that a BIM request is decomposed into explicit, inspectable fields,
+including:
 
 - intent class;
 - semantic type;
@@ -75,15 +80,16 @@ It means that a BIM request is decomposed into explicit, inspectable fields, inc
 - missing information;
 - ambiguity flags;
 - recovery needs;
-- confidence;
 - reason codes;
 - evidence trace.
 
-The semantic layer is therefore a structured contract between natural language and IFC-aware computation.
+The semantic layer is therefore a structured contract between natural language
+and IFC-aware computation.
 
 ## What "XAI" means here
 
-XAI is treated as evidence-oriented explainability, not as a claim of full mathematical interpretability.
+XAI is treated as **evidence-oriented explainability**, not as a claim of full
+mathematical interpretability.
 
 The repository focuses on whether a semantic BIM output can expose:
 
@@ -93,17 +99,43 @@ The repository focuses on whether a semantic BIM output can expose:
 - which evidence fragments or runtime context supported the output;
 - whether the generated record passes schema and replay validation.
 
-This is closer to provenance, evidence traceability and structured auditability than to SHAP/LIME-style feature attribution.
+Clarifications:
 
-## What This Repository Contains
+- This is closer to **provenance, evidence traceability and structured
+  auditability** than to SHAP/LIME-style feature attribution.
+- No SHAP/LIME attribution method is implemented in the public artifact.
+- No chain-of-thought is published as part of the public sample.
+- No complete mathematical attribution is claimed.
 
-- `sample20/`: the public sanitized sample dataset and its local manifest.
-- `harness/`: a lightweight replay and validation harness.
-- `benchmark/`: public sample validation results and benchmark notes.
-- `benchmark/qlora/`: sanitized aggregate evidence from the preliminary QLoRA experiment.
-- `PUBLIC_EVIDENCE.md`: public validation status and executable checks.
-- `docs/public_boundary.md`: the public/private boundary map.
-- `QUICKSTART.md`: minimal reproduction steps.
+## Architecture
+
+```mermaid
+flowchart LR
+    A[Natural-language AECO request] --> B[Semantic decomposition]
+    B --> C[IFC class / Pset / relationship mapping]
+    C --> D[Structured contract]
+    D --> E[JSON Schema validation]
+    E --> F[Canonical checks]
+    F --> G[Expected-negative handling]
+    G --> H[Evidence trace]
+    H --> I[Deterministic replay]
+    I --> J[Benchmark metrics]
+    J --> K[Professional review or safe next action]
+```
+
+## Components and responsibilities
+
+| Component | Responsibility |
+| --- | --- |
+| Semantic compiler | Decompose the natural-language request into structured intent, semantic type, missing inputs and ambiguity flags. |
+| IFC mapper | Map the request to candidate IFC classes, required Psets and required relationships. |
+| Schema validator | Enforce the strict `sample20` v2 JSON Schema Draft 2020-12 contract. |
+| Canonical checker | Verify agreement between model output, reference output and case expectation. |
+| Evidence builder | Construct and verify the `evidence_trace` linking output to input context. |
+| Replay harness | Deterministically re-execute records and confirm schema/conformance stability. |
+| Integrity verifier | Confirm three-copy schema/JSONL integrity, run the forbidden scan and the QLoRA aggregate verifier. |
+| Benchmark layer | Compute public sample metrics and host the planned `A1` baseline matrix. |
+| Interactive Space | Public Hugging Face interface for stored replay and conceptual demonstration. |
 
 ## Start Here
 
@@ -115,133 +147,107 @@ This is closer to provenance, evidence traceability and structured auditability 
 | benchmark sample results | `benchmark/results_sample20.md` |
 | preliminary QLoRA evidence | `benchmark/qlora/` |
 | public/private boundary | `docs/public_boundary.md` |
+| end-to-end example | `docs/examples/end_to_end_public_example.md` |
+| baseline matrix (planned) | `benchmark/baseline_matrix.md` |
 
-## Public Artifacts
+## Public project channels
 
-| Artifact | Purpose |
-| --- | --- |
-| [sample20_public_records.jsonl](sample20/sample20_public_records.jsonl) | Sanitized public sample records |
-| [schema_public_sample20_v2.json](sample20/schema_public_sample20_v2.json) | Strict public sample20 v2 contract using JSON Schema Draft 2020-12 |
-| [replay.py](harness/replay.py) | Public replay entrypoint |
-| [schema_validator.py](harness/schema_validator.py) | Basic JSONL schema inspection helper |
-| [smoke20_metrics_table.md](benchmark/metrics/smoke20_metrics_table.md) | Smoke run metrics table |
-| [smoke20_research_summary.json](benchmark/metrics/smoke20_research_summary.json) | JSON summary of the smoke run |
-| [semantic_bim_output_schema.json](benchmark/schema/semantic_bim_output_schema.json) | Semantic target schema definition |
-| [public_forbidden_scan.py](scripts/public_forbidden_scan.py) | Public forbidden scan checker script |
-| [schema_contract_map.md](docs/methodology/schema_contract_map.md) | Schema contract layers map |
-| [results_sample20.md](benchmark/results_sample20.md) | Executed public sample validation results |
-| [internal_preliminary_semantic_bim_runs.md](docs/experiments/internal_preliminary_semantic_bim_runs.md) | Internal preliminary experiments and feasibility evidence |
-| [validation_gates.md](docs/methodology/validation_gates.md) | Methodology for the public validation gates |
-| [XAIBIM_QWEN25_7B_QLORA_PRELIMINARY_RESULTS.md](benchmark/qlora/XAIBIM_QWEN25_7B_QLORA_PRELIMINARY_RESULTS.md) | Preliminary QLoRA experiment report |
-| [xaibim_qwen25_7b_qlora_preliminary_public_results.json](benchmark/qlora/xaibim_qwen25_7b_qlora_preliminary_public_results.json) | Machine-readable aggregate QLoRA results |
-| [verify_qlora_public_metrics.py](scripts/verify_qlora_public_metrics.py) | Deterministic QLoRA metrics verifier |
+| Channel | URL | Purpose |
+| --- | --- | --- |
+| GitHub | https://github.com/xaibim/semantic-bim-ifc-xai | Canonical source, CI, releases and public evidence |
+| Hugging Face | https://huggingface.co/XAIBIM/spaces | Public interactive Spaces |
+| Replay Space | https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay | Stored `sample20` v2 replay |
+| Harness Space | https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness | Interactive conceptual demonstration |
+| Kaggle | https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai | Preliminary QLoRA computational feasibility notebook |
+| YouTube | https://www.youtube.com/@XAIBIM | Public demonstrations and dissemination |
+| LinkedIn | https://www.linkedin.com/company/xaibim | Project updates and professional dissemination |
 
-## sample20
-
-`sample20` is the public sanitized sample dataset.
-
-`smoke20` is the public smoke/replay validation run executed against `sample20`; it is not a separate dataset.
-
-`sample20` is a minimal public reproducibility sample. It is not presented as a complete corpus and is not intended to represent the full experimental dataset.
-
-Its purpose is to show the structure of the records, the replay mechanism and the validation protocol. The larger curated synthetic/controlled dataset is part of the proposed advanced computing work.
-
-The public sample is intentionally small so a reviewer can inspect the records, replay the harness, and understand the public/private boundary quickly.
+YouTube and LinkedIn are dissemination channels. They are **not** presented as
+scientific evidence, peer review, or institutional endorsement.
 
 ## Quickstart
 
-See [QUICKSTART.md](QUICKSTART.md) for the minimal local replay steps.
+See [QUICKSTART.md](QUICKSTART.md) for the minimal local replay steps. The
+schema command must reference the strict v2 contract explicitly:
 
-## Validation Status
+```powershell
+python harness/schema_validator.py sample20/sample20_public_records.jsonl --schema sample20/schema_public_sample20_v2.json
+```
+
+## Public results
+
+`sample20` contains 20 public records: 18 valid cases and 2 expected canonical
+rejections.
 
 Current public validation status: `PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.
 
-The validation checks can be run locally using the following commands:
-```powershell
-python harness/replay.py --sample sample20/
-python harness/schema_validator.py sample20/sample20_public_records.jsonl
-python scripts/public_forbidden_scan.py
-```
+- `canonical_validation_rate = 0.9` (18/20): the two expected negatives are
+  rejected as intended.
+- `expectation_met_rate = 1.0` (20/20): each record's actual status matches its
+  case expectation.
+- `value_mode` distribution: `GUIDED_RECOVERY = 9`, `PREVIEW = 6`,
+  `PROPOSAL = 5`.
+- All `1.0` agreement metrics indicate internal consistency with the stored
+  synthetic reference, **not** general model performance or generalization.
 
-Additionally, the optional Hugging Face harness self-test can be run:
-```powershell
-python spaces/huggingface_harness/app.py --self-test
-```
-The Hugging Face harness dependencies are isolated in spaces/huggingface_harness/requirements.txt.
+`sample20` is a minimal reproducibility sample. It is not a complete corpus and
+is not a final benchmark.
 
-The public replay and evidence summary are documented in `PUBLIC_EVIDENCE.md` and `benchmark/results_sample20.md`.
+## Current limitations
 
-Internal preliminary experiments are summarized in [`docs/experiments/internal_preliminary_semantic_bim_runs.md`](docs/experiments/internal_preliminary_semantic_bim_runs.md). These runs are feasibility evidence only and do not constitute a final benchmark.
+- Minimal public sample (`sample20`, 20 records).
+- Synthetic/sanitized records; no real IFC files.
+- No final multi-model benchmark yet.
+- No broad AECO generalization established.
+- No SHAP/LIME mathematical attribution.
+- No certification or automated engineering approval.
+- No public private adapters/checkpoints.
+- No public claim of multilingual coverage.
+- No public claim of building-typology coverage.
 
-## What Is Not Claimed
+## Roadmap
 
-- This repository does not claim full mathematical XAI.
-- This repository does not claim SHAP, LIME, or equivalent attribution methods are implemented in the public sample.
-- This repository does not claim certification, production readiness, or institutional endorsement.
-- This repository does not include private datasets, adapters, checkpoints, or secrets.
+**Completed**
 
-## Links to Hugging Face
+- `sample20` v2 strict contract;
+- strict JSON Schema Draft 2020-12;
+- expected-negative handling;
+- integrity verifier (three-copy, forbidden scan, QLoRA verifier);
+- GitHub CI;
+- preliminary QLoRA feasibility pilot;
+- public Replay Space;
+- public Harness Space;
+- GitHub `xaibim` namespace;
+- Hugging Face `XAIBIM` namespace.
 
-- Public replay space: https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay
-- Public harness space: https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness
+**`A1` planned**
 
-## Preliminary QLoRA Computational Feasibility Experiment
+- scope freeze;
+- dataset expansion;
+- baseline matrix execution;
+- repeated seeds;
+- multi-model evaluation;
+- controlled QLoRA adaptation;
+- error taxonomy;
+- domain expert review;
+- aggregate public release.
 
-A public Kaggle notebook documents a bounded Qwen2.5-7B QLoRA experiment for
-structured, evidence-grounded Semantic BIM/IFC outputs.
+## Links and citation
 
-The experiment provides:
+- Canonical repository: <https://github.com/xaibim/semantic-bim-ifc-xai>
+- Methodology: [validation_gates.md](docs/methodology/validation_gates.md),
+  [dataset_construction_and_training_readiness.md](docs/methodology/dataset_construction_and_training_readiness.md),
+  [dataset_scope_and_compute_scaling.md](docs/methodology/dataset_scope_and_compute_scaling.md)
+- End-to-end example: [docs/examples/end_to_end_public_example.md](docs/examples/end_to_end_public_example.md)
+- Baseline matrix (planned): [benchmark/baseline_matrix.md](benchmark/baseline_matrix.md)
+- License separation: [LICENSES.md](LICENSES.md)
+- Citation: see [CITATION.cff](CITATION.cff)
 
-- measured training runtime and GPU utilization;
-- peak VRAM consumption;
-- effective and allocated GPU-hours;
-- aggregate base-model and adapter comparisons;
-- corrected schema and evidence-trace evaluation;
-- explicit methodological and generalization limitations.
+## What is not claimed
 
-This is a preliminary computational feasibility experiment. It is not a final
-benchmark, a production-readiness assessment, or evidence of broad AECO
-generalization.
+This repository does not claim full mathematical XAI, certification, production
+readiness, or institutional endorsement. It does not include private datasets,
+adapters, checkpoints, or secrets.
 
-Kaggle: <https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai>
-
-See [`benchmark/qlora/`](benchmark/qlora/) for the full report, JSON results,
-and the deterministic [verification script](scripts/verify_qlora_public_metrics.py).
-
-```bash
-python scripts/verify_qlora_public_metrics.py
-```
-
-## Methodology Docs
-
-- [validation_gates.md](docs/methodology/validation_gates.md)
-- [xai_evaluation_position.md](docs/methodology/xai_evaluation_position.md)
-- [dataset_construction_and_training_readiness.md](docs/methodology/dataset_construction_and_training_readiness.md)
-- [semantic_bim_compilation_task.md](docs/methodology/semantic_bim_compilation_task.md)
-- [xai_evidence_positioning.md](docs/methodology/xai_evidence_positioning.md)
-- [dataset_scope_and_compute_scaling.md](docs/methodology/dataset_scope_and_compute_scaling.md)
-- [schema_contract_map.md](docs/methodology/schema_contract_map.md)
-- [public_boundary.md](docs/public_boundary.md)
-
-## Dataset Structure and Metrics Wording
-
-The public `sample20` dataset contains 20 records: 18 valid cases and 2 expected canonical rejections.
-- The `canonical_validation_rate` is 0.9 (18/20) because the two expected negative cases are rejected as intended.
-- The `expectation_met_rate` is 1.0 (20/20) since the model's actual status matches the expected case expectation in all 20 records.
-- All 1.0 metrics indicate consistency within this reduced sample, not general model performance or generalization.
-- The `sample20` dataset is not a complete corpus and is not a final benchmark.
-- No private datasets, checkpoints, adapters or secrets are included.
-
-## Evidence Trace Diagram
-
-```mermaid
-flowchart TD
-    A[Public sample20 records] --> B[Replay harness]
-    B --> C[JSON parse]
-    C --> D[Schema checks]
-    D --> E[Evidence trace review]
-    E --> F[Public validation summary]
-```
-
-[sample20-badge]: https://github.com/BIMAIBlendgineer/semantic-bim-ifc-xai/actions/workflows/public-sample20.yml/badge.svg
-[sample20-workflow]: https://github.com/BIMAIBlendgineer/semantic-bim-ifc-xai/actions/workflows/public-sample20.yml
+[sample20-badge]: https://github.com/xaibim/semantic-bim-ifc-xai/actions/workflows/public-sample20.yml/badge.svg
+[sample20-workflow]: https://github.com/xaibim/semantic-bim-ifc-xai/actions/workflows/public-sample20.yml

@@ -62,27 +62,27 @@ payloads mapped to canonical catalogues.
 The dataset and pipeline infrastructure is governed by several key concepts:
 
 - **Runtime Payload and SSOT**: A structured payload encapsulates the input
-  prompt, the active database schema, and the target catalogues, ensuring any
+  request, the active database schema, and the target catalogues, ensuring any
   generated output is evaluated against a Single Source of Truth.
 - **Capabilities Catalog**: A registry of supported operations, classes, and
   properties, preventing the AI from generating arbitrary properties or
   violating schema rules.
-- **Internal Milestones (S18 / S19 / S20)**: Successive pipeline iterations
-  improving validation rigor, catalogue mapping, and blocked-by-prerequisite
-  gate enforcement.
-  - **S18**: Introduced database schemas for dataset candidate tracking;
-    suspended due to inadequate validation gates.
-  - **S19**: Introduced runtime catalogue mapping and strict output validation.
-  - **S20**: Established the fail-closed "blocked-by-prerequisite" gate.
-- **private pilot dataset**: A private development pilot of 1,000 curated cases
-  for early LoRA/QLoRA adaptation experiments (not published).
+- **Public record contract**: The strict `sample20` v2 schema
+  (`sample20/schema_public_sample20_v2.json`, JSON Schema Draft 2020-12) encodes
+  the public fields, value modes, and neutral dataset-candidate states.
+- **private pilot dataset**: A private development pilot used for early
+  LoRA/QLoRA adaptation experiments (not published).
 - **private high-fidelity internal dataset**: A private high-fidelity seed
   dataset used for closed-loop testing (not published).
 - **sample20**: A public, fully sanitized subset of 20 representative cases for
   scientific evidence and reproducible evaluation.
-- **Replay and Guided Harness**: Codebases that ingest prompt records and run
+- **Replay and Guided Harness**: Codebases that ingest record payloads and run
   deterministic replay validation to verify schema compliance, class mapping,
   and evidence-tracing contracts.
+
+> Historical internal development stages existed before the public artifact.
+> They are **historical internal development stages, not public releases or
+> public validation claims**, and are not presented here as public milestones.
 
 ![Dataset construction and benchmark cycle](../assets/figures/figure_03_experimental_cycle.png)
 
@@ -90,53 +90,41 @@ The dataset and pipeline infrastructure is governed by several key concepts:
 
 ---
 
-## 4. Chronology of Technical Development Phases
+## 4. Verifiable Public Chronology
 
 | Phase | Title | Description |
-|---|---|---|
-| 0 | Scientific Problem Definition | Established limits of NL interfaces in BIM; identified semantic interpretation gap. |
-| 1 | Literature and Domain Framing | Analysed state of the art; defined lack of auditable evidence as the primary research gap. |
-| 2 | Semantic Record Definition | Formalized the record structure: NL request, IFC class, LOI, conceptual LOD, evidence trace. |
-| 3 | Runtime/Payload Discovery | Initial payload design; discovered structured prompting templates required for correct JSON output. |
-| 4 | SSOT and Catalogue Correction | Integrated canonical catalogues; corrected schemas to prevent out-of-spec property generation. |
-| 5 | S18 Training-Readiness Suspension | Pipeline suspended — inadequate sanitization and deduplication checks. |
-| 6 | S19 Runtime/Catalog Validation | Strict runtime validation schemas; automated output compliance before dataset commit. |
-| 7 | S20 Blocked-by-Prerequisite Gate | Fail-closed gate: candidates lacking provenance, anonymization, or review are blocked. |
-| 8 | Feedback/Raw Events Excluded | Governance decision: raw user feedback excluded from training lake until sanitized. |
-| 9 | Semantic Record Contract Design | Finalized the structured data contract fields (intent, class, LOI, LOD, evidence, limitations). |
-| 10 | JSON/JSONL Validation Strategy | Automated test suites for syntax and full schema compliance. |
-| 11 | Dataset Candidate Governance | SQL migrations tracking `FrameworkDatasetCandidate` and `FrameworkDatasetGateDecision`. |
-| 12 | Train/Val/Test/Eval/Rejected Split | Formulated strict criteria for dataset split assignment. |
-| 13 | private pilot dataset Private Experiment Boundary | QLoRA fine-tuning on private cluster; private model boundary defined. |
-| 14 | sample20 Public Sanitized Subset | 20 representative cases extracted; proprietary data replaced with synthetic alternatives. |
-| 15 | Replay Harness | Lightweight Python harness for deterministic schema and intent checking. |
-| 16 | Guided Public Harness | Hugging Face interactive harness for external reviewer access. |
-| 17 | Benchmark Methodology | Formal benchmark protocol: intent accuracy, slot F1, IFC class mapping, JSON validity, explanation supportedness. |
-| 18 | LoRA/QLoRA Adaptation Roadmap | Next experimental phase planned: fine-tuning open LLMs after baseline benchmarks are confirmed. |
-| 19 | XAI as Upstream Requirement | XAI established as active engineering constraint, not post-hoc analysis. |
-| 20 | Quantization/QAT as Efficiency Study | Post-training quantization and QAT planned as future resource-efficiency research. |
-| 21 | Public Academic Dissemination Boundary | Delineation of public vs. private research surface. |
+| --- | --- | --- |
+| 1 | Semantic task definition | Defined the structured semantic BIM compilation task: NL request → IFC-aware semantic record with validation, evidence and replay. |
+| 2 | `v0.1` public sample | First public sanitized sample and public repository foundation. |
+| 3 | `v0.1.1` validation cleanup | Public validation cleanup: forbidden scan, CI and release notes. |
+| 4 | Preliminary QLoRA feasibility evidence | Bounded Qwen2.5-7B QLoRA compute-feasibility experiment on a private pilot (synthetic/controlled). |
+| 5 | `sample20` v2 strict validation | Strict `sample20` v2 JSON Schema Draft 2020-12 contract with expected negatives. |
+| 6 | GitHub/Hugging Face integrity alignment | Three-copy schema/JSONL integrity and alignment of the public Replay and Harness Spaces. |
+| 7 | `v0.2` final public research artifact | Canonical `xaibim` GitHub namespace, `XAIBIM` Hugging Face namespace, corrected documentation and planned `A1` baseline matrix. |
+
+Internal development work that preceded these public steps is treated as
+**historical internal development stages, not public releases or public
+validation claims**.
 
 ---
 
-## 5. Dataset Record Structure
+## 5. Public Record Structure (`sample20` v2)
 
-A single valid semantic dataset record contains:
+A single valid public semantic record contains:
 
 | Field | Description |
-|---|---|
-| `natural_language_request` | The input user prompt |
-| `semantic_intent` | The identified engineering goal (e.g., `classify_bim_element`) |
-| `bim_element` | Generic description of the physical component |
-| `suggested_ifc_class` | buildingSMART IFC class (e.g., `IfcColumn`) |
-| `expected_json_output` | The structured JSON payload with parsed details |
-| `loi_table` | Level of Information Need properties required |
-| `lod_conceptual_preview` | Simplified geometric description for illustration only |
-| `evidence_trace` | Logical proof linking classification to input context |
-| `validation_metadata` | Hashes, timestamps, quality grades, reviewer decisions |
-| `limitations` | Explicit warnings on what cannot be verified |
-| `quality_grade` | Grade A, B, or C |
-| `split_assignment` | Target subset: train, validation, test, or eval_only |
+| --- | --- |
+| `schema_version` | Contract version (currently `2.0`). |
+| `sample_id` | Unique record identifier. |
+| `case_expectation` | `VALID` or `EXPECTED_CANONICAL_REJECTION`. |
+| `expectation_met` | Whether actual status matches the case expectation. |
+| `record_status` | `PASS` or `EXPECTED_REJECTION_PASS`. |
+| `input_summary` | Discipline, IFC class group, semantic type, ambiguity flags, missing inputs, recovery type. |
+| `model_output` | Structured output: intent, semantic type, IFC class, value mode, dimensions, Psets, relationships, missing inputs, ambiguity flags, recovery, safe next action, reason codes, evidence trace. |
+| `reference_output` | Stored synthetic reference target for agreement checking. |
+| `canonical_check` | Coherence check between output, reference and expectation. |
+| `agreement` | Field-level agreement between model output and reference output. |
+| `reference_scope` | Scope of the reference (synthetic target, not normative certification). |
 
 ---
 

@@ -1,13 +1,15 @@
 cff-version: 1.2.0
-title: "Semantic BIM/IFC Evidence-Grounded Harness"
+title: "Semantic BIM/IFC Evidence-Grounded Public Research Artifact"
 message: "If you use this public BIM/IFC research artifact in academic work, please cite this repository."
 type: software
 authors:
   - family-names: "de Freitas Oliveira Mousinho"
     given-names: "Dean Delmo"
-
-repository-code: "https://github.com/BIMAIBlendgineer/semantic-bim-ifc-xai"
-abstract: "Public academic research artifact for evidence-grounded semantic BIM/IFC sample validation, replay, and public benchmark reporting."
+version: 0.2.0
+doi: ""
+url: "https://github.com/xaibim/semantic-bim-ifc-xai"
+repository-code: "https://github.com/xaibim/semantic-bim-ifc-xai"
+abstract: "Public academic research artifact for evidence-grounded semantic BIM/IFC sample validation, deterministic replay, integrity verification, and a planned comparative benchmark. Includes the strict public sample20 v2 contract (JSON Schema Draft 2020-12), expected-negative handling, and preliminary QLoRA compute-feasibility evidence. Code is MIT; public documentation and sample20 data are CC-BY-4.0 (see LICENSES.md)."
 keywords:
   - BIM
   - IFC
@@ -15,6 +17,9 @@ keywords:
   - semantic IFC
   - semantic AI
   - evidence-grounded
+  - explainable AI
   - benchmark
   - dataset
+  - sample20
+  - QLoRA feasibility
 license: MIT

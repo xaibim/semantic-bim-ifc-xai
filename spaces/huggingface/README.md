@@ -45,4 +45,4 @@ All 1.0 metrics indicate internal agreement with the stored synthetic reference,
 
 ## Source repository
 
-https://github.com/BIMAIBlendgineer/semantic-bim-ifc-xai
+https://github.com/xaibim/semantic-bim-ifc-xai
