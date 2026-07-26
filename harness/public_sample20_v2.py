@@ -165,7 +165,6 @@ def validate_records(records: list[dict[str, Any]], schema: dict[str, Any]) -> t
     metrics = {
         "record_count": len(records),
         "unique_sample_id_count": len(unique_ids),
-        "json_parse_rate": 1.0,
         "public_schema_valid_rate": public_schema_valid_rate,
         "canonical_validation_rate": valid_cases / len(records) if records else 0.0,
         "valid_case_count": valid_cases,

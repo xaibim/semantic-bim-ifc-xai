@@ -28,6 +28,9 @@ LEGACY_CLASS_FIELD = "suggested_ifc_" + "class"
 LOI_FIELD = "loi_" + "table"
 LEGACY_BLOCK = "hard_" + "block"
 BLOCKED_PREREQ = "blocked-by-" + "prerequisite"
+OLD_REPLAY_NOTE = "Deterministic public " + "replay completed successfully"
+OLD_EXECUTED_REPLAY = "Executed " + "Replay"
+OLD_RUN_PUBLIC_REPLAY = "Run the public replay"
 
 
 def tracked_text_files():
@@ -263,6 +266,25 @@ class TestDocumentationAlignment(unittest.TestCase):
         readme = README.read_text(encoding="utf-8").lower()
         self.assertIn("planned", readme)
         self.assertIn("not executed", readme)
+
+    def test_28_stored_record_docs_updated(self):
+        docs = [
+            ROOT / "QUICKSTART.md",
+            ROOT / "PUBLIC_EVIDENCE.md",
+            ROOT / "sample20" / "VALIDATION_SUMMARY.md",
+            ROOT / "benchmark" / "results_sample20.md",
+        ]
+        for path in docs:
+            text = path.read_text(encoding="utf-8")
+            lower = text.lower()
+            self.assertIn("deterministic stored-record validation", lower)
+            self.assertIn("json parsing", lower)
+            self.assertIn("schema validation", lower)
+            self.assertIn("fixture-contract validation", lower)
+            self.assertIn("canonical three-copy integrity", lower)
+            self.assertNotIn(OLD_REPLAY_NOTE, text)
+            self.assertNotIn(OLD_EXECUTED_REPLAY, text)
+            self.assertNotIn(OLD_RUN_PUBLIC_REPLAY, text)
 
 
 if __name__ == "__main__":

@@ -22,21 +22,40 @@ pip install -r requirements.txt
 
 The root public replay and validation harnesses use Python standard library only. The optional Hugging Face harness has its own dependency file.
 
-## 4. Run the public replay
+## 4. Run deterministic stored-record validation
 
 ```powershell
 python harness/replay.py --sample sample20/
 ```
 
+The historical CLI filename is `replay.py`, but the command loads and validates committed records. It does not rerun model generation.
+
 Expected output includes:
 
 * `records=20`
+* `nonempty_lines=20`
+* `parsed_records=20`
+* `json_parse_rate=1.000000`
+* `json_parse=PASS`
 * `valid_cases=18`
 * `expected_rejections=2`
-* `expectation_met_rate=1.0`
+* `expectation_met_rate=1.000000`
+* `schema_valid_rate=1.000000`
 * `schema=PASS`
+* `fixture_contract=PASS`
+* `integrity_scope=CANONICAL_THREE_COPY`
+* `jsonl_copy_count=3`
+* `jsonl_copy_byte_identity=PASS`
+* `jsonl_lf_normalized_sha256=2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa`
+* `schema_copy_count=3`
+* `schema_copy_byte_identity=PASS`
+* `schema_lf_normalized_sha256=de9c722f98085d7227906295531aa190755d105a0bf030d360fb26b1298ab216`
 * `integrity=PASS`
 * `status=PUBLIC_SAMPLE20_V2_VALID`
+
+`integrity=PASS` means that the command independently verified the three public JSONL copies and the three public schema copies. It is not derived from schema validation.
+
+The command reports JSON parsing, schema validation, fixture-contract validation, and canonical three-copy integrity as separate checks.
 
 ## 5. Run the public schema validator
 
