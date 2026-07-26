@@ -9,28 +9,29 @@ from typing import Any
 import jsonschema
 
 ROOT = Path(__file__).resolve().parents[1]
+KNOWN_SAMPLE_FILENAMES = ("sample20_public_records.jsonl", "sample20_public_predictions.jsonl")
+SCHEMA_FILENAME = "schema_public_" + "sample20_v2.json"
 
 
-def _resolve_schema_path(sample_path: Path, explicit_schema: Path | None) -> Path | None:
+def _resolve_sample_file(sample_path: Path) -> Path | None:
+    if sample_path.is_file():
+        return sample_path
+
+    if sample_path.is_dir():
+        for name in KNOWN_SAMPLE_FILENAMES:
+            candidate = sample_path / name
+            if candidate.exists():
+                return candidate
+
+    return None
+
+
+def _resolve_schema_path(sample_file: Path, explicit_schema: Path | None) -> Path | None:
     if explicit_schema is not None:
         return explicit_schema
 
-    candidates: list[Path]
-    if sample_path.is_dir():
-        candidates = [
-            sample_path / ("schema_public_" + "sample20_v2.json"),
-            ROOT / "sample20" / ("schema_public_" + "sample20_v2.json"),
-        ]
-    else:
-        candidates = [
-            sample_path.parent / ("schema_public_" + "sample20_v2.json"),
-            ROOT / "sample20" / ("schema_public_" + "sample20_v2.json"),
-        ]
-
-    for candidate in candidates:
-        if candidate.exists():
-            return candidate
-    return None
+    candidate = sample_file.parent / SCHEMA_FILENAME
+    return candidate if candidate.exists() else None
 
 
 def _has_required_keys(record: dict[str, Any], required_keys: list[str]) -> bool:
@@ -71,20 +72,36 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    sample_path = Path(args.sample)
-    if not sample_path.exists():
-        print(f"FILE_NOT_FOUND: {sample_path}")
+    sample_input = Path(args.sample)
+    if not sample_input.exists():
+        print("FILE_NOT_FOUND")
         return 2
 
-    schema_path = _resolve_schema_path(sample_path, Path(args.schema) if args.schema else None)
+    sample_file = _resolve_sample_file(sample_input)
+    if sample_file is None:
+        print("SAMPLE_FILE_NOT_FOUND")
+        return 2
+
+    schema_path = _resolve_schema_path(sample_file, Path(args.schema) if args.schema else None)
     if schema_path is None or not schema_path.exists():
-        print(f"SCHEMA_FILE_NOT_FOUND: {schema_path if schema_path is not None else 'None'}")
+        print("SCHEMA_FILE_NOT_FOUND")
         return 2
 
     try:
         schema = json.loads(schema_path.read_text(encoding="utf-8"))
     except Exception as exc:
         print(f"ERROR: failed to read schema: {exc}")
+        return 1
+
+    if not isinstance(schema, dict):
+        print("SCHEMA_DEFINITION_ERROR: schema root must be a JSON object")
+        return 1
+
+    try:
+        jsonschema.Draft202012Validator.check_schema(schema)
+    except jsonschema.exceptions.SchemaError as exc:
+        message = exc.message if hasattr(exc, "message") else str(exc)
+        print(f"SCHEMA_DEFINITION_ERROR: {message}")
         return 1
 
     parse_errors: list[str] = []
@@ -94,7 +111,7 @@ def main(argv: list[str] | None = None) -> int:
     parsed_record_count = 0
 
     try:
-        with sample_path.open("r", encoding="utf-8") as handle:
+        with sample_file.open("r", encoding="utf-8") as handle:
             for line_number, line in enumerate(handle, start=1):
                 text = line.strip()
                 if not text:
@@ -151,7 +168,7 @@ def main(argv: list[str] | None = None) -> int:
     status = "SCHEMA_VALIDATION_OK" if json_parse_ok and schema_status == "PASS" else "SCHEMA_VALIDATION_FAIL"
 
     print("SEMANTIC_XAIBIM_SCHEMA_VALIDATION_V2")
-    print(f"file={sample_path}")
+    print(f"file={sample_file}")
     print(f"schema_file={schema_path}")
     print(f"records={parsed_record_count}")
     print(f"nonempty_lines={nonempty_line_count}")

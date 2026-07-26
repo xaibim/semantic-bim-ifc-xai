@@ -491,6 +491,34 @@ class TestPublicStoredRecordValidation(unittest.TestCase):
         self.assertTrue(is_canonical_public_pair(JSONL_PATH, SCHEMA_PATH))
         self.assertTrue(verify_canonical_public_integrity()[0])
 
+    def test_14_unhashable_required_psets_through_cli(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            sample_file = tmp_path / "sample20_public_records.jsonl"
+            schema_file = tmp_path / "schema_public_sample20_v2.json"
+            shutil.copyfile(JSONL_PATH, sample_file)
+            shutil.copyfile(SCHEMA_PATH, schema_file)
+
+            records = load_canonical_records()
+            target = records[0]
+            target["model_output"]["required_psets"].append({"invalid": True})
+            target["reference_output"]["required_psets"].append({"invalid": True})
+            sample_file.write_text(
+                "\n".join(json.dumps(record, ensure_ascii=False) for record in records) + "\n",
+                encoding="utf-8",
+            )
+
+            result = run_replay(tmp_path)
+
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertNotIn("Traceback", result.stdout + result.stderr)
+        parsed = parse_cli_output(result.stdout)
+        self.assertEqual(parsed["json_parse"], "PASS")
+        self.assertEqual(parsed["schema"], "FAIL")
+        self.assertEqual(parsed["fixture_contract"], "FAIL")
+        self.assertEqual(parsed["integrity"], "NOT_CHECKED")
+        self.assertEqual(parsed["status"], "STORED_RECORD_VALIDATION_INVALID")
+
 
 if __name__ == "__main__":
     unittest.main()

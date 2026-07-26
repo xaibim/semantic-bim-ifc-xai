@@ -19,9 +19,20 @@ FORBIDDEN_KEYS = {
 ALLOWED_VALUE_MODES = {"EXECUTE", "PREVIEW", "PROPOSAL", "GUIDED_RECOVERY"}
 
 
-def _recall(expected: list[Any], actual: list[Any]) -> float:
-    expected_set = set(expected)
-    actual_set = set(actual)
+def _safe_unique_set(value: Any) -> set[Any] | None:
+    if not isinstance(value, list):
+        return None
+    try:
+        return set(value)
+    except TypeError:
+        return None
+
+
+def _recall(expected: Any, actual: Any) -> float:
+    expected_set = _safe_unique_set(expected)
+    actual_set = _safe_unique_set(actual)
+    if expected_set is None or actual_set is None:
+        return 0.0
     if not expected_set:
         return 1.0 if not actual_set else 0.0
     return len(expected_set & actual_set) / len(expected_set)
@@ -101,10 +112,7 @@ def _validate_record_coherence(
         evidence_trace = _dict_value(output, "evidence_trace")
         relation_observed = None if evidence_trace is None else evidence_trace.get("relation_observed")
         required_relationships = output.get("required_relationships")
-        if isinstance(required_relationships, list):
-            relationship_set = set(required_relationships)
-        else:
-            relationship_set = set()
+        relationship_set = _safe_unique_set(required_relationships) or set()
         if relation_observed not in relationship_set:
             errors.append(
                 f"{prefix} {output_name} evidence relation is not declared in required_relationships"
@@ -159,7 +167,10 @@ def validate_records(records: list[dict[str, Any]], schema: dict[str, Any]) -> t
 
     # 2. Check unique sample_ids
     sample_ids = [r.get("sample_id") for r in records]
-    unique_ids = set(sample_ids)
+    unique_ids: list[Any] = []
+    for sample_id in sample_ids:
+        if not any(sample_id == existing for existing in unique_ids):
+            unique_ids.append(sample_id)
     if len(unique_ids) != len(records):
         errors.append(f"Duplicate sample_ids found: {len(records) - len(unique_ids)} duplicates")
 

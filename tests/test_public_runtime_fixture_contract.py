@@ -209,6 +209,28 @@ class TestPublicRuntimeFixtureContract(unittest.TestCase):
         self.assertEqual(recomputed["required_psets_recall"], 1.0)
         self.assertEqual(recomputed["required_relationships_recall"], records[index]["agreement"]["required_relationships_recall"])
 
+    def test_11_unhashable_required_psets_are_failure_safe(self):
+        records = [deep_copy_record(record) for record in self.records]
+        target = records[0]
+        target["model_output"]["required_psets"].append({"invalid": True})
+        target["reference_output"]["required_psets"].append({"invalid": True})
+        ok, errors, metrics = self._validate(records)
+        self.assertFalse(ok)
+        self.assertLess(metrics["public_schema_valid_rate"], 1.0)
+        self.assertEqual(metrics["package_status"], "PUBLIC_SAMPLE_INVALID")
+        self.assertTrue(any("schema error" in err.lower() for err in errors))
+
+    def test_12_non_list_required_relationships_are_failure_safe(self):
+        records = [deep_copy_record(record) for record in self.records]
+        target = records[1]
+        target["model_output"]["required_relationships"] = None
+        target["reference_output"]["required_relationships"] = None
+        ok, errors, metrics = self._validate(records)
+        self.assertFalse(ok)
+        self.assertLess(metrics["public_schema_valid_rate"], 1.0)
+        self.assertEqual(metrics["package_status"], "PUBLIC_SAMPLE_INVALID")
+        self.assertTrue(any("schema error" in err.lower() for err in errors))
+
     def _all_relationships(self) -> list[str]:
         relations: list[str] = []
         for record in self.records:

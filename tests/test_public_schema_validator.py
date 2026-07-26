@@ -46,6 +46,98 @@ def load_records() -> list[dict[str, object]]:
 
 
 class TestPublicSchemaValidator(unittest.TestCase):
+    def test_00_canonical_directory_success(self):
+        result = run_schema_validator(ROOT / "sample20")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        parsed = parse_stdout(result.stdout)
+        self.assertEqual(result.stdout.splitlines()[0], "SEMANTIC_XAIBIM_SCHEMA_VALIDATION_V2")
+        self.assertTrue(parsed["file"].endswith("sample20_public_records.jsonl"))
+        self.assertEqual(parsed["schema"], "PASS")
+        self.assertEqual(parsed["status"], "SCHEMA_VALIDATION_OK")
+
+    def test_01_known_prediction_directory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            sample_dir = tmp_path / "sample"
+            sample_dir.mkdir()
+            shutil.copyfile(JSONL_PATH, sample_dir / "sample20_public_predictions.jsonl")
+            shutil.copyfile(SCHEMA_PATH, sample_dir / "schema_public_sample20_v2.json")
+            result = run_schema_validator(sample_dir)
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        parsed = parse_stdout(result.stdout)
+        self.assertTrue(parsed["file"].endswith("sample20_public_predictions.jsonl"))
+        self.assertTrue(parsed["schema_file"].endswith("schema_public_sample20_v2.json"))
+        self.assertEqual(parsed["schema"], "PASS")
+        self.assertEqual(parsed["status"], "SCHEMA_VALIDATION_OK")
+
+    def test_02_directory_without_known_jsonl(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            sample_dir = tmp_path / "sample"
+            sample_dir.mkdir()
+            (sample_dir / "random.jsonl").write_text("{}\n", encoding="utf-8")
+            shutil.copyfile(SCHEMA_PATH, sample_dir / "schema_public_sample20_v2.json")
+            result = run_schema_validator(sample_dir)
+
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("SAMPLE_FILE_NOT_FOUND", result.stdout)
+        self.assertNotIn("Traceback", result.stdout + result.stderr)
+
+    def test_03_schema_root_is_array(self):
+        records = load_records()
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            sample_file = tmp_path / "sample.jsonl"
+            schema_file = tmp_path / "schema_public_sample20_v2.json"
+            sample_file.write_text(
+                "\n".join(json.dumps(record, ensure_ascii=False) for record in records) + "\n",
+                encoding="utf-8",
+            )
+            schema_file.write_text("[]\n", encoding="utf-8")
+            result = run_schema_validator(sample_file, schema_file)
+
+        self.assertEqual(result.returncode, 1)
+        output = result.stdout + result.stderr
+        self.assertIn("SCHEMA_DEFINITION_ERROR", output)
+        self.assertNotIn("Traceback", output)
+
+    def test_04_invalid_json_schema(self):
+        records = load_records()
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            sample_file = tmp_path / "sample.jsonl"
+            schema_file = tmp_path / "schema_public_sample20_v2.json"
+            sample_file.write_text(
+                "\n".join(json.dumps(record, ensure_ascii=False) for record in records) + "\n",
+                encoding="utf-8",
+            )
+            schema_file.write_text('{"type": "not-a-valid-json-schema-type"}\n', encoding="utf-8")
+            result = run_schema_validator(sample_file, schema_file)
+
+        self.assertEqual(result.returncode, 1)
+        output = result.stdout + result.stderr
+        self.assertIn("SCHEMA_DEFINITION_ERROR", output)
+        self.assertNotIn("Traceback", output)
+
+    def test_05_explicit_missing_schema(self):
+        records = load_records()
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            sample_file = tmp_path / "sample.jsonl"
+            schema_file = tmp_path / "schema_public_sample20_v2.json"
+            sample_file.write_text(
+                "\n".join(json.dumps(record, ensure_ascii=False) for record in records) + "\n",
+                encoding="utf-8",
+            )
+            shutil.copyfile(SCHEMA_PATH, schema_file)
+            missing_schema = tmp_path / "missing_schema.json"
+            result = run_schema_validator(sample_file, missing_schema)
+
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("SCHEMA_FILE_NOT_FOUND", result.stdout)
+        self.assertNotIn("Traceback", result.stdout + result.stderr)
+
     def test_01_canonical_success(self):
         result = run_schema_validator(JSONL_PATH, SCHEMA_PATH)
         self.assertEqual(result.returncode, 0, result.stderr)
