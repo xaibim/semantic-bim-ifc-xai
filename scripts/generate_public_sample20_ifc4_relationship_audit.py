@@ -21,9 +21,11 @@ EXPECTED_UNIQUE_IFC_CLASS_COUNT = 11
 EXPECTED_UNIQUE_RELATIONSHIP_COUNT = 9
 EXPECTED_RECORD_RELATIONSHIP_PAIR_COUNT = 37
 EXPECTED_EVIDENCE_RELATION_DECLARED_COUNT = 20
-EXPECTED_SCHEMA_INVERSE_PARTICIPATION_FOUND_COUNT = 26
-EXPECTED_SCHEMA_INVERSE_PARTICIPATION_NOT_FOUND_COUNT = 11
-AUDIT_ID = "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V1"
+EXPECTED_EXACT_INVERSE_ENDPOINT_COUNT = 26
+EXPECTED_INHERITED_SUPERTYPE_COMPATIBLE_COUNT = 5
+EXPECTED_SCHEMA_COMPATIBLE_COUNT = 31
+EXPECTED_SCHEMA_INCOMPATIBLE_COUNT = 6
+AUDIT_ID = "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V2"
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -125,7 +127,9 @@ def class_inverse_endpoints(declaration: Any) -> list[dict[str, Any]]:
     )
 
 
-def build_catalogs(schema: Any, records: list[dict[str, Any]]) -> tuple[dict[str, Any], dict[str, Any]]:
+def build_catalogs(
+    schema: Any, records: list[dict[str, Any]]
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     ifc_classes = sorted_unique_strings(record["model_output"]["ifc_class"] for record in records)
     relationship_names = sorted_unique_strings(
         relationship
@@ -155,6 +159,7 @@ def build_catalogs(schema: Any, records: list[dict[str, Any]]) -> tuple[dict[str
         }
 
     relationship_catalog: dict[str, Any] = {}
+    relationship_declarations: dict[str, Any] = {}
     for relationship_name in relationship_names:
         try:
             declaration = schema.declaration_by_name(relationship_name)
@@ -169,8 +174,10 @@ def build_catalogs(schema: Any, records: list[dict[str, Any]]) -> tuple[dict[str
                 "forward_attributes": [],
                 "error": f"{type(exc).__name__}: {exc}",
             }
+            relationship_declarations[relationship_name] = None
             continue
 
+        relationship_declarations[relationship_name] = declaration
         relationship_catalog[relationship_name] = {
             "declaration_exists": True,
             "is_ifc_relationship": bool(is_a(declaration, "IfcRelationship")),
@@ -186,13 +193,14 @@ def build_catalogs(schema: Any, records: list[dict[str, Any]]) -> tuple[dict[str
             "forward_attributes": relationship_forward_attributes(declaration),
         }
 
-    return class_catalog, relationship_catalog
+    return class_catalog, relationship_catalog, relationship_declarations
 
 
 def build_record_audits(
     records: list[dict[str, Any]],
     class_catalog: dict[str, Any],
     relationship_catalog: dict[str, Any],
+    relationship_declarations: dict[str, Any],
 ) -> list[dict[str, Any]]:
     audits: list[dict[str, Any]] = []
     for record in records:
@@ -205,21 +213,48 @@ def build_record_audits(
         relationship_audits: list[dict[str, Any]] = []
         for relationship in model_output["required_relationships"]:
             relation_info = relationship_catalog.get(relationship, {})
-            inverse_endpoints = [
+            declaration = relationship_declarations.get(relationship)
+            exact_inverse_endpoints = [
                 endpoint
                 for endpoint in class_endpoints
                 if endpoint.get("relationship_entity") == relationship
             ]
+            inherited_supertype_endpoints: list[dict[str, Any]] = []
+            if not exact_inverse_endpoints and declaration is not None:
+                for endpoint in class_endpoints:
+                    endpoint_relationship_name = endpoint.get("relationship_entity")
+                    if endpoint_relationship_name is None:
+                        continue
+                    if not is_a(declaration, endpoint_relationship_name):
+                        continue
+                    inherited_supertype_endpoints.append(
+                        {
+                            "inverse_attribute_name": endpoint.get("inverse_attribute_name"),
+                            "forward_attribute_name": endpoint.get("forward_attribute_name"),
+                            "declared_relationship_supertype": endpoint_relationship_name,
+                        }
+                    )
+
+            if exact_inverse_endpoints:
+                compatibility_state = "EXACT_INVERSE_ENDPOINT"
+            elif inherited_supertype_endpoints:
+                compatibility_state = "INHERITED_SUPERTYPE_COMPATIBLE"
+            else:
+                compatibility_state = "SCHEMA_INCOMPATIBLE"
             relationship_audits.append(
                 {
                     "relationship": relationship,
+                    "required_relationship_supertype_chain": relation_info.get("supertype_chain", []),
                     "evidence_relation_observed": relation_observed,
                     "evidence_relation_declared": evidence_relation_declared,
                     "declaration_exists": bool(relation_info.get("declaration_exists")),
                     "is_ifc_relationship": bool(relation_info.get("is_ifc_relationship")),
                     "relationship_is_abstract": bool(relation_info.get("is_abstract")),
-                    "class_inverse_participation_found": bool(inverse_endpoints),
-                    "inverse_endpoints": inverse_endpoints,
+                    "compatibility_state": compatibility_state,
+                    "schema_compatible": compatibility_state
+                    in {"EXACT_INVERSE_ENDPOINT", "INHERITED_SUPERTYPE_COMPATIBLE"},
+                    "exact_inverse_endpoints": exact_inverse_endpoints,
+                    "inherited_supertype_endpoints": inherited_supertype_endpoints,
                     "interpretation_state": "NOT_EVALUATED",
                 }
             )
@@ -256,8 +291,8 @@ def build_audit() -> dict[str, Any]:
     if any(record.get("model_output") != record.get("reference_output") for record in records):
         raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
 
-    class_catalog, relationship_catalog = build_catalogs(schema, records)
-    record_audits = build_record_audits(records, class_catalog, relationship_catalog)
+    class_catalog, relationship_catalog, relationship_declarations = build_catalogs(schema, records)
+    record_audits = build_record_audits(records, class_catalog, relationship_catalog, relationship_declarations)
 
     relationship_rows = [
         row
@@ -265,8 +300,12 @@ def build_audit() -> dict[str, Any]:
         for row in record["relationship_audits"]
     ]
     evidence_relation_declared_count = sum(record["evidence_relation_declared"] for record in record_audits)
-    schema_inverse_participation_found_count = sum(row["class_inverse_participation_found"] for row in relationship_rows)
-    schema_inverse_participation_not_found_count = sum(not row["class_inverse_participation_found"] for row in relationship_rows)
+    exact_inverse_endpoint_count = sum(row["compatibility_state"] == "EXACT_INVERSE_ENDPOINT" for row in relationship_rows)
+    inherited_supertype_compatible_count = sum(
+        row["compatibility_state"] == "INHERITED_SUPERTYPE_COMPATIBLE" for row in relationship_rows
+    )
+    schema_compatible_count = sum(row["schema_compatible"] for row in relationship_rows)
+    schema_incompatible_count = sum(row["compatibility_state"] == "SCHEMA_INCOMPATIBLE" for row in relationship_rows)
 
     if len(class_catalog) != EXPECTED_UNIQUE_IFC_CLASS_COUNT:
         raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
@@ -276,9 +315,13 @@ def build_audit() -> dict[str, Any]:
         raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
     if evidence_relation_declared_count != EXPECTED_EVIDENCE_RELATION_DECLARED_COUNT:
         raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
-    if schema_inverse_participation_found_count != EXPECTED_SCHEMA_INVERSE_PARTICIPATION_FOUND_COUNT:
+    if exact_inverse_endpoint_count != EXPECTED_EXACT_INVERSE_ENDPOINT_COUNT:
         raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
-    if schema_inverse_participation_not_found_count != EXPECTED_SCHEMA_INVERSE_PARTICIPATION_NOT_FOUND_COUNT:
+    if inherited_supertype_compatible_count != EXPECTED_INHERITED_SUPERTYPE_COMPATIBLE_COUNT:
+        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+    if schema_compatible_count != EXPECTED_SCHEMA_COMPATIBLE_COUNT:
+        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+    if schema_incompatible_count != EXPECTED_SCHEMA_INCOMPATIBLE_COUNT:
         raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
 
     summary = {
@@ -289,8 +332,10 @@ def build_audit() -> dict[str, Any]:
         "unique_relationship_count": EXPECTED_UNIQUE_RELATIONSHIP_COUNT,
         "record_relationship_pair_count": EXPECTED_RECORD_RELATIONSHIP_PAIR_COUNT,
         "evidence_relation_declared_count": EXPECTED_EVIDENCE_RELATION_DECLARED_COUNT,
-        "schema_inverse_participation_found_count": EXPECTED_SCHEMA_INVERSE_PARTICIPATION_FOUND_COUNT,
-        "schema_inverse_participation_not_found_count": EXPECTED_SCHEMA_INVERSE_PARTICIPATION_NOT_FOUND_COUNT,
+        "exact_inverse_endpoint_count": EXPECTED_EXACT_INVERSE_ENDPOINT_COUNT,
+        "inherited_supertype_compatible_count": EXPECTED_INHERITED_SUPERTYPE_COMPATIBLE_COUNT,
+        "schema_compatible_count": EXPECTED_SCHEMA_COMPATIBLE_COUNT,
+        "schema_incompatible_count": EXPECTED_SCHEMA_INCOMPATIBLE_COUNT,
     }
 
     result = {
@@ -342,7 +387,7 @@ def render_markdown(result: dict[str, Any]) -> str:
     record_audits = result["record_audits"]
 
     lines: list[str] = []
-    lines.append("# Public sample20 IFC4 relationship schema-participation audit")
+    lines.append("# Public sample20 IFC4 subtype-aware relationship schema-participation audit")
     lines.append("")
     lines.append("## Scope")
     lines.append("")
@@ -350,6 +395,7 @@ def render_markdown(result: dict[str, Any]) -> str:
         [
             "- frozen public sample20;",
             "- IFC4 schema participation only;",
+            "- subtype-aware classification of relationship endpoints;",
             "- no semantic task-alignment conclusion;",
             "- no real IFC instance validation;",
             "- no certification;",
@@ -381,8 +427,10 @@ def render_markdown(result: dict[str, Any]) -> str:
         "unique_relationship_count",
         "record_relationship_pair_count",
         "evidence_relation_declared_count",
-        "schema_inverse_participation_found_count",
-        "schema_inverse_participation_not_found_count",
+        "exact_inverse_endpoint_count",
+        "inherited_supertype_compatible_count",
+        "schema_compatible_count",
+        "schema_incompatible_count",
     ]:
         lines.append(f"| `{key}` | `{summary[key]}` |")
 
@@ -409,22 +457,43 @@ def render_markdown(result: dict[str, Any]) -> str:
     lines.append("")
     lines.append("## Record-relationship matrix")
     lines.append("")
-    lines.append("| sample_id | case_expectation | semantic_type | ifc_class | relationship | evidence_relation | declaration | abstract | inverse_participation | inverse_endpoints | semantic_alignment |")
-    lines.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
-    no_inverse_rows: list[dict[str, Any]] = []
+    lines.append("| sample_id | case_expectation | semantic_type | ifc_class | relationship | evidence_relation | declaration | abstract | compatibility_state | schema_compatible | exact_inverse_endpoints | inherited_supertype_endpoints | semantic_alignment |")
+    lines.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
+    exact_rows: list[dict[str, Any]] = []
+    inherited_rows: list[dict[str, Any]] = []
+    incompatible_rows: list[dict[str, Any]] = []
     for record in record_audits:
         for row in record["relationship_audits"]:
-            if not row["class_inverse_participation_found"]:
-                no_inverse_rows.append(
+            if row["compatibility_state"] == "EXACT_INVERSE_ENDPOINT":
+                exact_rows.append(
                     {
                         "sample_id": record["sample_id"],
                         "ifc_class": record["ifc_class"],
                         "relationship": row["relationship"],
-                        "inverse_endpoints": row["inverse_endpoints"],
+                        "exact_inverse_endpoints": row["exact_inverse_endpoints"],
+                    }
+                )
+            elif row["compatibility_state"] == "INHERITED_SUPERTYPE_COMPATIBLE":
+                inherited_rows.append(
+                    {
+                        "sample_id": record["sample_id"],
+                        "ifc_class": record["ifc_class"],
+                        "relationship": row["relationship"],
+                        "inherited_supertype_endpoints": row["inherited_supertype_endpoints"],
+                    }
+                )
+            else:
+                incompatible_rows.append(
+                    {
+                        "sample_id": record["sample_id"],
+                        "ifc_class": record["ifc_class"],
+                        "relationship": row["relationship"],
+                        "exact_inverse_endpoints": row["exact_inverse_endpoints"],
+                        "inherited_supertype_endpoints": row["inherited_supertype_endpoints"],
                     }
                 )
             lines.append(
-                "| {sample_id} | {case_expectation} | {semantic_type} | {ifc_class} | {relationship} | {evidence_relation} | {declaration} | {abstract} | {inverse_participation} | {inverse_endpoints} | {semantic_alignment} |".format(
+                "| {sample_id} | {case_expectation} | {semantic_type} | {ifc_class} | {relationship} | {evidence_relation} | {declaration} | {abstract} | {compatibility_state} | {schema_compatible} | {exact_inverse_endpoints} | {inherited_supertype_endpoints} | {semantic_alignment} |".format(
                     sample_id=markdown_cell(record["sample_id"]),
                     case_expectation=markdown_cell(record["case_expectation"]),
                     semantic_type=markdown_cell(record["semantic_type"]),
@@ -433,24 +502,57 @@ def render_markdown(result: dict[str, Any]) -> str:
                     evidence_relation=markdown_cell(row["evidence_relation_observed"]),
                     declaration=markdown_cell("DECLARATION_FOUND" if row["declaration_exists"] else "DECLARATION_MISSING"),
                     abstract=markdown_cell("ABSTRACT_RELATIONSHIP" if row["relationship_is_abstract"] else "CONCRETE_RELATIONSHIP"),
-                    inverse_participation=markdown_cell("CLASS_INVERSE_PARTICIPATION_FOUND" if row["class_inverse_participation_found"] else "CLASS_INVERSE_PARTICIPATION_NOT_FOUND"),
-                    inverse_endpoints=markdown_cell(row["inverse_endpoints"]),
+                    compatibility_state=markdown_cell(row["compatibility_state"]),
+                    schema_compatible=markdown_cell(row["schema_compatible"]),
+                    exact_inverse_endpoints=markdown_cell(row["exact_inverse_endpoints"]),
+                    inherited_supertype_endpoints=markdown_cell(row["inherited_supertype_endpoints"]),
                     semantic_alignment=markdown_cell(row["interpretation_state"]),
                 )
             )
 
     lines.append("")
-    lines.append("## No inverse participation found")
+    lines.append("## Exact inverse endpoints")
     lines.append("")
-    lines.append("| sample_id | ifc_class | relationship | inverse_endpoints |")
+    lines.append("| sample_id | ifc_class | relationship | exact_inverse_endpoints |")
     lines.append("| --- | --- | --- | --- |")
-    for row in no_inverse_rows:
+    for row in exact_rows:
         lines.append(
-            "| {sample_id} | {ifc_class} | {relationship} | {inverse_endpoints} |".format(
+            "| {sample_id} | {ifc_class} | {relationship} | {exact_inverse_endpoints} |".format(
                 sample_id=markdown_cell(row["sample_id"]),
                 ifc_class=markdown_cell(row["ifc_class"]),
                 relationship=markdown_cell(row["relationship"]),
-                inverse_endpoints=markdown_cell(row["inverse_endpoints"]),
+                exact_inverse_endpoints=markdown_cell(row["exact_inverse_endpoints"]),
+            )
+        )
+
+    lines.append("")
+    lines.append("## Inherited supertype-compatible rows")
+    lines.append("")
+    lines.append("| sample_id | ifc_class | relationship | inherited_supertype_endpoints |")
+    lines.append("| --- | --- | --- | --- |")
+    for row in inherited_rows:
+        lines.append(
+            "| {sample_id} | {ifc_class} | {relationship} | {inherited_supertype_endpoints} |".format(
+                sample_id=markdown_cell(row["sample_id"]),
+                ifc_class=markdown_cell(row["ifc_class"]),
+                relationship=markdown_cell(row["relationship"]),
+                inherited_supertype_endpoints=markdown_cell(row["inherited_supertype_endpoints"]),
+            )
+        )
+
+    lines.append("")
+    lines.append("## Schema-incompatible rows")
+    lines.append("")
+    lines.append("| sample_id | ifc_class | relationship | exact_inverse_endpoints | inherited_supertype_endpoints |")
+    lines.append("| --- | --- | --- | --- | --- |")
+    for row in incompatible_rows:
+        lines.append(
+            "| {sample_id} | {ifc_class} | {relationship} | {exact_inverse_endpoints} | {inherited_supertype_endpoints} |".format(
+                sample_id=markdown_cell(row["sample_id"]),
+                ifc_class=markdown_cell(row["ifc_class"]),
+                relationship=markdown_cell(row["relationship"]),
+                exact_inverse_endpoints=markdown_cell(row["exact_inverse_endpoints"]),
+                inherited_supertype_endpoints=markdown_cell(row["inherited_supertype_endpoints"]),
             )
         )
 

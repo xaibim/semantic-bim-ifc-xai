@@ -32,8 +32,53 @@ EXPECTED_SUMMARY = {
     "unique_relationship_count": 9,
     "record_relationship_pair_count": 37,
     "evidence_relation_declared_count": 20,
-    "schema_inverse_participation_found_count": 26,
-    "schema_inverse_participation_not_found_count": 11,
+    "exact_inverse_endpoint_count": 26,
+    "inherited_supertype_compatible_count": 5,
+    "schema_compatible_count": 31,
+    "schema_incompatible_count": 6,
+}
+EXPECTED_EXACT_ROWS = {
+    ("4eeac340747306fd", "IfcColumn", "IfcRelConnectsElements"),
+    ("4eeac340747306fd", "IfcColumn", "IfcRelDefinesByProperties"),
+    ("495a677407a7f05a", "IfcWall", "IfcRelNests"),
+    ("1ae42de17ac977f7", "IfcBeam", "IfcRelVoidsElement"),
+    ("1ae42de17ac977f7", "IfcBeam", "IfcRelFillsElement"),
+    ("ae47e72e2af2b182", "IfcBeam", "IfcRelConnectsElements"),
+    ("ae47e72e2af2b182", "IfcBeam", "IfcRelAggregates"),
+    ("8c0052ccd9bc96e4", "IfcPump", "IfcRelVoidsElement"),
+    ("21129edbbd73ebef", "IfcSpace", "IfcRelContainedInSpatialStructure"),
+    ("d2ed814a93840a19", "IfcFlowTerminal", "IfcRelVoidsElement"),
+    ("d2ed814a93840a19", "IfcFlowTerminal", "IfcRelFillsElement"),
+    ("fa3bca1c51085557", "IfcAirTerminal", "IfcRelNests"),
+    ("fa3bca1c51085557", "IfcAirTerminal", "IfcRelFillsElement"),
+    ("048b754023b7b6b4", "IfcColumn", "IfcRelConnectsElements"),
+    ("048b754023b7b6b4", "IfcColumn", "IfcRelAggregates"),
+    ("5af537f550afd4aa", "IfcFan", "IfcRelContainedInSpatialStructure"),
+    ("5af537f550afd4aa", "IfcFan", "IfcRelNests"),
+    ("6ebb6c9ea431c6a7", "IfcColumn", "IfcRelVoidsElement"),
+    ("ca455e91ed772fd8", "IfcColumn", "IfcRelVoidsElement"),
+    ("f84721ef28e281d1", "IfcSpace", "IfcRelAggregates"),
+    ("f84721ef28e281d1", "IfcSpace", "IfcRelContainedInSpatialStructure"),
+    ("3dab4b257ae52bfc", "IfcFlowTerminal", "IfcRelNests"),
+    ("3dab4b257ae52bfc", "IfcFlowTerminal", "IfcRelFillsElement"),
+    ("8f91faebc05dd115", "IfcAsset", "IfcRelDefinesByProperties"),
+    ("8f91faebc05dd115", "IfcAsset", "IfcRelNests"),
+    ("7f1ea524d9fdbdcb", "IfcColumn", "IfcRelAggregates"),
+}
+EXPECTED_INHERITED_ROWS = {
+    ("495a677407a7f05a", "IfcWall", "IfcRelAssignsToGroup", "IfcRelAssigns"),
+    ("8c0052ccd9bc96e4", "IfcPump", "IfcRelAssociatesMaterial", "IfcRelAssociates"),
+    ("6ebb6c9ea431c6a7", "IfcColumn", "IfcRelAssignsToGroup", "IfcRelAssigns"),
+    ("ca455e91ed772fd8", "IfcColumn", "IfcRelAssignsToGroup", "IfcRelAssigns"),
+    ("7f1ea524d9fdbdcb", "IfcColumn", "IfcRelAssociatesMaterial", "IfcRelAssociates"),
+}
+EXPECTED_INCOMPATIBLE_ROWS = {
+    ("21129edbbd73ebef", "IfcSpace", "IfcRelConnectsElements"),
+    ("ee5057a4b7f15e3c", "IfcSystem", "IfcRelConnectsElements"),
+    ("ee5057a4b7f15e3c", "IfcSystem", "IfcRelVoidsElement"),
+    ("f72f31f4c063475b", "IfcSpace", "IfcRelFillsElement"),
+    ("23dad325e1a64458", "IfcAsset", "IfcRelFillsElement"),
+    ("45f540e38ef9fe81", "IfcZone", "IfcRelConnectsElements"),
 }
 
 # This test module does not demonstrate IFC4 task suitability or real IFC instance validity.
@@ -72,7 +117,7 @@ class TestPublicSample20IFC4RelationshipAudit(unittest.TestCase):
         self.assertEqual(sha256_normalized_text(SCHEMA_PATHS[2]), EXPECTED_SCHEMA_SHA256)
 
     def test_03_audit_metadata_and_summary(self) -> None:
-        self.assertEqual(self.audit["audit_id"], "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V1")
+        self.assertEqual(self.audit["audit_id"], "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V2")
         self.assertIn("audit_metadata", self.audit)
         self.assertNotIn("metadata", self.audit)
         self.assertEqual(self.audit["audit_metadata"]["source_commit"], "b00dc9ce6a8a96309fb77472eabff9a90d0d50d7")
@@ -87,14 +132,29 @@ class TestPublicSample20IFC4RelationshipAudit(unittest.TestCase):
         self.assertFalse(self.audit["interpretation_boundary"]["relationship_instances_created"])
         self.assertFalse(self.audit["interpretation_boundary"]["ifc_certification_claimed"])
         self.assertFalse(self.audit["interpretation_boundary"]["corrections_authorized"])
+        self.assertEqual(
+            set(self.audit),
+            {
+                "audit_id",
+                "audit_metadata",
+                "class_catalog",
+                "interpretation_boundary",
+                "record_audits",
+                "relationship_catalog",
+                "summary",
+            },
+        )
 
     def test_04_record_audit_counts(self) -> None:
         record_audits = self.audit["record_audits"]
         rows = [row for record in record_audits for row in record["relationship_audits"]]
         self.assertEqual(len(record_audits), 20)
         self.assertEqual(len(rows), 37)
-        self.assertEqual(sum(1 for row in rows if row["class_inverse_participation_found"]), 26)
-        self.assertEqual(sum(1 for row in rows if not row["class_inverse_participation_found"]), 11)
+        self.assertEqual(sum(1 for row in rows if row["compatibility_state"] == "EXACT_INVERSE_ENDPOINT"), 26)
+        self.assertEqual(sum(1 for row in rows if row["compatibility_state"] == "INHERITED_SUPERTYPE_COMPATIBLE"), 5)
+        self.assertEqual(sum(1 for row in rows if row["compatibility_state"] == "SCHEMA_INCOMPATIBLE"), 6)
+        self.assertEqual(sum(1 for row in rows if row["schema_compatible"]), 31)
+        self.assertEqual(sum(1 for row in rows if not row["schema_compatible"]), 6)
         self.assertEqual(sum(1 for record in record_audits if record["evidence_relation_declared"]), 20)
 
     def test_05_jsonl_to_audit_mapping(self) -> None:
@@ -113,19 +173,31 @@ class TestPublicSample20IFC4RelationshipAudit(unittest.TestCase):
             for relationship_audit in audit_record["relationship_audits"]:
                 self.assertIn(relationship_audit["relationship"], record["model_output"]["required_relationships"])
                 self.assertEqual(relationship_audit["interpretation_state"], "NOT_EVALUATED")
-                self.assertEqual(
-                    relationship_audit["class_inverse_participation_found"],
-                    bool(relationship_audit["inverse_endpoints"]),
-                )
+                self.assertIn("required_relationship_supertype_chain", relationship_audit)
+                self.assertNotIn("class_inverse_participation_found", relationship_audit)
+                self.assertIn(relationship_audit["compatibility_state"], {
+                    "EXACT_INVERSE_ENDPOINT",
+                    "INHERITED_SUPERTYPE_COMPATIBLE",
+                    "SCHEMA_INCOMPATIBLE",
+                })
+                if relationship_audit["compatibility_state"] == "EXACT_INVERSE_ENDPOINT":
+                    self.assertTrue(relationship_audit["exact_inverse_endpoints"])
+                    self.assertEqual(relationship_audit["inherited_supertype_endpoints"], [])
+                elif relationship_audit["compatibility_state"] == "INHERITED_SUPERTYPE_COMPATIBLE":
+                    self.assertEqual(relationship_audit["exact_inverse_endpoints"], [])
+                    self.assertTrue(relationship_audit["inherited_supertype_endpoints"])
+                else:
+                    self.assertEqual(relationship_audit["exact_inverse_endpoints"], [])
+                    self.assertEqual(relationship_audit["inherited_supertype_endpoints"], [])
 
     def test_06_markdown_contains_expected_content(self) -> None:
-        self.assertIn("Public sample20 IFC4 relationship schema-participation audit", self.markdown)
+        self.assertIn("Public sample20 IFC4 subtype-aware relationship schema-participation audit", self.markdown)
         for record in self.records:
             self.assertIn(record["sample_id"], self.markdown)
             self.assertIn(record["model_output"]["ifc_class"], self.markdown)
         for relationship in sorted({rel for record in self.records for rel in record["model_output"]["required_relationships"]}):
             self.assertIn(relationship, self.markdown)
-        matrix_section = self.markdown.split("## Record-relationship matrix", 1)[1].split("## No inverse participation found", 1)[0]
+        matrix_section = self.markdown.split("## Record-relationship matrix", 1)[1].split("## Exact inverse endpoints", 1)[0]
         matrix_rows = [
             line
             for line in matrix_section.splitlines()
@@ -135,18 +207,62 @@ class TestPublicSample20IFC4RelationshipAudit(unittest.TestCase):
             and line.strip()
         ]
         self.assertEqual(len(matrix_rows), 37)
-        no_inverse_section = self.markdown.split("## No inverse participation found", 1)[1].split("## Interpretation", 1)[0]
-        no_inverse_rows = [
+        exact_section = self.markdown.split("## Exact inverse endpoints", 1)[1].split("## Inherited supertype-compatible rows", 1)[0]
+        exact_rows = [
             line
-            for line in no_inverse_section.splitlines()
+            for line in exact_section.splitlines()
             if line.startswith("|")
             and not line.startswith("| sample_id |")
             and not line.startswith("| ---")
             and line.strip()
         ]
-        self.assertEqual(len(no_inverse_rows), 11)
+        self.assertEqual(len(exact_rows), 26)
+        inherited_section = self.markdown.split("## Inherited supertype-compatible rows", 1)[1].split("## Schema-incompatible rows", 1)[0]
+        inherited_rows = [
+            line
+            for line in inherited_section.splitlines()
+            if line.startswith("|")
+            and not line.startswith("| sample_id |")
+            and not line.startswith("| ---")
+            and line.strip()
+        ]
+        self.assertEqual(len(inherited_rows), 5)
+        incompatible_section = self.markdown.split("## Schema-incompatible rows", 1)[1].split("## Interpretation", 1)[0]
+        incompatible_rows = [
+            line
+            for line in incompatible_section.splitlines()
+            if line.startswith("|")
+            and not line.startswith("| sample_id |")
+            and not line.startswith("| ---")
+            and line.strip()
+        ]
+        self.assertEqual(len(incompatible_rows), 6)
 
-    def test_07_generator_check_mode(self) -> None:
+    def test_07_compatibility_classification_sets(self) -> None:
+        rows = [row for record in self.audit["record_audits"] for row in record["relationship_audits"]]
+        exact = {
+            (record["sample_id"], record["ifc_class"], row["relationship"])
+            for record in self.audit["record_audits"]
+            for row in record["relationship_audits"]
+            if row["compatibility_state"] == "EXACT_INVERSE_ENDPOINT"
+        }
+        inherited = {
+            (record["sample_id"], record["ifc_class"], row["relationship"], row["inherited_supertype_endpoints"][0]["declared_relationship_supertype"])
+            for record in self.audit["record_audits"]
+            for row in record["relationship_audits"]
+            if row["compatibility_state"] == "INHERITED_SUPERTYPE_COMPATIBLE"
+        }
+        incompatible = {
+            (record["sample_id"], record["ifc_class"], row["relationship"])
+            for record in self.audit["record_audits"]
+            for row in record["relationship_audits"]
+            if row["compatibility_state"] == "SCHEMA_INCOMPATIBLE"
+        }
+        self.assertEqual(exact, EXPECTED_EXACT_ROWS)
+        self.assertEqual(inherited, EXPECTED_INHERITED_ROWS)
+        self.assertEqual(incompatible, EXPECTED_INCOMPATIBLE_ROWS)
+
+    def test_08_generator_check_mode(self) -> None:
         if importlib.util.find_spec("ifcopenshell") is None:
             self.skipTest("IfcOpenShell not available")
         proc = subprocess.run(
