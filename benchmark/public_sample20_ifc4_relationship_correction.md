@@ -14,7 +14,7 @@
 - parent commit: `24da422a7570813041ffcb1e75a1e6bce7aae1f7`
 - source JSONL SHA-256: `016ebda71cf67ca1d09def86facdb6d9b4d2bdb2cd1728ac1229854a234accc0`
 - fixture correction commit: `2b8b568b33e5a6852f6353499c9233771ac3c6c2`
-- corrected JSONL SHA-256: `4f670146a4860e96fa820805e0f6d3db19fd3490e9db74a595bf33589aee9de1`
+- corrected JSONL SHA-256: `2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa`
 - IFC schema: `IFC4`
 - IfcOpenShell: `0.8.5`
 

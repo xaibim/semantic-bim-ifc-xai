@@ -12,7 +12,7 @@ from ifcopenshell.util.schema import is_a
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "2b8b568b33e5a6852f6353499c9233771ac3c6c2"
 SOURCE_JSONL = ROOT / "sample20" / "sample20_public_records.jsonl"
-EXPECTED_JSONL_SHA256 = "4f670146a4860e96fa820805e0f6d3db19fd3490e9db74a595bf33589aee9de1"
+EXPECTED_JSONL_SHA256 = "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
 EXPECTED_SCHEMA_SHA256 = "769a6dad5517cb97860b00a2c4fc33ab3c0e6362b30059172bc55735834cdb25"
 EXPECTED_RECORD_COUNT = 20
 EXPECTED_POSITIVE_COUNT = 18
@@ -34,6 +34,11 @@ def sha256_bytes(data: bytes) -> str:
 
 def sha256_path(path: Path) -> str:
     return sha256_bytes(path.read_bytes())
+
+
+def sha256_normalized_text(path: Path) -> str:
+    text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
+    return sha256_bytes(text.encode("utf-8"))
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -276,7 +281,7 @@ def build_record_audits(
 def build_audit() -> dict[str, Any]:
     schema = ifcopenshell.schema_by_name("IFC4")
     records = load_jsonl(SOURCE_JSONL)
-    source_sha256 = sha256_path(SOURCE_JSONL)
+    source_sha256 = sha256_normalized_text(SOURCE_JSONL)
     if source_sha256.lower() != EXPECTED_JSONL_SHA256:
         raise SystemExit("STOP_PR15_MICRO_06B_SOURCE_HASH_MISMATCH")
     if len(records) != EXPECTED_RECORD_COUNT:

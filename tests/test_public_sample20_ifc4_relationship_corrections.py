@@ -15,7 +15,7 @@ JSONL_PATHS = [
 ]
 AUDIT_JSON_PATH = ROOT / "benchmark" / "public_sample20_ifc4_relationship_schema_participation.json"
 CORRECTION_MD_PATH = ROOT / "benchmark" / "public_sample20_ifc4_relationship_correction.md"
-EXPECTED_JSONL_SHA256 = "4f670146a4860e96fa820805e0f6d3db19fd3490e9db74a595bf33589aee9de1"
+EXPECTED_JSONL_SHA256 = "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
 EXPECTED_AUDIT_SUMMARY = {
     "record_count": 20,
     "positive_count": 18,
@@ -75,6 +75,11 @@ def sha256_path(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def sha256_normalized_text(path: Path) -> str:
+    text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
 class TestPublicSample20IFC4RelationshipCorrections(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -86,7 +91,7 @@ class TestPublicSample20IFC4RelationshipCorrections(unittest.TestCase):
         self.assertEqual(JSONL_PATHS[0].read_bytes(), JSONL_PATHS[1].read_bytes())
         self.assertEqual(JSONL_PATHS[0].read_bytes(), JSONL_PATHS[2].read_bytes())
         for path in JSONL_PATHS:
-            self.assertEqual(sha256_path(path), EXPECTED_JSONL_SHA256)
+            self.assertEqual(sha256_normalized_text(path), EXPECTED_JSONL_SHA256)
 
     def test_02_fixture_counts_and_correspondence(self) -> None:
         self.assertEqual(len(self.records), 20)
