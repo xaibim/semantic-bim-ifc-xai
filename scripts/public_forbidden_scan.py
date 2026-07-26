@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import html
 import json
@@ -51,7 +51,7 @@ FORBIDDEN_SUBSTRINGS = [
 FORBIDDEN_REGEXES = [
     re.compile(r"hf_[a-zA-Z0-9]{15,}"),          # HuggingFace tokens
     re.compile(r"sk-[a-zA-Z0-9]{15,}"),            # OpenAI tokens
-    # Windows absolute drive paths â€” negative lookbehind prevents matching
+    # Windows absolute drive paths — negative lookbehind prevents matching
     # URL schemes like "https://". Requires the letter NOT be preceded by
     # another letter (so "https:" is excluded but "C:\" is matched).
     re.compile(r"(?<![a-zA-Z])[A-Za-z]:[/\\](?!//)"),
@@ -77,7 +77,7 @@ FORBIDDEN_KEYS = {
     "adapter_dir",
 }
 
-# Extensions treated as binary â€” skipped entirely for text scanning
+# Extensions treated as binary — skipped entirely for text scanning
 _BINARY_EXTENSIONS = frozenset([
     ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico",
     ".woff", ".woff2", ".ttf", ".eot", ".otf",
@@ -91,7 +91,7 @@ _BINARY_EXTENSIONS = frozenset([
 _INVISIBLE_CHARS_RE = re.compile(r"[\u200b\u200c\u200d\u2060\ufeff]")
 
 # Files to skip entirely (the scanner itself, self-test validators, and integrity verifiers)
-# These implement the forbidden-token CHECK logic themselves â€” their source code contains
+# These implement the forbidden-token CHECK logic themselves — their source code contains
 # the token literals as string constants for comparison, not as data.
 _SKIP_FILENAMES = frozenset([
     "public_forbidden_scan.py",
@@ -100,12 +100,11 @@ _SKIP_FILENAMES = frozenset([
 
 # File paths (relative, using forward slashes) to skip beyond filename-only matches
 _SKIP_RELPATHS = frozenset([
-    "harness/public_sample20_v2.py",
-    "tests/test_public_sample20_v2.py",
-    "benchmark/public_sample20_ifc4_relationship_schema_participation.json",
+    "harness/public_sample20_v2.py",         # validator code — checks for tokens, doesn't contain them as data
+    "tests/test_public_sample20_v2.py",      # test code — uses tokens as negative test inputs
 ])
 
-# Schema definition files â€” FORBIDDEN_KEYS check is skipped for these
+# Schema definition files — FORBIDDEN_KEYS check is skipped for these
 # because they define property schemas, not data records.
 _SCHEMA_DEFINITION_SUFFIXES = frozenset([".schema.json"])
 _SCHEMA_DEFINITION_NAMES = frozenset([
@@ -143,7 +142,7 @@ def scan_decoded_json(
         for k, v in obj.items():
             norm_k = normalize_text(str(k))
 
-            # Key forbidden-key check â€” skip for schema definition files
+            # Key forbidden-key check — skip for schema definition files
             if not is_schema_def and norm_k in FORBIDDEN_KEYS:
                 errors.append(
                     f"Forbidden key '{norm_k}' found in "
@@ -221,7 +220,7 @@ def main() -> int:
         if file_path_str.replace("\\", "/") in _SKIP_RELPATHS:
             continue
 
-        # Skip binary files â€” they produce meaningless garbage matches
+        # Skip binary files — they produce meaningless garbage matches
         if file_path.suffix.lower() in _BINARY_EXTENSIONS:
             continue
 

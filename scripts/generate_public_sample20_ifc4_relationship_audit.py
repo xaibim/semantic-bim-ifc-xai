@@ -295,7 +295,7 @@ def build_audit() -> dict[str, Any]:
 
     result = {
         "audit_id": AUDIT_ID,
-        "metadata": {
+        "audit_metadata": {
             "source_commit": SOURCE_COMMIT,
             "source_file": "sample20/sample20_public_records.jsonl",
             "source_sha256": EXPECTED_JSONL_SHA256,
@@ -337,7 +337,7 @@ def markdown_cell(value: Any) -> str:
 
 def render_markdown(result: dict[str, Any]) -> str:
     summary = result["summary"]
-    metadata = result["metadata"]
+    metadata = result["audit_metadata"]
     relationship_catalog = result["relationship_catalog"]
     record_audits = result["record_audits"]
 

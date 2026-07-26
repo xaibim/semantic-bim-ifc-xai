@@ -1,5 +1,13 @@
 {
   "audit_id": "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V1",
+  "audit_metadata": {
+    "ifc_schema": "IFC4",
+    "ifcopenshell_version": "0.8.5",
+    "scope_note": "This audit does not demonstrate professional task suitability or real IFC instance validity.",
+    "source_commit": "b00dc9ce6a8a96309fb77472eabff9a90d0d50d7",
+    "source_file": "sample20/sample20_public_records.jsonl",
+    "source_sha256": "016ebda71cf67ca1d09def86facdb6d9b4d2bdb2cd1728ac1229854a234accc0"
+  },
   "class_catalog": {
     "IfcAirTerminal": {
       "all_inverse_attributes": [
@@ -1331,14 +1339,6 @@
     "relationship_instances_created": false,
     "schema_participation_only": true,
     "semantic_task_alignment_evaluated": false
-  },
-  "metadata": {
-    "ifc_schema": "IFC4",
-    "ifcopenshell_version": "0.8.5",
-    "scope_note": "This audit does not demonstrate professional task suitability or real IFC instance validity.",
-    "source_commit": "b00dc9ce6a8a96309fb77472eabff9a90d0d50d7",
-    "source_file": "sample20/sample20_public_records.jsonl",
-    "source_sha256": "016ebda71cf67ca1d09def86facdb6d9b4d2bdb2cd1728ac1229854a234accc0"
   },
   "record_audits": [
     {

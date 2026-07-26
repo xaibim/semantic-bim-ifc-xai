@@ -73,11 +73,13 @@ class TestPublicSample20IFC4RelationshipAudit(unittest.TestCase):
 
     def test_03_audit_metadata_and_summary(self) -> None:
         self.assertEqual(self.audit["audit_id"], "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V1")
-        self.assertEqual(self.audit["metadata"]["source_commit"], "b00dc9ce6a8a96309fb77472eabff9a90d0d50d7")
-        self.assertEqual(self.audit["metadata"]["source_file"], "sample20/sample20_public_records.jsonl")
-        self.assertEqual(self.audit["metadata"]["source_sha256"], EXPECTED_JSONL_SHA256)
-        self.assertEqual(self.audit["metadata"]["ifcopenshell_version"], "0.8.5")
-        self.assertEqual(self.audit["metadata"]["ifc_schema"], "IFC4")
+        self.assertIn("audit_metadata", self.audit)
+        self.assertNotIn("metadata", self.audit)
+        self.assertEqual(self.audit["audit_metadata"]["source_commit"], "b00dc9ce6a8a96309fb77472eabff9a90d0d50d7")
+        self.assertEqual(self.audit["audit_metadata"]["source_file"], "sample20/sample20_public_records.jsonl")
+        self.assertEqual(self.audit["audit_metadata"]["source_sha256"], EXPECTED_JSONL_SHA256)
+        self.assertEqual(self.audit["audit_metadata"]["ifcopenshell_version"], "0.8.5")
+        self.assertEqual(self.audit["audit_metadata"]["ifc_schema"], "IFC4")
         self.assertEqual(self.audit["summary"], EXPECTED_SUMMARY)
         self.assertTrue(self.audit["interpretation_boundary"]["schema_participation_only"])
         self.assertFalse(self.audit["interpretation_boundary"]["semantic_task_alignment_evaluated"])
