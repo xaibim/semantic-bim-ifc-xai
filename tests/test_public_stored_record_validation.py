@@ -24,6 +24,16 @@ from public_sample20_v2 import validate_records  # noqa: E402
 JSONL_PATH = ROOT / "sample20" / "sample20_public_records.jsonl"
 SCHEMA_PATH = ROOT / "sample20" / "schema_public_sample20_v2.json"
 REPLAY_SCRIPT = ROOT / "harness" / "replay.py"
+JSONL_BINDING_PATHS = {
+    "sample20": ROOT / "sample20" / "sample20_public_records.jsonl",
+    "replay": ROOT / "spaces" / "huggingface" / "sample20_public_predictions.jsonl",
+    "harness": ROOT / "spaces" / "huggingface_harness" / "sample20_public_predictions.jsonl",
+}
+SCHEMA_BINDING_PATHS = {
+    "sample20": ROOT / "sample20" / "schema_public_sample20_v2.json",
+    "replay": ROOT / "spaces" / "huggingface" / "schema_public_sample20_v2.json",
+    "harness": ROOT / "spaces" / "huggingface_harness" / "schema_public_sample20_v2.json",
+}
 
 
 def parse_cli_output(stdout: str) -> dict[str, str]:
@@ -381,7 +391,78 @@ class TestPublicStoredRecordValidation(unittest.TestCase):
         self.assertEqual(parsed["schema"], "FAIL")
         self.assertEqual(parsed["integrity"], "NOT_CHECKED")
 
-    def test_11_documentation(self):
+    def test_11_runtime_fixture_incoherence_through_cli(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            sample_file = tmp_path / "sample20_public_records.jsonl"
+            schema_file = tmp_path / "schema_public_sample20_v2.json"
+            shutil.copyfile(JSONL_PATH, sample_file)
+            shutil.copyfile(SCHEMA_PATH, schema_file)
+
+            records = load_canonical_records()
+            target_index = next(
+                idx for idx, record in enumerate(records)
+                if record["reference_output"]["ifc_class"] != "IfcBeam"
+            )
+            records[target_index]["reference_output"]["ifc_class"] = "IfcBeam"
+            sample_file.write_text(
+                "\n".join(json.dumps(record, ensure_ascii=False) for record in records) + "\n",
+                encoding="utf-8",
+            )
+
+            result = run_replay(tmp_path)
+
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        parsed = parse_cli_output(result.stdout)
+        self.assertEqual(parsed["json_parse"], "PASS")
+        self.assertEqual(parsed["schema"], "PASS")
+        self.assertEqual(parsed["fixture_contract"], "FAIL")
+        self.assertEqual(parsed["integrity_scope"], "NONCANONICAL_INPUT")
+        self.assertEqual(parsed["integrity"], "NOT_CHECKED")
+        self.assertEqual(parsed["status"], "STORED_RECORD_VALIDATION_INVALID")
+
+    def test_12_canonical_pair_bindings(self):
+        true_cases = [
+            ("sample20", "sample20"),
+            ("replay", "replay"),
+            ("replay", "sample20"),
+            ("harness", "harness"),
+            ("harness", "sample20"),
+        ]
+        false_cases = [
+            ("sample20", "replay"),
+            ("sample20", "harness"),
+            ("replay", "harness"),
+            ("harness", "replay"),
+        ]
+
+        for jsonl_key, schema_key in true_cases:
+            self.assertTrue(
+                is_canonical_public_pair(
+                    JSONL_BINDING_PATHS[jsonl_key],
+                    SCHEMA_BINDING_PATHS[schema_key],
+                ),
+                msg=f"Expected canonical binding for {jsonl_key}/{schema_key}",
+            )
+
+        for jsonl_key, schema_key in false_cases:
+            self.assertFalse(
+                is_canonical_public_pair(
+                    JSONL_BINDING_PATHS[jsonl_key],
+                    SCHEMA_BINDING_PATHS[schema_key],
+                ),
+                msg=f"Unexpected canonical binding for {jsonl_key}/{schema_key}",
+            )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            jsonl_copy = tmp_path / "sample20_public_records.jsonl"
+            schema_copy = tmp_path / "schema_public_sample20_v2.json"
+            shutil.copyfile(JSONL_PATH, jsonl_copy)
+            shutil.copyfile(SCHEMA_PATH, schema_copy)
+            self.assertFalse(is_canonical_public_pair(jsonl_copy, schema_copy))
+
+    def test_13_documentation(self):
         docs = [
             ROOT / "QUICKSTART.md",
             ROOT / "PUBLIC_EVIDENCE.md",

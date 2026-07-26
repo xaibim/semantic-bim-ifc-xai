@@ -17,12 +17,22 @@ CANONICAL_SCHEMA_PATHS = [
     ROOT / "spaces" / "huggingface_harness" / "schema_public_sample20_v2.json",
 ]
 
+_CANONICAL_PAIR_BINDINGS = {
+    (ROOT / "sample20" / "sample20_public_records.jsonl").resolve(): {
+        (ROOT / "sample20" / "schema_public_sample20_v2.json").resolve(),
+    },
+    (ROOT / "spaces" / "huggingface" / "sample20_public_predictions.jsonl").resolve(): {
+        (ROOT / "spaces" / "huggingface" / "schema_public_sample20_v2.json").resolve(),
+        (ROOT / "sample20" / "schema_public_sample20_v2.json").resolve(),
+    },
+    (ROOT / "spaces" / "huggingface_harness" / "sample20_public_predictions.jsonl").resolve(): {
+        (ROOT / "spaces" / "huggingface_harness" / "schema_public_sample20_v2.json").resolve(),
+        (ROOT / "sample20" / "schema_public_sample20_v2.json").resolve(),
+    },
+}
+
 EXPECTED_JSONL_LF_NORMALIZED_SHA256 = "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
 EXPECTED_SCHEMA_LF_NORMALIZED_SHA256 = "de9c722f98085d7227906295531aa190755d105a0bf030d360fb26b1298ab216"
-
-_CANONICAL_JSONL_RESOLVED = {path.resolve() for path in CANONICAL_JSONL_PATHS}
-_CANONICAL_SCHEMA_RESOLVED = {path.resolve() for path in CANONICAL_SCHEMA_PATHS}
-
 
 def sha256_lf_normalized(path: Path) -> str:
     data = path.read_bytes()
@@ -132,7 +142,5 @@ def is_canonical_public_pair(sample_file: Path, schema_file: Path) -> bool:
     if not _within_root(sample_resolved) or not _within_root(schema_resolved):
         return False
 
-    return (
-        sample_resolved in _CANONICAL_JSONL_RESOLVED
-        and schema_resolved in _CANONICAL_SCHEMA_RESOLVED
-    )
+    allowed_schemas = _CANONICAL_PAIR_BINDINGS.get(sample_resolved)
+    return allowed_schemas is not None and schema_resolved in allowed_schemas

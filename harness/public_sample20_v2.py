@@ -19,6 +19,122 @@ FORBIDDEN_KEYS = {
 ALLOWED_VALUE_MODES = {"EXECUTE", "PREVIEW", "PROPOSAL", "GUIDED_RECOVERY"}
 
 
+def _recall(expected: list[Any], actual: list[Any]) -> float:
+    expected_list = list(expected)
+    actual_list = list(actual)
+    if not expected_list:
+        return 1.0 if not actual_list else 0.0
+    return len(set(expected_list) & set(actual_list)) / len(expected_list)
+
+
+def _recompute_agreement(
+    model: dict[str, Any],
+    reference: dict[str, Any],
+) -> dict[str, Any]:
+    return {
+        "ifc_class": model.get("ifc_class") == reference.get("ifc_class"),
+        "semantic_type": model.get("semantic_type") == reference.get("semantic_type"),
+        "intent_class": model.get("intent_class") == reference.get("intent_class"),
+        "value_mode": model.get("value_mode") == reference.get("value_mode"),
+        "dimensions": model.get("normalized_dimensions_m") == reference.get("normalized_dimensions_m"),
+        "missing_inputs": model.get("missing_inputs") == reference.get("missing_inputs"),
+        "required_psets_recall": _recall(
+            reference.get("required_psets", []),
+            model.get("required_psets", []),
+        ),
+        "required_relationships_recall": _recall(
+            reference.get("required_relationships", []),
+            model.get("required_relationships", []),
+        ),
+    }
+
+
+def _dict_value(record: dict[str, Any], key: str) -> dict[str, Any] | None:
+    value = record.get(key)
+    return value if isinstance(value, dict) else None
+
+
+def _validate_record_coherence(
+    record: dict[str, Any],
+    record_index: int,
+) -> list[str]:
+    errors: list[str] = []
+    prefix = f"Record {record_index}:"
+
+    model_output = _dict_value(record, "model_output")
+    reference_output = _dict_value(record, "reference_output")
+    canonical_check = _dict_value(record, "canonical_check")
+    agreement = _dict_value(record, "agreement")
+    input_summary = _dict_value(record, "input_summary")
+
+    if model_output is None or reference_output is None:
+        errors.append(f"{prefix} model_output and reference_output differ")
+        return errors
+
+    if model_output != reference_output:
+        errors.append(f"{prefix} model_output and reference_output differ")
+
+    if canonical_check is None or canonical_check.get("ifc_class") != model_output.get("ifc_class"):
+        errors.append(f"{prefix} canonical_check.ifc_class does not match model_output.ifc_class")
+
+    if canonical_check is None or canonical_check.get("value_mode") != model_output.get("value_mode"):
+        errors.append(f"{prefix} canonical_check.value_mode does not match model_output.value_mode")
+
+    canonical_warnings = canonical_check.get("warnings") if canonical_check is not None else None
+    if canonical_warnings != ["reason_codes_at_maximum"]:
+        errors.append(f"{prefix} canonical_check.warnings must equal ['reason_codes_at_maximum']")
+
+    recomputed_agreement = _recompute_agreement(model_output, reference_output)
+    if agreement != recomputed_agreement:
+        errors.append(f"{prefix} stored agreement does not match recomputed agreement")
+
+    for field in ("semantic_type", "ambiguity_flags", "missing_inputs", "recovery_type"):
+        model_value = model_output.get(field)
+        summary_value = None if input_summary is None else input_summary.get(field)
+        if summary_value != model_value:
+            errors.append(f"{prefix} input_summary.{field} does not match model_output.{field}")
+
+    for output_name, output in (("model_output", model_output), ("reference_output", reference_output)):
+        is_guided_recovery = output.get("value_mode") == "GUIDED_RECOVERY"
+        recovery_needed = output.get("recovery_needed") is True
+        if is_guided_recovery != recovery_needed:
+            errors.append(
+                f"{prefix} {output_name} recovery_needed is inconsistent with value_mode"
+            )
+
+        evidence_trace = _dict_value(output, "evidence_trace")
+        relation_observed = None if evidence_trace is None else evidence_trace.get("relation_observed")
+        required_relationships = output.get("required_relationships")
+        if isinstance(required_relationships, list):
+            relationship_set = set(required_relationships)
+        else:
+            relationship_set = set()
+        if relation_observed not in relationship_set:
+            errors.append(
+                f"{prefix} {output_name} evidence relation is not declared in required_relationships"
+            )
+
+    case_exp = record.get("case_expectation")
+    canonical_ok = canonical_check.get("ok") if canonical_check is not None else None
+    canonical_errors = canonical_check.get("errors") if canonical_check is not None else None
+    if case_exp == "VALID":
+        if canonical_ok is not True:
+            errors.append(f"{prefix} canonical_check.ok must be true for VALID records")
+        if canonical_errors != []:
+            errors.append(f"{prefix} canonical_check.errors must be empty for VALID records")
+    elif case_exp == "EXPECTED_CANONICAL_REJECTION":
+        if canonical_ok is not False:
+            errors.append(
+                f"{prefix} canonical_check.ok must be false for EXPECTED_CANONICAL_REJECTION records"
+            )
+        if not isinstance(canonical_errors, list) or len(canonical_errors) == 0:
+            errors.append(
+                f"{prefix} canonical_check.errors must be non-empty for EXPECTED_CANONICAL_REJECTION records"
+            )
+
+    return errors
+
+
 def check_forbidden_and_legacy(obj: Any, errors: list[str], path: str = "") -> None:
     if isinstance(obj, dict):
         for k, v in obj.items():
@@ -125,6 +241,10 @@ def validate_records(records: list[dict[str, Any]], schema: dict[str, Any]) -> t
                 errors.append(f"Record {idx}: safe_next_action in {mo} is missing or empty")
         if sna_ok:
             safe_next_action_count += 1
+
+        record_coherence_errors = _validate_record_coherence(r, idx)
+        if record_coherence_errors:
+            errors.extend(record_coherence_errors)
 
     # Traverse all keys and values recursively to count legacy blocking states
     def count_legacy_tokens(obj: Any) -> int:
