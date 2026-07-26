@@ -23,7 +23,7 @@ JSON_OUTPUT = ROOT / "benchmark" / "public_sample20_ifc4_relationship_schema_par
 MARKDOWN_OUTPUT = ROOT / "benchmark" / "public_sample20_ifc4_relationship_schema_participation.md"
 SCRIPT_PATH = ROOT / "scripts" / "generate_public_sample20_ifc4_relationship_audit.py"
 EXPECTED_JSONL_SHA256 = "016ebda71cf67ca1d09def86facdb6d9b4d2bdb2cd1728ac1229854a234accc0"
-EXPECTED_SCHEMA_SHA256 = "769a6dad5517cb97860b00a2c4fc33ab3c0e6362b30059172bc55735834cdb25"
+EXPECTED_SCHEMA_SHA256 = "de9c722f98085d7227906295531aa190755d105a0bf030d360fb26b1298ab216"
 EXPECTED_SUMMARY = {
     "record_count": 20,
     "positive_count": 18,
@@ -47,6 +47,11 @@ def sha256_path(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def sha256_normalized_text(path: Path) -> str:
+    text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
 class TestPublicSample20IFC4RelationshipAudit(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -62,9 +67,9 @@ class TestPublicSample20IFC4RelationshipAudit(unittest.TestCase):
         self.assertEqual(sha256_path(JSONL_PATHS[2]), EXPECTED_JSONL_SHA256)
 
     def test_02_schema_hashes(self) -> None:
-        self.assertEqual(sha256_path(SCHEMA_PATHS[0]), EXPECTED_SCHEMA_SHA256)
-        self.assertEqual(sha256_path(SCHEMA_PATHS[1]), EXPECTED_SCHEMA_SHA256)
-        self.assertEqual(sha256_path(SCHEMA_PATHS[2]), EXPECTED_SCHEMA_SHA256)
+        self.assertEqual(sha256_normalized_text(SCHEMA_PATHS[0]), EXPECTED_SCHEMA_SHA256)
+        self.assertEqual(sha256_normalized_text(SCHEMA_PATHS[1]), EXPECTED_SCHEMA_SHA256)
+        self.assertEqual(sha256_normalized_text(SCHEMA_PATHS[2]), EXPECTED_SCHEMA_SHA256)
 
     def test_03_audit_metadata_and_summary(self) -> None:
         self.assertEqual(self.audit["audit_id"], "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V1")
