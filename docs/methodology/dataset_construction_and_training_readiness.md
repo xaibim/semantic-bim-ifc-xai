@@ -2,34 +2,30 @@
 
 ## 1. Scientific Motivation
 
-The semantic interpretation of Building Information Modeling (BIM) data in the
-context of the Industry Foundation Classes (IFC) schema is not a generic
-prompt-response task. Standard natural language processing systems often treat
-text inputs and structured outputs in isolation, disregarding the deep domain
-constraints inherent in civil engineering. A valid semantic BIM record must
-capture and formalize:
+### A. Broader research target
 
-- **Engineering Intent**: The precise technical objective requested by the
-  practitioner (e.g., classification, property enrichment, spatial query,
-  compliance check).
-- **BIM/IFC Context**: The structural topology, spatial relationships, and
-  metadata of the element under consideration.
-- **IFC Class Candidate**: The target entity within the IFC schema hierarchy
-  (e.g., `IfcWall`, `IfcColumn`, `IfcSlab`).
-- **Information Requirements**: The Level of Information Need (LOIN)
-  specifying mandatory properties, quantities, and classifications.
-- **Evidence Trace**: The explicit grounds (GlobalIds, property sets, rules, or
-  geometric parameters) that justify a classification or property assignment.
-- **Validation State and Traceability**: Audit metadata detailing origin,
-  sanitization status, and schema validation results.
+The broader research target is a semantic BIM task where a professional
+request can mention IFC context, information requirements, source-grounding
+concepts and recoverable ambiguity. In that broader setting, a model would need
+to produce structured outputs that support validation and review.
 
-Without these components, models are prone to hallucinating invalid IFC classes,
-incorrect property set mappings, and groundless technical claims — compromising
-safety and quality in governed AECO workflows.
+### B. Current public v2 fixture
+
+The current public `sample20` fixture is narrower. The public schema does not
+contain:
+
+- original prompt;
+- raw runtime payload;
+- LOIN object;
+- external source identifier;
+- source location;
+- audit metadata.
+
+The public `evidence_trace` contains only structured labels.
 
 ![Semantic BIM/IFC record concept](../assets/figures/figure_02_semantic_bim_prompt.png)
 
-*Figure 1. Structured semantic BIM/IFC record concept used to connect natural-language engineering requests with IFC grounding, information requirements, validation metadata, and evidence traces.*
+*Figure 1. Structured semantic BIM/IFC record concept used to connect natural-language engineering requests with structured public record fields, validation metadata, and evidence-trace labels.*
 
 ---
 
@@ -46,8 +42,8 @@ was rejected for several critical reasons:
    outputs fail to maintain alignments with these Single Sources of Truth
    (SSOT).
 3. **Absence of Grounding and Rationale**: A plain text response cannot easily
-   be audited. Engineering decisions require a clear evidence trace back to
-   the source model.
+   be audited. Engineering decisions require a clear evidence trace back to the
+   source model.
 4. **Mutational Safety**: Plain instructions do not distinguish between safe
    queries (read-only preview) and destructive mutations (model alterations),
    presenting risks to the integrity of Common Data Environments (CDE).
@@ -74,37 +70,35 @@ The dataset and pipeline infrastructure is governed by several key concepts:
   LoRA/QLoRA adaptation experiments (not published).
 - **private high-fidelity internal dataset**: A private high-fidelity seed
   dataset used for closed-loop testing (not published).
-- **sample20**: A public, fully sanitized subset of 20 illustrative frozen fixture cases for
-  scientific evidence and reproducible evaluation.
-- **Stored-record validation and Guided Harness**: Codebases that load stored
-  public record payloads and validate schema, case-expectation and
-  fixture-conformance fields. They do not rerun model generation.
+- **sample20**: A public sanitized frozen fixture of 20 illustrative records.
+- **Stored-record validation**: Code that loads stored public record payloads
+  and validates schema, case-expectation and fixture-conformance fields. It
+  does not rerun model generation.
 
 > Historical internal development stages existed before the public artifact.
-> They are **historical internal development stages, not public releases or
-> public validation claims**, and are not presented here as public milestones.
+> They are historical internal development stages, not public releases or public
+> validation claims, and are not presented here as public milestones.
 
 ![Dataset construction and benchmark cycle](../assets/figures/figure_03_experimental_cycle.png)
 
-*Figure 2. Dataset and benchmark lifecycle linking record construction, validation, replay, baseline evaluation, future adaptation, and XAI-oriented assessment.*
+*Figure 2. Dataset and benchmark lifecycle linking record construction, stored-record validation, baseline evaluation, future adaptation, and XAI-oriented assessment.*
 
 ---
 
-## 4. Verifiable Public Chronology
+## 4. Verifiable Current State
 
-| Phase | Title | Description |
-| --- | --- | --- |
-| 1 | Semantic task definition | Defined the structured semantic BIM compilation task: NL request → IFC-aware semantic record with validation, evidence and replay. |
-| 2 | `v0.1` public sample | First public sanitized sample and public repository foundation. |
-| 3 | `v0.1.1` validation cleanup | Public validation cleanup: forbidden scan, CI and release notes. |
-| 4 | Preliminary QLoRA feasibility evidence | Bounded Qwen2.5-7B QLoRA compute-feasibility experiment on a private pilot (synthetic/controlled). |
-| 5 | `sample20` v2 strict validation | Strict `sample20` v2 JSON Schema Draft 2020-12 contract with expected negatives. |
-| 6 | GitHub/Hugging Face integrity alignment | Three-copy schema/JSONL integrity and alignment of the public Replay and Harness Spaces. |
-| 7 | `v0.2` final public research artifact | Canonical `xaibim` GitHub namespace, `XAIBIM` Hugging Face namespace, corrected documentation and planned comparative benchmark matrix. |
+| Item | Current state |
+| --- | --- |
+| 1. Public fixture | 20 committed records, 18 VALID, 2 expected rejections. |
+| 2. Strict schema | JSON Schema Draft 2020-12. |
+| 3. Stored-record validation | Parsing, schema, fixture contract and integrity. |
+| 4. IFC4 Pset audit | Class applicability only. |
+| 5. IFC4 relationship audit | Schema compatibility only; no task-suitability conclusion. |
+| 6. Preliminary QLoRA evidence | One private controlled feasibility pilot; aggregate evidence only. |
+| 7. Public gateways | Canonical XAIBIM gateways and verified bimaiblend Gradio runtimes. |
+| 8. Planned work | Larger dataset and comparative benchmark. |
 
-Internal development work that preceded these public steps is treated as
-**historical internal development stages, not public releases or public
-validation claims**.
+No tag or release state is claimed by this methodology document.
 
 ---
 
@@ -134,11 +128,11 @@ The public artifacts in this repository represent a strictly sanitized and
 demonstrative research surface:
 
 - **Sanitized Dataset**: `sample20` uses generic, synthetic cases. No real
-  building models, proprietary databases, or private corporate structures
-  are exposed.
+  building models, proprietary databases, or private corporate structures are
+  exposed.
 - **No Private Models**: The public Replay Space loads stored fixture records,
   and the public Harness Space provides a constrained conceptual demonstration.
   No private weights or custom adapters are published.
 - **Research Orientation**: This repository demonstrates feasibility of the
-  semantic contract and benchmark protocol. It does not provide certified
-  commercial deliverables or professional engineering signatures.
+  semantic contract and stored-record validation protocol. It does not provide
+  certified commercial deliverables or professional engineering signatures.

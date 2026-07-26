@@ -40,60 +40,60 @@ Within `model_output`:
 
 ---
 
-## Layer A — Public Executable Checks
+## Layer A - Public Executable Checks
 
 These checks run against the public sample using the public harness and CI.
 
-1. **JSON parsing** — every record parses as syntactically valid JSON.
-2. **JSON Schema Draft 2020-12** — every record conforms to the strict
-   `sample20` v2 contract.
-3. **Strict schema validation** — required fields, enumerations and types are
-   enforced (including `value_mode` conformance and forbidden states).
-4. **Value-mode conformance** — `value_mode` is one of `PREVIEW`, `PROPOSAL`,
-   `GUIDED_RECOVERY` (and `EXECUTE` only when separately authorized); legacy
-   blocking terminology is rejected by the forbidden scan.
-5. **Canonical coherence** — `canonical_check.ok` is consistent with
-   `case_expectation` and `record_status`.
-6. **Expected-negative coherence** — records with
-   `case_expectation = EXPECTED_CANONICAL_REJECTION` carry `record_status =
-   EXPECTED_REJECTION_PASS` and a non-empty `canonical_check.errors`.
-7. **Safe-next-action presence** — `model_output.safe_next_action` is always
-   present and never a blocking state.
-8. **Evidence-trace structure** — the required evidence fields are present and
-   schema-valid. This check does not prove that the evidence label resolves to
-   an external source or that every claim is source-supported.
-9. **Deterministic stored-record validation** — the harness reloads committed
-   records and validates schema and stored conformance. It does not rerun
-   model generation or the original prompt-to-output pipeline.
-10. **Three-copy integrity** — the JSONL and schema copies in `sample20/`,
-    `spaces/huggingface/` and `spaces/huggingface_harness/` are byte-identical.
-11. **Forbidden scan** — file-level scan rejects real credentials, internal
-    paths, and internal blocking terminology.
-12. **QLoRA aggregate verifier** — the deterministic verifier checks the
-    published aggregate QLoRA metrics file.
-13. **Replay Space self-test** — the Replay Space `--self-test` passes.
-14. **Harness Space self-test** — the Harness Space `--self-test` passes.
+1. **JSON parsing** - every record parses as syntactically valid JSON.
+2. **Schema-only JSON Schema validation** - every record conforms to the
+   strict `sample20` v2 contract.
+3. **Runtime fixture-contract coherence** - model/reference equality,
+   canonical class/value-mode equality, stored agreement recomputation,
+   input-summary equality, recovery/value-mode coherence, evidence relation
+   declared in required relationships, and expected-negative state.
+4. **Deterministic stored-record validation CLI** - the harness reloads
+   committed records and validates schema and stored conformance. It does not
+   rerun model generation or the original prompt-to-output pipeline.
+5. **Canonical three-copy byte identity and LF-normalized hashes** - the JSONL
+   and schema copies in `sample20/`, `spaces/huggingface/` and
+   `spaces/huggingface_harness/` are byte-identical and match the published
+   LF-normalized hashes.
+6. **Forbidden scan** - file-level scan rejects real credentials, internal
+   paths and internal blocking terminology.
+7. **Published IFC4 Pset applicability audit** - class applicability only.
+   Class applicability does not prove that a Pset is mandatory for every
+   professional task.
+8. **Published subtype-aware IFC4 relationship schema audit** - schema
+   compatibility only. Schema compatibility does not prove semantic task
+   suitability, occurrence in a real IFC model or correct instantiation.
+9. **QLoRA aggregate verifier** - the deterministic verifier checks the
+   published aggregate QLoRA metrics file.
+10. **Replay Space self-test** - the Replay Space `--self-test` passes.
+11. **Harness Space self-test** - the Harness Space `--self-test` passes.
+
+The evidence-trace check in Layer A is structural and internal only; external
+source supportedness is not evaluated.
 
 ---
 
-## Layer B — Private / Future Dataset Methodology
+## Layer B - Private / Future Dataset Methodology
 
-These are **methodology** steps for the larger curated dataset. They are not
+These are methodology steps for the larger curated dataset. They are not
 executable public checks in this artifact and are documented only as planned
 dataset-construction controls.
 
-- **NER sanitization** — Named Entity Recognition redaction of private project
+- **NER sanitization** - Named Entity Recognition redaction of private project
   names, locations, paths and persons.
-- **Leakage analysis** — train/test contamination detection.
-- **Near-duplicate analysis** — semantic and exact-duplicate filtering.
-- **Split contamination analysis** — cross-split overlap checks.
-- **Canonical catalogue validation** — mapping against buildingSMART IFC
+- **Leakage analysis** - train/test contamination detection.
+- **Near-duplicate analysis** - semantic and exact-duplicate filtering.
+- **Split contamination analysis** - cross-split overlap checks.
+- **Canonical catalogue validation** - mapping against buildingSMART IFC
   catalogues.
-- **Real IFC file validation** — checks against actual IFC models (not present
+- **Real IFC file validation** - checks against actual IFC models (not present
   in `sample20`).
-- **Domain expert review** — professional review of candidate records.
+- **Domain expert review** - professional review of candidate records.
 
-Layer B is described for transparency. It is **not** presented as a public,
+Layer B is described for transparency. It is not presented as a public,
 currently executable check.
 
 ---
@@ -116,11 +116,11 @@ There is no blocking state and no user-facing blocking response.
 
 For professional interaction, the contract uses non-blocking states:
 
-- `PREVIEW` — read-only preview, no mutation.
-- `PROPOSAL` — proposed change requiring confirmation.
-- `GUIDED_RECOVERY` — recovery path with `missing_inputs` and
+- `PREVIEW` - read-only preview, no mutation.
+- `PROPOSAL` - proposed change requiring confirmation.
+- `GUIDED_RECOVERY` - recovery path with `missing_inputs` and
   `safe_next_action`.
-- `EXECUTE` — only when separately authorized and appropriate.
+- `EXECUTE` - only when separately authorized and appropriate.
 
 Every interaction always includes:
 
@@ -147,16 +147,19 @@ For the `sample20` dataset, the public validation expects:
 - **Status**: `PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.
 
 All `1.0` metrics indicate internal agreement with the stored synthetic
-reference, not a final benchmark, production deployment, or certification. This
-is an academic research artifact, not a final benchmark, not a product, and does
-not claim production readiness or certification.
+reference, not a final benchmark, production deployment or certification. This
+is an academic research artifact, not a final benchmark, not a product, and
+does not claim production readiness or certification.
 
 ---
 
 ## Relationship to XAI
 
-Layer A checks 5 (canonical coherence) and 8 (evidence-trace structure)
-expose and structurally validate the evidence-oriented XAI requirement at the
-public sample level. Records are required to expose an explicit `evidence_trace`
-and a `safe_next_action`. This structural validation is the foundation of the
-XAI evaluation methodology documented in `xai_evaluation_position.md`.
+The checks named above - JSON parsing, schema-only JSON Schema validation,
+runtime fixture-contract coherence, deterministic stored-record validation CLI,
+canonical three-copy byte identity and LF-normalized hashes, forbidden scan,
+published IFC4 Pset applicability audit, published subtype-aware IFC4
+relationship schema audit, QLoRA aggregate verifier, Replay Space self-test and
+Harness Space self-test - together define the public XAI boundary. The
+evidence-trace structure is verified structurally; external source supportedness
+is not evaluated.

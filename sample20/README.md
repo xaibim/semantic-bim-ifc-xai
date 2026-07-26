@@ -1,12 +1,14 @@
 # sample20
 
-`sample20` is the public sanitized sample dataset. `smoke20` is the public smoke/replay validation run executed against `sample20`; it is not a separate dataset.
+`sample20` is the public sanitized frozen fixture. `smoke20` is a historical
+label for deterministic stored-record validation over that fixture; it is not a
+separate dataset.
 
 ## What It Is
 
-- A small public dataset for academic review.
-- A sanitized set of replayable public sample records.
-- The canonical public input for `harness/replay.py`.
+- A small public fixture for academic review.
+- A sanitized set of committed structured records.
+- The canonical public stored input for `harness/replay.py`.
 
 ## What It Is Not
 
@@ -42,4 +44,7 @@ Expected metrics are:
 - **Expectation Met Rate**: `expectation_met_rate = 1.0`;
 - **Status**: `status = PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.
 
-All 1.0 metrics indicate internal agreement with the stored synthetic reference, not a final benchmark, production deployment, or certification. This is an academic research artifact, not a final benchmark, not a product, and does not claim production readiness or certification.
+All 1.0 metrics indicate internal agreement with the stored synthetic
+reference, not a final benchmark, production deployment, or certification. This
+is an academic research artifact, not a final benchmark, not a product, and
+does not claim production readiness or certification.

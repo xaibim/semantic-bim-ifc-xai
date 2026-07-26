@@ -8,7 +8,9 @@ Purpose:
 - Explain PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES.
 - Avoid exposing raw training workspaces or model adapters.
 
-Initial implementation can use Gradio with static JSONL examples.
+The current verified runtime uses Gradio with committed public JSONL examples.
+`Replay` is the historical Space name. The runtime displays and validates
+stored records; inference is disabled.
 
 ## Canonical Replay gateway
 

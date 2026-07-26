@@ -19,6 +19,9 @@ tags:
 
 This Space is a lightweight public stored-record validation demo for Semantic XAIBIM, validating records against the strict public sample20 v2 contract using JSON Schema Draft 2020-12 (defined in `schema_public_sample20_v2.json`).
 
+`Replay` is the historical product name. This Space loads and validates
+committed records; it does not rerun the original model or prompt pipeline.
+
 It does not run a model.
 
 It loads a reduced public JSONL sample and displays:

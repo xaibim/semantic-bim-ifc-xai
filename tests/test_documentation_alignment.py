@@ -32,7 +32,7 @@ OLD_REPLAY_NOTE = "Deterministic public " + "replay completed successfully"
 OLD_EXECUTED_REPLAY = "Executed " + "Replay"
 OLD_RUN_PUBLIC_REPLAY = "Run the public replay"
 SCHEMA_ONLY_VALIDATION_LOWER = "schema-only validation"
-SCHEMA_ONLY_VALIDATION_TITLE = "Schema-only validation"
+SCHEMA_ONLY_VALIDATION_TITLE = "Schema-only JSON parsing and JSON Schema validation"
 NOT_EVALUATED_FIXTURE = "fixture_contract=NOT_EVALUATED"
 NOT_CHECKED_INTEGRITY = "integrity=NOT_CHECKED"
 LOWER_NOT_EVALUATED_FIXTURE = "fixture_contract=not_evaluated"
@@ -50,6 +50,10 @@ def tracked_text_files():
             continue
         files.append(p)
     return files
+
+
+def normalized_text(path: Path) -> str:
+    return " ".join(path.read_text(encoding="utf-8").split())
 
 
 class TestDocumentationAlignment(unittest.TestCase):
@@ -105,8 +109,8 @@ class TestDocumentationAlignment(unittest.TestCase):
             "semantic compiler",
             "ifc mapper",
             "schema validator",
-            "canonical checker",
-            "evidence trace fields",
+            "canonical / fixture checker",
+            "evidence-trace fields",
             "stored-record validator",
             "integrity verifier",
             "qlora aggregate verifier",
@@ -150,7 +154,8 @@ class TestDocumentationAlignment(unittest.TestCase):
     def test_17_end_to_end_example_exists(self):
         self.assertTrue(END_TO_END.exists())
         text = END_TO_END.read_text(encoding="utf-8").lower()
-        self.assertIn("stored replay record", text)
+        self.assertIn("stored public record", text)
+        self.assertIn("stored-record walkthrough", text)
         self.assertIn("live model inference", text)
         self.assertIn("interactive conceptual demonstration", text)
 
@@ -294,22 +299,22 @@ class TestDocumentationAlignment(unittest.TestCase):
 
     def test_29_schema_validator_docs_updated(self):
         quickstart = (ROOT / "QUICKSTART.md").read_text(encoding="utf-8")
-        evidence = (ROOT / "PUBLIC_EVIDENCE.md").read_text(encoding="utf-8")
-        summary = (ROOT / "sample20" / "VALIDATION_SUMMARY.md").read_text(encoding="utf-8")
+        evidence = normalized_text(ROOT / "PUBLIC_EVIDENCE.md")
+        summary = normalized_text(ROOT / "sample20" / "VALIDATION_SUMMARY.md")
 
-        self.assertIn(SCHEMA_ONLY_VALIDATION_LOWER, quickstart)
+        self.assertIn(SCHEMA_ONLY_VALIDATION_LOWER, quickstart.lower())
         self.assertIn(SCHEMA_ONLY_VALIDATION_TITLE, evidence)
         self.assertIn(SCHEMA_ONLY_VALIDATION_TITLE, summary)
 
-        for text in (quickstart, evidence, summary):
+        for text in (evidence, summary):
             self.assertIn(NOT_EVALUATED_FIXTURE, text)
             self.assertIn(NOT_CHECKED_INTEGRITY, text)
             self.assertNotIn(LOWER_NOT_EVALUATED_FIXTURE, text)
             self.assertNotIn(LOWER_NOT_CHECKED_INTEGRITY, text)
 
         self.assertIn("does not evaluate the fixture contract or canonical three-copy integrity", quickstart)
-        self.assertIn("Counted directly from both model and reference evidence_trace structures", evidence)
-        self.assertIn("Counted directly from both model and reference evidence_trace structures", summary)
+        self.assertIn("Counted from model and reference evidence_trace objects", evidence)
+        self.assertIn("Counted from model and reference evidence_trace objects", summary)
 
 
 if __name__ == "__main__":

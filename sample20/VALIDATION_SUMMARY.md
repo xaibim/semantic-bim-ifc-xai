@@ -6,13 +6,12 @@ Status: `PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`
 
 | Check | Public executable? | Command/path | Status | Notes |
 | --- | --- | --- | --- | --- |
-| JSON parse | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl` | PASS | 20 records successfully parsed |
-| Strict public sample20 v2 contract validation (JSON Schema Draft 2020-12) | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl --schema sample20/schema_public_sample20_v2.json` | PASS | Schema-only validation; fixture coherence and canonical integrity are reported separately by the stored-record validation command. Reports `fixture_contract=NOT_EVALUATED` and `integrity=NOT_CHECKED` |
+| Schema-only JSON parsing and JSON Schema validation | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl --schema sample20/schema_public_sample20_v2.json` | PASS | 20/20 records parsed and schema-valid. `fixture_contract=NOT_EVALUATED`; `integrity=NOT_CHECKED`. |
 | JSON parsing | yes | `python harness/replay.py --sample sample20/` | PASS | 20/20 nonempty lines parsed |
 | Strict schema validation | yes | `python harness/replay.py --sample sample20/` | PASS | 20/20 parsed records schema-valid |
 | Fixture-contract validation | yes | `python harness/replay.py --sample sample20/` | PASS | Counts, expected negatives and stored coherence valid |
 | Canonical three-copy integrity | yes | `python harness/replay.py --sample sample20/` | PASS | Three JSONL and three schema copies verified independently |
-| Evidence trace presence | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl` | PASS | Counted directly from both model and reference evidence_trace structures |
+| Evidence-trace structure count | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl` | PASS | Counted from model and reference evidence_trace objects. This does not verify external source supportedness. |
 | Forbidden pattern scan | yes | `python scripts/public_forbidden_scan.py` | PASS | Scans tracked files for forbidden patterns and credentials |
 | Leakage/dedupe | no | `not exposed as public executable check` | METHODOLOGICAL | Handled as a methodology-only process |
 | NER sanitization | no | `not exposed as public executable check` | METHODOLOGICAL | Handled as a methodology-only process |
