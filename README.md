@@ -2,13 +2,13 @@
 
 [![Public sample20 v2 validation][sample20-badge]][sample20-workflow]
 
-This repository is a public academic research artifact for evidence-grounded
-semantic BIM/IFC sample validation, traceable replay, and reproducible
-benchmarking. It is **not** a certification tool, a production BIM service, or
-an institutional endorsement. It contains only public synthetic or sanitized
-examples.
+This repository is a public academic research artifact for stored-record
+semantic BIM/IFC sample validation, strict schema validation, three-copy
+integrity verification, and preliminary QLoRA compute-feasibility evidence. It
+is **not** a certification tool, a production BIM service, or an institutional
+endorsement. It contains only public synthetic or sanitized examples.
 
-The badge confirms that the public sanitized `sample20` replay validates the
+The workflow checks that the public sanitized `sample20` fixture validates the
 **strict public `sample20` v2 contract (JSON Schema Draft 2020-12)**, the
 forbidden-pattern scan, and the Hugging Face Space self-tests. It is not a
 certification, a production-readiness claim, or a final benchmark.
@@ -22,11 +22,11 @@ certification, a production-readiness claim, or a final benchmark.
 - **Scientific contribution**: A structured, schema-validated semantic contract
   that turns ambiguous BIM/IFC requests into inspectable, replayable,
   evidence-traceable records suitable for benchmarking.
-- **Public scope**: A minimal, sanitized `sample20` reproducibility sample, the
-  strict v2 schema, deterministic replay, integrity verification, and a
-  preliminary QLoRA compute-feasibility experiment.
+- **Public scope**: A minimal sanitized `sample20` reproducibility fixture, the
+  strict v2 schema, deterministic stored-record validation, three-copy
+  integrity verification, and preliminary QLoRA compute-feasibility evidence.
 - **Status**: Preliminary research artifact. The comparative multi-model
-  benchmark (`A1`) is planned, not executed.
+  benchmark is planned, not executed.
 
 ## Research Contributions
 
@@ -36,17 +36,19 @@ certification, a production-readiness claim, or a final benchmark.
   required fields, enumerations, and forbidden states.
 - **Expected-negative handling**: records whose correct outcome is a canonical
   rejection are recorded and validated as such.
-- **Evidence traceability**: every record carries an `evidence_trace` linking
-  the output to input context.
-- **Deterministic replay**: a reproducible harness re-runs records and checks
-  schema/conformance consistency.
-- **Integrity verification**: three-copy schema/JSONL integrity, a forbidden
-  scan, and a deterministic QLoRA aggregate verifier.
+- **Evidence-trace structure**: every record carries structured evidence labels
+  and ambiguity context. The current public artifact validates field presence
+  and structure; it does not independently verify source-grounded supportedness.
+- **Deterministic stored-record validation**: the public harness reloads the
+  stored JSONL records and checks schema and fixture conformance. It does not
+  rerun model generation or the original prompt-to-output pipeline.
+- **Integrity verification**: three-copy schema/JSONL integrity and a forbidden
+  scan.
 - **Preliminary QLoRA compute calibration**: bounded GPU-hour / VRAM calibration
   from a private, controlled, synthetic pilot (not a public result).
-- **Planned comparative benchmark (`A1`)**: a baseline matrix (rule/schema
-  lookup, prompt-only LLM, retrieved-context LLM, QLoRA-adapted, optional
-  graph/ontology retrieval) to be executed, not yet reported.
+- **Planned comparative benchmark**: a baseline matrix (rule/schema lookup,
+  prompt-only LLM, retrieved-context LLM, optional graph/ontology retrieval)
+  to be executed, not yet reported.
 
 ## Why not just IfcOpenShell + LLM + RAG?
 
@@ -118,7 +120,7 @@ flowchart LR
     E --> F[Canonical checks]
     F --> G[Expected-negative handling]
     G --> H[Evidence trace]
-    H --> I[Deterministic replay]
+    H --> I[Stored-record validation]
     I --> J[Benchmark metrics]
     J --> K[Professional review or safe next action]
 ```
@@ -131,10 +133,11 @@ flowchart LR
 | IFC mapper | Map the request to candidate IFC classes, required Psets and required relationships. |
 | Schema validator | Enforce the strict `sample20` v2 JSON Schema Draft 2020-12 contract. |
 | Canonical checker | Verify agreement between model output, reference output and case expectation. |
-| Evidence builder | Construct and verify the `evidence_trace` linking output to input context. |
-| Replay harness | Deterministically re-execute records and confirm schema/conformance stability. |
-| Integrity verifier | Confirm three-copy schema/JSONL integrity, run the forbidden scan and the QLoRA aggregate verifier. |
-| Benchmark layer | Compute public sample metrics and host the planned `A1` baseline matrix. |
+| Evidence trace fields | Store evidence labels, observed-relationship labels and ambiguity context. Public source-grounding verification is not yet implemented. |
+| Stored-record validator | Load the committed fixture and validate schema, case expectation and stored conformance. No model generation is rerun. |
+| Integrity verifier | Verify byte identity of the three public JSONL/schema copies and consistency of published fixture metrics. |
+| QLoRA aggregate verifier | Independently verify the published aggregate feasibility metrics. |
+| Benchmark layer | Compute public sample metrics and host the planned comparative benchmark matrix. |
 | Interactive Space | Public Hugging Face interface for stored replay and conceptual demonstration. |
 
 ## Start Here
@@ -142,13 +145,13 @@ flowchart LR
 | Need | Path |
 | --- | --- |
 | public sample | `sample20/` |
-| reproduce replay | `QUICKSTART.md` |
+| stored-record validation | `QUICKSTART.md` |
 | validation evidence | `PUBLIC_EVIDENCE.md` |
 | benchmark sample results | `benchmark/results_sample20.md` |
 | preliminary QLoRA evidence | `benchmark/qlora/` |
 | public/private boundary | `docs/public_boundary.md` |
 | end-to-end example | `docs/examples/end_to_end_public_example.md` |
-| baseline matrix (planned) | `benchmark/baseline_matrix.md` |
+| planned comparative benchmark matrix | `benchmark/baseline_matrix.md` |
 
 ## Public project channels
 
@@ -165,9 +168,15 @@ flowchart LR
 YouTube and LinkedIn are dissemination channels. They are **not** presented as
 scientific evidence, peer review, or institutional endorsement.
 
+The `XAIBIM` Space URLs are the canonical public gateways. The verified
+Gradio runtime implementations are currently hosted under the `bimaiblend`
+namespace. The gateway/runtime separation is an infrastructure arrangement;
+the canonical public entry points remain the `XAIBIM` URLs.
+
 ## Quickstart
 
-See [QUICKSTART.md](QUICKSTART.md) for the minimal local replay steps. The
+See [QUICKSTART.md](QUICKSTART.md) for the minimal local stored-record
+validation steps. The
 schema command must reference the strict v2 contract explicitly:
 
 ```powershell
@@ -212,7 +221,7 @@ is not a final benchmark.
 - `sample20` v2 strict contract;
 - strict JSON Schema Draft 2020-12;
 - expected-negative handling;
-- integrity verifier (three-copy, forbidden scan, QLoRA verifier);
+- integrity verifier (three-copy and forbidden scan);
 - GitHub CI;
 - preliminary QLoRA feasibility pilot;
 - public Replay Space;
@@ -220,14 +229,14 @@ is not a final benchmark.
 - GitHub `xaibim` namespace;
 - Hugging Face `XAIBIM` namespace.
 
-**`A1` planned**
+**Planned comparative benchmark**
 
 - scope freeze;
 - dataset expansion;
 - baseline matrix execution;
 - repeated seeds;
 - multi-model evaluation;
-- controlled QLoRA adaptation;
+- optional bounded QLoRA adaptation after dataset-quality and baseline gates;
 - error taxonomy;
 - domain expert review;
 - aggregate public release.

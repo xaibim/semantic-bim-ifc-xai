@@ -191,12 +191,16 @@ The work proceeds in this order:
 3. validate schema, leakage, deduplication and coverage;
 4. execute baseline model evaluations;
 5. analyse errors;
-6. test lightweight LoRA/QLoRA adaptation after dataset and evaluation validation;
-7. compare before/after results.
+6. optionally execute a bounded LoRA/QLoRA adaptation only after dataset
+   quality and baseline evaluation gates are satisfied;
+7. compare adapted and non-adapted results only if step 6 is executed.
+
+Successful completion of the planned dataset and benchmark work does not depend
+on executing the optional adaptation step.
 
 ---
 
-## Planned scope to be frozen before `A1` benchmark execution
+## Planned scope to be frozen before benchmark execution
 
 The following dimensions are **to be confirmed in the experimental protocol**
 and are **not** asserted by the current public artifact:

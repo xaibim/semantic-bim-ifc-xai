@@ -59,10 +59,12 @@ These checks run against the public sample using the public harness and CI.
    EXPECTED_REJECTION_PASS` and a non-empty `canonical_check.errors`.
 7. **Safe-next-action presence** — `model_output.safe_next_action` is always
    present and never a blocking state.
-8. **Evidence-trace structure** — `evidence_trace` carries a resolvable
-   `evidence_pattern`, observed relationship and ambiguity context.
-9. **Deterministic replay** — the replay harness re-executes records and
-   confirms schema/conformance stability.
+8. **Evidence-trace structure** — the required evidence fields are present and
+   schema-valid. This check does not prove that the evidence label resolves to
+   an external source or that every claim is source-supported.
+9. **Deterministic stored-record validation** — the harness reloads committed
+   records and validates schema and stored conformance. It does not rerun
+   model generation or the original prompt-to-output pipeline.
 10. **Three-copy integrity** — the JSONL and schema copies in `sample20/`,
     `spaces/huggingface/` and `spaces/huggingface_harness/` are byte-identical.
 11. **Forbidden scan** — file-level scan rejects real credentials, internal
@@ -124,7 +126,7 @@ Every interaction always includes:
 
 - `missing_inputs`;
 - `safe_next_action`;
-- at least one recovery alternative.
+- a non-empty `safe_next_action` field.
 
 A professional reviewer remains responsible for any engineering decision. The
 artifact never certifies or auto-approves engineering actions.
@@ -153,8 +155,8 @@ not claim production readiness or certification.
 
 ## Relationship to XAI
 
-Layer A checks 5 (canonical coherence) and 8 (evidence-trace structure) enforce
-the evidence-oriented XAI requirement at the public sample level. Records are
-required to expose an explicit `evidence_trace` and a `safe_next_action`. This
-upstream enforcement is the foundation of the XAI evaluation methodology
-documented in `xai_evaluation_position.md`.
+Layer A checks 5 (canonical coherence) and 8 (evidence-trace structure)
+expose and structurally validate the evidence-oriented XAI requirement at the
+public sample level. Records are required to expose an explicit `evidence_trace`
+and a `safe_next_action`. This structural validation is the foundation of the
+XAI evaluation methodology documented in `xai_evaluation_position.md`.

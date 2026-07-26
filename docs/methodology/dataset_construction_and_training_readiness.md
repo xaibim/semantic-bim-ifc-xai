@@ -74,11 +74,11 @@ The dataset and pipeline infrastructure is governed by several key concepts:
   LoRA/QLoRA adaptation experiments (not published).
 - **private high-fidelity internal dataset**: A private high-fidelity seed
   dataset used for closed-loop testing (not published).
-- **sample20**: A public, fully sanitized subset of 20 representative cases for
+- **sample20**: A public, fully sanitized subset of 20 illustrative frozen fixture cases for
   scientific evidence and reproducible evaluation.
-- **Replay and Guided Harness**: Codebases that ingest record payloads and run
-  deterministic replay validation to verify schema compliance, class mapping,
-  and evidence-tracing contracts.
+- **Stored-record validation and Guided Harness**: Codebases that load stored
+  public record payloads and validate schema, case-expectation and
+  fixture-conformance fields. They do not rerun model generation.
 
 > Historical internal development stages existed before the public artifact.
 > They are **historical internal development stages, not public releases or
@@ -100,7 +100,7 @@ The dataset and pipeline infrastructure is governed by several key concepts:
 | 4 | Preliminary QLoRA feasibility evidence | Bounded Qwen2.5-7B QLoRA compute-feasibility experiment on a private pilot (synthetic/controlled). |
 | 5 | `sample20` v2 strict validation | Strict `sample20` v2 JSON Schema Draft 2020-12 contract with expected negatives. |
 | 6 | GitHub/Hugging Face integrity alignment | Three-copy schema/JSONL integrity and alignment of the public Replay and Harness Spaces. |
-| 7 | `v0.2` final public research artifact | Canonical `xaibim` GitHub namespace, `XAIBIM` Hugging Face namespace, corrected documentation and planned `A1` baseline matrix. |
+| 7 | `v0.2` final public research artifact | Canonical `xaibim` GitHub namespace, `XAIBIM` Hugging Face namespace, corrected documentation and planned comparative benchmark matrix. |
 
 Internal development work that preceded these public steps is treated as
 **historical internal development stages, not public releases or public
@@ -136,9 +136,9 @@ demonstrative research surface:
 - **Sanitized Dataset**: `sample20` uses generic, synthetic cases. No real
   building models, proprietary databases, or private corporate structures
   are exposed.
-- **No Private Models**: The public harnesses run on lightweight, open-source
-  base models or deterministic replay files. No private weights or custom
-  adapters are published.
+- **No Private Models**: The public Replay Space loads stored fixture records,
+  and the public Harness Space provides a constrained conceptual demonstration.
+  No private weights or custom adapters are published.
 - **Research Orientation**: This repository demonstrates feasibility of the
   semantic contract and benchmark protocol. It does not provide certified
   commercial deliverables or professional engineering signatures.

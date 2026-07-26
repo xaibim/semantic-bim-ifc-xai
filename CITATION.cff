@@ -5,11 +5,9 @@ type: software
 authors:
   - family-names: "de Freitas Oliveira Mousinho"
     given-names: "Dean Delmo"
-version: 0.2.0
-doi: ""
 url: "https://github.com/xaibim/semantic-bim-ifc-xai"
 repository-code: "https://github.com/xaibim/semantic-bim-ifc-xai"
-abstract: "Public academic research artifact for evidence-grounded semantic BIM/IFC sample validation, deterministic replay, integrity verification, and a planned comparative benchmark. Includes the strict public sample20 v2 contract (JSON Schema Draft 2020-12), expected-negative handling, and preliminary QLoRA compute-feasibility evidence. Code is MIT; public documentation and sample20 data are CC-BY-4.0 (see LICENSES.md)."
+abstract: "Public academic research artifact for stored-record semantic BIM/IFC sample validation, strict schema validation, three-copy integrity verification, expected-negative handling, and preliminary QLoRA compute-feasibility evidence. The comparative multi-model benchmark is planned and has not yet been executed. Code is MIT; public documentation and sample20 data are CC-BY-4.0 (see LICENSES.md)."
 keywords:
   - BIM
   - IFC

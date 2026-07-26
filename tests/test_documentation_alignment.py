@@ -28,7 +28,6 @@ LEGACY_CLASS_FIELD = "suggested_ifc_" + "class"
 LOI_FIELD = "loi_" + "table"
 LEGACY_BLOCK = "hard_" + "block"
 BLOCKED_PREREQ = "blocked-by-" + "prerequisite"
-RESEARCH_PASS = "RESEARCH_" + "PASS"
 
 
 def tracked_text_files():
@@ -98,9 +97,10 @@ class TestDocumentationAlignment(unittest.TestCase):
             "ifc mapper",
             "schema validator",
             "canonical checker",
-            "evidence builder",
-            "replay harness",
+            "evidence trace fields",
+            "stored-record validator",
             "integrity verifier",
+            "qlora aggregate verifier",
             "benchmark layer",
             "interactive space",
         ]:
@@ -147,9 +147,15 @@ class TestDocumentationAlignment(unittest.TestCase):
 
     def test_18_baseline_matrix_exists(self):
         self.assertTrue(BASELINE_MATRIX.exists())
-        text = BASELINE_MATRIX.read_text(encoding="utf-8").lower()
-        for b in ["deterministic rule", "prompt-only", "retrieved", "qlora", "graph"]:
-            self.assertIn(b, text)
+        text = BASELINE_MATRIX.read_text(encoding="utf-8")
+        self.assertIn("Baseline Matrix (Planned Comparative Benchmark)", text)
+        self.assertIn("| A | Deterministic rule / schema lookup | REQUIRED |", text)
+        self.assertIn("| B | Base LLM, prompt-only | REQUIRED |", text)
+        self.assertIn("| C | Base LLM with retrieved BIM/IFC context | REQUIRED |", text)
+        self.assertIn("| D | QLoRA-adapted model | OPTIONAL |", text)
+        self.assertIn("| E | Graph / ontology-grounded retrieval | OPTIONAL |", text)
+        self.assertIn("not required for successful completion", text)
+        self.assertNotIn("../../docs/", text)
 
     def test_19_licenses_mit_and_cc_by(self):
         text = LICENSES.read_text(encoding="utf-8")
@@ -210,7 +216,20 @@ class TestDocumentationAlignment(unittest.TestCase):
                     msg=f"Unqualified IFC version claim in {p}",
                 )
 
-    def test_24_no_unqualified_multilingual_claim(self):
+    def test_24_public_example_matches_jsonl(self):
+        rows = [
+            json.loads(line)
+            for line in JSONL.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        row = next(r for r in rows if r["sample_id"] == "4eeac340747306fd")
+        self.assertEqual(row["model_output"]["required_psets"], ["Pset_ColumnCommon"])
+        example = END_TO_END.read_text(encoding="utf-8")
+        self.assertIn('"required_psets": ["Pset_ColumnCommon"]', example)
+        self.assertNotIn("Pset_QuantityTakeOff", example)
+        self.assertNotIn("Pset_SlabCommon", example)
+
+    def test_25_no_unqualified_multilingual_claim(self):
         for p in tracked_text_files():
             text = p.read_text(encoding="utf-8", errors="ignore")
             low = text.lower()
@@ -220,7 +239,24 @@ class TestDocumentationAlignment(unittest.TestCase):
                     msg=f"Unqualified multilingual claim in {p}",
                 )
 
-    def test_25_no_invented_comparative_benchmark(self):
+    def test_26_no_prohibited_document_phrases(self):
+        forbidden_phrases = [
+            "re-" + "executes records",
+            "re-" + "runs records",
+            "resolvable " + "evidence_pattern",
+            "Prompt payload " + "if available.",
+            "Canonical " + "output.",
+            "Expected " + "output.",
+            "Parsed " + "output.",
+            "doi: " + '""',
+            "version: 0." + "2.0",
+        ]
+        for p in tracked_text_files():
+            text = p.read_text(encoding="utf-8", errors="ignore")
+            for phrase in forbidden_phrases:
+                self.assertNotIn(phrase, text, msg=f"Forbidden phrase in {p}: {phrase}")
+
+    def test_27_no_invented_comparative_benchmark(self):
         text = BASELINE_MATRIX.read_text(encoding="utf-8")
         self.assertIn("No final comparative results", text)
         self.assertIn("planned", text.lower())

@@ -46,7 +46,7 @@ The example below is the **stored replay** mode.
   "ifc_class": "IfcColumn",
   "value_mode": "PREVIEW",
   "normalized_dimensions_m": {"height": 0.8, "length": 1.6, "width": 0.4},
-  "required_psets": ["Pset_QuantityTakeOff", "Pset_ColumnCommon", "Pset_SlabCommon"],
+  "required_psets": ["Pset_ColumnCommon"],
   "required_relationships": ["IfcRelConnectsElements", "IfcRelDefinesByProperties"],
   "missing_inputs": ["ifc_classes"],
   "ambiguity_flags": ["ambiguous_ifc_class"],
@@ -76,7 +76,7 @@ The example below is the **stored replay** mode.
 | `semantic_type` | `semantic_enrichment` |
 | `intent_class` | `unknown_edge` |
 | `value_mode` | `PREVIEW` |
-| `required_psets` | `Pset_QuantityTakeOff`, `Pset_ColumnCommon`, `Pset_SlabCommon` |
+| `required_psets` | `Pset_ColumnCommon` |
 | `required_relationships` | `IfcRelConnectsElements`, `IfcRelDefinesByProperties` |
 | `missing_inputs` | `ifc_classes` |
 | `ambiguity_flags` | `ambiguous_ifc_class` |
@@ -95,9 +95,12 @@ The example below is the **stored replay** mode.
 }
 ```
 
-The `evidence_trace` links the output to a named input context pattern
-(`zoning_matrix`) and the relationship used (`IfcRelConnectsElements`). It is a
-provenance/supportedness signal, not a mathematical attribution.
+The `evidence_trace` stores a named evidence label (`zoning_matrix`), an
+observed-relationship label and an ambiguity context. The published
+`input_summary` does not include the underlying source fragment, identifier or
+location. This public example therefore demonstrates trace-field structure, not
+independently verified source-grounded supportedness or mathematical
+attribution.
 
 ## Canonical check
 
