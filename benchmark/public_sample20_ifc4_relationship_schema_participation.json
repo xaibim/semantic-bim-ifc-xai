@@ -1,12 +1,12 @@
 {
-  "audit_id": "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V2",
+  "audit_id": "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V3",
   "audit_metadata": {
     "ifc_schema": "IFC4",
     "ifcopenshell_version": "0.8.5",
     "scope_note": "This audit does not demonstrate professional task suitability or real IFC instance validity.",
-    "source_commit": "b00dc9ce6a8a96309fb77472eabff9a90d0d50d7",
+    "source_commit": "2b8b568b33e5a6852f6353499c9233771ac3c6c2",
     "source_file": "sample20/sample20_public_records.jsonl",
-    "source_sha256": "016ebda71cf67ca1d09def86facdb6d9b4d2bdb2cd1728ac1229854a234accc0"
+    "source_sha256": "4f670146a4860e96fa820805e0f6d3db19fd3490e9db74a595bf33589aee9de1"
   },
   "class_catalog": {
     "IfcAirTerminal": {
@@ -1693,23 +1693,29 @@
           "schema_compatible": true
         },
         {
-          "compatibility_state": "SCHEMA_INCOMPATIBLE",
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
           "declaration_exists": true,
           "evidence_relation_declared": true,
           "evidence_relation_observed": "IfcRelContainedInSpatialStructure",
-          "exact_inverse_endpoints": [],
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingSpace",
+              "inverse_attribute_name": "BoundedBy",
+              "relationship_entity": "IfcRelSpaceBoundary"
+            }
+          ],
           "inherited_supertype_endpoints": [],
           "interpretation_state": "NOT_EVALUATED",
           "is_ifc_relationship": true,
-          "relationship": "IfcRelConnectsElements",
+          "relationship": "IfcRelSpaceBoundary",
           "relationship_is_abstract": false,
           "required_relationship_supertype_chain": [
-            "IfcRelConnectsElements",
+            "IfcRelSpaceBoundary",
             "IfcRelConnects",
             "IfcRelationship",
             "IfcRoot"
           ],
-          "schema_compatible": false
+          "schema_compatible": true
         }
       ],
       "sample_id": "21129edbbd73ebef",
@@ -2098,46 +2104,33 @@
     {
       "case_expectation": "EXPECTED_CANONICAL_REJECTION",
       "evidence_relation_declared": true,
-      "evidence_relation_observed": "IfcRelConnectsElements",
+      "evidence_relation_observed": "IfcRelAssignsToGroup",
       "ifc_class": "IfcSystem",
       "relationship_audits": [
         {
-          "compatibility_state": "SCHEMA_INCOMPATIBLE",
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
           "declaration_exists": true,
           "evidence_relation_declared": true,
-          "evidence_relation_observed": "IfcRelConnectsElements",
-          "exact_inverse_endpoints": [],
+          "evidence_relation_observed": "IfcRelAssignsToGroup",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingGroup",
+              "inverse_attribute_name": "IsGroupedBy",
+              "relationship_entity": "IfcRelAssignsToGroup"
+            }
+          ],
           "inherited_supertype_endpoints": [],
           "interpretation_state": "NOT_EVALUATED",
           "is_ifc_relationship": true,
-          "relationship": "IfcRelConnectsElements",
+          "relationship": "IfcRelAssignsToGroup",
           "relationship_is_abstract": false,
           "required_relationship_supertype_chain": [
-            "IfcRelConnectsElements",
-            "IfcRelConnects",
+            "IfcRelAssignsToGroup",
+            "IfcRelAssigns",
             "IfcRelationship",
             "IfcRoot"
           ],
-          "schema_compatible": false
-        },
-        {
-          "compatibility_state": "SCHEMA_INCOMPATIBLE",
-          "declaration_exists": true,
-          "evidence_relation_declared": true,
-          "evidence_relation_observed": "IfcRelConnectsElements",
-          "exact_inverse_endpoints": [],
-          "inherited_supertype_endpoints": [],
-          "interpretation_state": "NOT_EVALUATED",
-          "is_ifc_relationship": true,
-          "relationship": "IfcRelVoidsElement",
-          "relationship_is_abstract": false,
-          "required_relationship_supertype_chain": [
-            "IfcRelVoidsElement",
-            "IfcRelDecomposes",
-            "IfcRelationship",
-            "IfcRoot"
-          ],
-          "schema_compatible": false
+          "schema_compatible": true
         }
       ],
       "sample_id": "ee5057a4b7f15e3c",
@@ -2146,27 +2139,33 @@
     {
       "case_expectation": "VALID",
       "evidence_relation_declared": true,
-      "evidence_relation_observed": "IfcRelFillsElement",
+      "evidence_relation_observed": "IfcRelSpaceBoundary",
       "ifc_class": "IfcSpace",
       "relationship_audits": [
         {
-          "compatibility_state": "SCHEMA_INCOMPATIBLE",
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
           "declaration_exists": true,
           "evidence_relation_declared": true,
-          "evidence_relation_observed": "IfcRelFillsElement",
-          "exact_inverse_endpoints": [],
+          "evidence_relation_observed": "IfcRelSpaceBoundary",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingSpace",
+              "inverse_attribute_name": "BoundedBy",
+              "relationship_entity": "IfcRelSpaceBoundary"
+            }
+          ],
           "inherited_supertype_endpoints": [],
           "interpretation_state": "NOT_EVALUATED",
           "is_ifc_relationship": true,
-          "relationship": "IfcRelFillsElement",
+          "relationship": "IfcRelSpaceBoundary",
           "relationship_is_abstract": false,
           "required_relationship_supertype_chain": [
-            "IfcRelFillsElement",
+            "IfcRelSpaceBoundary",
             "IfcRelConnects",
             "IfcRelationship",
             "IfcRoot"
           ],
-          "schema_compatible": false
+          "schema_compatible": true
         }
       ],
       "sample_id": "f72f31f4c063475b",
@@ -2240,27 +2239,33 @@
     {
       "case_expectation": "VALID",
       "evidence_relation_declared": true,
-      "evidence_relation_observed": "IfcRelFillsElement",
+      "evidence_relation_observed": "IfcRelAssignsToGroup",
       "ifc_class": "IfcAsset",
       "relationship_audits": [
         {
-          "compatibility_state": "SCHEMA_INCOMPATIBLE",
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
           "declaration_exists": true,
           "evidence_relation_declared": true,
-          "evidence_relation_observed": "IfcRelFillsElement",
-          "exact_inverse_endpoints": [],
+          "evidence_relation_observed": "IfcRelAssignsToGroup",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingGroup",
+              "inverse_attribute_name": "IsGroupedBy",
+              "relationship_entity": "IfcRelAssignsToGroup"
+            }
+          ],
           "inherited_supertype_endpoints": [],
           "interpretation_state": "NOT_EVALUATED",
           "is_ifc_relationship": true,
-          "relationship": "IfcRelFillsElement",
+          "relationship": "IfcRelAssignsToGroup",
           "relationship_is_abstract": false,
           "required_relationship_supertype_chain": [
-            "IfcRelFillsElement",
-            "IfcRelConnects",
+            "IfcRelAssignsToGroup",
+            "IfcRelAssigns",
             "IfcRelationship",
             "IfcRoot"
           ],
-          "schema_compatible": false
+          "schema_compatible": true
         }
       ],
       "sample_id": "23dad325e1a64458",
@@ -2334,27 +2339,33 @@
     {
       "case_expectation": "EXPECTED_CANONICAL_REJECTION",
       "evidence_relation_declared": true,
-      "evidence_relation_observed": "IfcRelConnectsElements",
+      "evidence_relation_observed": "IfcRelAssignsToGroup",
       "ifc_class": "IfcZone",
       "relationship_audits": [
         {
-          "compatibility_state": "SCHEMA_INCOMPATIBLE",
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
           "declaration_exists": true,
           "evidence_relation_declared": true,
-          "evidence_relation_observed": "IfcRelConnectsElements",
-          "exact_inverse_endpoints": [],
+          "evidence_relation_observed": "IfcRelAssignsToGroup",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingGroup",
+              "inverse_attribute_name": "IsGroupedBy",
+              "relationship_entity": "IfcRelAssignsToGroup"
+            }
+          ],
           "inherited_supertype_endpoints": [],
           "interpretation_state": "NOT_EVALUATED",
           "is_ifc_relationship": true,
-          "relationship": "IfcRelConnectsElements",
+          "relationship": "IfcRelAssignsToGroup",
           "relationship_is_abstract": false,
           "required_relationship_supertype_chain": [
-            "IfcRelConnectsElements",
-            "IfcRelConnects",
+            "IfcRelAssignsToGroup",
+            "IfcRelAssigns",
             "IfcRelationship",
             "IfcRoot"
           ],
-          "schema_compatible": false
+          "schema_compatible": true
         }
       ],
       "sample_id": "45f540e38ef9fe81",
@@ -2978,6 +2989,86 @@
         "IfcRoot"
       ]
     },
+    "IfcRelSpaceBoundary": {
+      "all_attributes": [
+        "ConnectionGeometry",
+        "Description",
+        "GlobalId",
+        "InternalOrExternalBoundary",
+        "Name",
+        "OwnerHistory",
+        "PhysicalOrVirtualBoundary",
+        "RelatedBuildingElement",
+        "RelatingSpace"
+      ],
+      "argument_types": [
+        "STRING",
+        "ENTITY INSTANCE",
+        "STRING",
+        "STRING",
+        "ENTITY INSTANCE",
+        "ENTITY INSTANCE",
+        "ENTITY INSTANCE",
+        "ENUMERATION",
+        "ENUMERATION"
+      ],
+      "declaration_exists": true,
+      "forward_attributes": [
+        {
+          "argument_type": "STRING",
+          "index": 0,
+          "name": "GlobalId"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 1,
+          "name": "OwnerHistory"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 2,
+          "name": "Name"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 3,
+          "name": "Description"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 4,
+          "name": "RelatingSpace"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 5,
+          "name": "RelatedBuildingElement"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 6,
+          "name": "ConnectionGeometry"
+        },
+        {
+          "argument_type": "ENUMERATION",
+          "index": 7,
+          "name": "PhysicalOrVirtualBoundary"
+        },
+        {
+          "argument_type": "ENUMERATION",
+          "index": 8,
+          "name": "InternalOrExternalBoundary"
+        }
+      ],
+      "is_abstract": false,
+      "is_ifc_relationship": true,
+      "supertype_chain": [
+        "IfcRelSpaceBoundary",
+        "IfcRelConnects",
+        "IfcRelationship",
+        "IfcRoot"
+      ]
+    },
     "IfcRelVoidsElement": {
       "all_attributes": [
         "Description",
@@ -3040,15 +3131,15 @@
   },
   "summary": {
     "evidence_relation_declared_count": 20,
-    "exact_inverse_endpoint_count": 26,
+    "exact_inverse_endpoint_count": 31,
     "expected_negative_count": 2,
     "inherited_supertype_compatible_count": 5,
     "positive_count": 18,
     "record_count": 20,
-    "record_relationship_pair_count": 37,
-    "schema_compatible_count": 31,
-    "schema_incompatible_count": 6,
+    "record_relationship_pair_count": 36,
+    "schema_compatible_count": 36,
+    "schema_incompatible_count": 0,
     "unique_ifc_class_count": 11,
-    "unique_relationship_count": 9
+    "unique_relationship_count": 10
   }
 }

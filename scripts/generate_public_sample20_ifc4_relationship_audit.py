@@ -10,22 +10,22 @@ import ifcopenshell
 from ifcopenshell.util.schema import is_a
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_COMMIT = "b00dc9ce6a8a96309fb77472eabff9a90d0d50d7"
+SOURCE_COMMIT = "2b8b568b33e5a6852f6353499c9233771ac3c6c2"
 SOURCE_JSONL = ROOT / "sample20" / "sample20_public_records.jsonl"
-EXPECTED_JSONL_SHA256 = "016ebda71cf67ca1d09def86facdb6d9b4d2bdb2cd1728ac1229854a234accc0"
+EXPECTED_JSONL_SHA256 = "4f670146a4860e96fa820805e0f6d3db19fd3490e9db74a595bf33589aee9de1"
 EXPECTED_SCHEMA_SHA256 = "769a6dad5517cb97860b00a2c4fc33ab3c0e6362b30059172bc55735834cdb25"
 EXPECTED_RECORD_COUNT = 20
 EXPECTED_POSITIVE_COUNT = 18
 EXPECTED_EXPECTED_NEGATIVE_COUNT = 2
 EXPECTED_UNIQUE_IFC_CLASS_COUNT = 11
-EXPECTED_UNIQUE_RELATIONSHIP_COUNT = 9
-EXPECTED_RECORD_RELATIONSHIP_PAIR_COUNT = 37
+EXPECTED_UNIQUE_RELATIONSHIP_COUNT = 10
+EXPECTED_RECORD_RELATIONSHIP_PAIR_COUNT = 36
 EXPECTED_EVIDENCE_RELATION_DECLARED_COUNT = 20
-EXPECTED_EXACT_INVERSE_ENDPOINT_COUNT = 26
+EXPECTED_EXACT_INVERSE_ENDPOINT_COUNT = 31
 EXPECTED_INHERITED_SUPERTYPE_COMPATIBLE_COUNT = 5
-EXPECTED_SCHEMA_COMPATIBLE_COUNT = 31
-EXPECTED_SCHEMA_INCOMPATIBLE_COUNT = 6
-AUDIT_ID = "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V2"
+EXPECTED_SCHEMA_COMPATIBLE_COUNT = 36
+EXPECTED_SCHEMA_INCOMPATIBLE_COUNT = 0
+AUDIT_ID = "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V3"
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -45,7 +45,7 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
         try:
             records.append(json.loads(line))
         except json.JSONDecodeError as exc:
-            raise SystemExit(f"STOP_PR15_MICRO_05B_JSONL_PARSE_ERROR:{path}:{line_number}:{exc}") from exc
+            raise SystemExit(f"STOP_PR15_MICRO_06B_JSONL_PARSE_ERROR:{path}:{line_number}:{exc}") from exc
     return records
 
 
@@ -278,18 +278,18 @@ def build_audit() -> dict[str, Any]:
     records = load_jsonl(SOURCE_JSONL)
     source_sha256 = sha256_path(SOURCE_JSONL)
     if source_sha256.lower() != EXPECTED_JSONL_SHA256:
-        raise SystemExit("STOP_PR15_MICRO_05B_SOURCE_HASH_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_SOURCE_HASH_MISMATCH")
     if len(records) != EXPECTED_RECORD_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     sample_ids = [record.get("sample_id") for record in records]
     if len(set(sample_ids)) != EXPECTED_RECORD_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     if sum(record.get("case_expectation") == "VALID" for record in records) != EXPECTED_POSITIVE_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     if sum(record.get("case_expectation") == "EXPECTED_CANONICAL_REJECTION" for record in records) != EXPECTED_EXPECTED_NEGATIVE_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     if any(record.get("model_output") != record.get("reference_output") for record in records):
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
 
     class_catalog, relationship_catalog, relationship_declarations = build_catalogs(schema, records)
     record_audits = build_record_audits(records, class_catalog, relationship_catalog, relationship_declarations)
@@ -308,21 +308,21 @@ def build_audit() -> dict[str, Any]:
     schema_incompatible_count = sum(row["compatibility_state"] == "SCHEMA_INCOMPATIBLE" for row in relationship_rows)
 
     if len(class_catalog) != EXPECTED_UNIQUE_IFC_CLASS_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     if len(relationship_catalog) != EXPECTED_UNIQUE_RELATIONSHIP_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     if len(relationship_rows) != EXPECTED_RECORD_RELATIONSHIP_PAIR_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     if evidence_relation_declared_count != EXPECTED_EVIDENCE_RELATION_DECLARED_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     if exact_inverse_endpoint_count != EXPECTED_EXACT_INVERSE_ENDPOINT_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     if inherited_supertype_compatible_count != EXPECTED_INHERITED_SUPERTYPE_COMPATIBLE_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     if schema_compatible_count != EXPECTED_SCHEMA_COMPATIBLE_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     if schema_incompatible_count != EXPECTED_SCHEMA_INCOMPATIBLE_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_05B_PROBE_COUNT_MISMATCH")
+        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
 
     summary = {
         "record_count": EXPECTED_RECORD_COUNT,
