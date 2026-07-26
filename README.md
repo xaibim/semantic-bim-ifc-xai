@@ -1,12 +1,13 @@
-# Semantic BIM/IFC Evidence-Grounded Research Artifact
+# Semantic BIM/IFC Evidence-Trace Public Research Artifact
 
 [![Public sample20 v2 validation][sample20-badge]][sample20-workflow]
 
-This repository is a public academic research artifact for stored-record
-semantic BIM/IFC validation, strict schema validation, three-copy integrity
-verification, and preliminary QLoRA compute-feasibility evidence. It is not a
-certification tool, a production BIM service, or an institutional endorsement.
-It contains only public synthetic or sanitized examples.
+This repository is the public Semantic BIM/IFC Evidence-Trace Public Research
+Artifact for stored-record semantic BIM/IFC validation, strict schema
+validation, three-copy integrity verification, and preliminary QLoRA
+compute-feasibility evidence. It is not a certification tool, a production BIM
+service, or an institutional endorsement. It contains only public synthetic or
+sanitized examples.
 
 The workflow checks that the public sanitized `sample20` fixture validates the
 strict public `sample20` v2 contract (JSON Schema Draft 2020-12), the
@@ -39,7 +40,7 @@ certification, a production-readiness claim, or a final benchmark.
   rejection are recorded and validated as such.
 - **Evidence-trace structure**: every record carries structured evidence
   labels and ambiguity context. The current public artefact validates field
-  presence and structure; it does not independently verify external source
+  presence and structure; it does not independently verify external-source
   supportedness.
 - **Deterministic stored-record validation**: the public harness reloads the
   stored JSONL records and checks schema and fixture conformance. It does not

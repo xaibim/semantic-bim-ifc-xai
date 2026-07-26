@@ -1,5 +1,8 @@
 # Changelog
 
+This changelog is historical chronology only. It does not by itself declare a
+Git tag, GitHub Release, or publication milestone.
+
 ## Unreleased
 
 - Migrated public dataset to sample20 v2 format (schema_version = 2.0).
@@ -27,6 +30,6 @@
 
 - Added the public sample20 entrypoint and quickstart.
 - Added replay and schema validation for the public sample20 artifact.
-- Added benchmark sample20 public results and evidence-grounded wording.
+- Added benchmark sample20 public results and evidence-trace wording.
 - Clarified the public/private boundary for public review.
 - Confirmed that no private datasets, checkpoints, or adapters are included.

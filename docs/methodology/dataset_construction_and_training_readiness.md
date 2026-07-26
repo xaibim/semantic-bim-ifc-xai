@@ -5,9 +5,9 @@
 ### A. Broader research target
 
 The broader research target is a semantic BIM task where a professional
-request can mention IFC context, information requirements, source-grounding
-concepts and recoverable ambiguity. In that broader setting, a model would need
-to produce structured outputs that support validation and review.
+request can mention IFC context, information requirements, source-linked
+review concepts and recoverable ambiguity. In that broader setting, a model
+would need to produce structured outputs that support validation and review.
 
 ### B. Current public v2 fixture
 
@@ -21,7 +21,8 @@ contain:
 - source location;
 - audit metadata.
 
-The public `evidence_trace` contains only structured labels.
+The public `evidence_trace` contains only structured labels and does not
+resolve an external source.
 
 ![Semantic BIM/IFC record concept](../assets/figures/figure_02_semantic_bim_prompt.png)
 
@@ -41,9 +42,10 @@ was rejected for several critical reasons:
    canonical classification catalogues and standard property sets. Plain text
    outputs fail to maintain alignments with these Single Sources of Truth
    (SSOT).
-3. **Absence of Grounding and Rationale**: A plain text response cannot easily
-   be audited. Engineering decisions require a clear evidence trace back to the
-   source model.
+3. **Absence of Verified Source Linkage and Rationale**: A plain text response
+   cannot easily be audited. Engineering decisions benefit from a structured
+   evidence trace, but the current public fixture only carries structured labels
+   and does not resolve an external source.
 4. **Mutational Safety**: Plain instructions do not distinguish between safe
    queries (read-only preview) and destructive mutations (model alterations),
    presenting risks to the integrity of Common Data Environments (CDE).
@@ -57,23 +59,25 @@ payloads mapped to canonical catalogues.
 
 The dataset and pipeline infrastructure is governed by several key concepts:
 
-- **Runtime Payload and SSOT**: A structured payload encapsulates the input
-  request, the active database schema, and the target catalogues, ensuring any
-  generated output is evaluated against a Single Source of Truth.
-- **Capabilities Catalog**: A registry of supported operations, classes, and
-  properties, preventing the AI from generating arbitrary properties or
-  violating schema rules.
+- **Runtime Payload and SSOT**: BROADER / PRIVATE OR PLANNED. A structured
+  payload encapsulates the input request, the active database schema, and the
+  target catalogues, ensuring any generated output is evaluated against a
+  Single Source of Truth.
+- **Capabilities Catalog**: BROADER / PRIVATE OR PLANNED. A registry of
+  supported operations, classes, and properties, preventing the AI from
+  generating arbitrary properties or violating schema rules.
 - **Public record contract**: The strict `sample20` v2 schema
   (`sample20/schema_public_sample20_v2.json`, JSON Schema Draft 2020-12) encodes
   the public fields, value modes, and neutral dataset-candidate states.
-- **private pilot dataset**: A private development pilot used for early
-  LoRA/QLoRA adaptation experiments (not published).
-- **private high-fidelity internal dataset**: A private high-fidelity seed
-  dataset used for closed-loop testing (not published).
-- **sample20**: A public sanitized frozen fixture of 20 illustrative records.
-- **Stored-record validation**: Code that loads stored public record payloads
-  and validates schema, case-expectation and fixture-conformance fields. It
-  does not rerun model generation.
+- **private pilot dataset**: PRIVATE. A private development pilot used for
+  early LoRA/QLoRA adaptation experiments (not published).
+- **private high-fidelity internal dataset**: PRIVATE. A private high-fidelity
+  seed dataset used for closed-loop testing (not published).
+- **sample20**: CURRENT PUBLIC EXECUTABLE. A public sanitized frozen fixture of
+  20 illustrative records.
+- **Stored-record validation**: CURRENT PUBLIC EXECUTABLE. Code that loads
+  stored public record payloads and validates schema, case-expectation and
+  fixture-conformance fields. It does not rerun model generation.
 
 > Historical internal development stages existed before the public artifact.
 > They are historical internal development stages, not public releases or public

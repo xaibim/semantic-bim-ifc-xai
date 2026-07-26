@@ -1,10 +1,10 @@
 {
   "artifact_type": "preliminary_aggregate_experiment_report",
   "artifact_version": "1.0",
-  "title": "Preliminary QLoRA Computational Feasibility Run for Evidence-Grounded Semantic BIM/IFC Outputs",
+  "title": "Preliminary QLoRA Computational Feasibility Run for Evidence-Trace Semantic BIM/IFC Outputs",
   "kaggle_notebook_url": "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai",
   "scope": {
-    "purpose": "Demonstrate that a bounded QLoRA workflow can be executed and measured on commodity GPU infrastructure.",
+    "purpose": "Demonstrate that a bounded QLoRA workflow can be executed and measured on commodity GPU infrastructure for evidence-trace Semantic BIM/IFC target agreement.",
     "not_claimed": [
       "final benchmark performance",
       "generalization across AECO tasks",
@@ -83,7 +83,7 @@
     "non_training_runtime_share_percent": "non_training_overhead_seconds / measured_end_to_end_runtime_seconds * 100"
   },
   "corrected_held_out_results": {
-    "evaluator_correction_note": "The original evaluator treated evidence_trace as a list. The dataset contract uses an object. Metrics below were recomputed from stored predictions using the object-based contract. No retraining was required.",
+    "evaluator_correction_note": "The original evaluator treated evidence_trace as a list. The dataset contract uses an object. Metrics below were recomputed from stored predictions using the object-based contract. The evidence_trace metrics below measure agreement against stored structured targets, not external-source supportedness. No retraining was required.",
     "baseline": {
       "record_count": 100,
       "json_parse_rate": 1.0,
@@ -144,7 +144,7 @@
         "PROPOSAL": 17
       }
     },
-    "interpretation": "The adapter showed strong controlled held-out target agreement on this bounded experiment. Computational feasibility was demonstrated. The result remains preliminary: the test set contains seven semantic families, four IFC classes, and a single intent label. No broad generalization is established. No statistical significance is claimed."
+    "interpretation": "The adapter showed strong controlled held-out target agreement on this bounded experiment. Computational feasibility was demonstrated. The result remains preliminary: the test set contains seven semantic families, four IFC classes, and a single intent label. The evidence_trace metrics are target-agreement scores against stored structured targets, not external-source supportedness. No broad generalization is established. No statistical significance is claimed."
   },
   "limitations": [
     "Single run and single random seed.",

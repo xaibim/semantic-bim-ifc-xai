@@ -14,6 +14,10 @@ These experiments are internal preliminary experiments. They are feasibility
 evidence for the proposed benchmark workflow. They do not establish a final
 benchmark result, claim production readiness, or certify BIM/IFC compliance.
 
+This historical internal log is retained for methodology context only. It is
+superseded by the public Evidence-Trace boundary language in the repository's
+current public documentation.
+
 ## Research task
 
 The experiments follow the same positioning: BIM 3D/IFC is the technical
@@ -27,14 +31,14 @@ The experiments evaluate a structured task:
 natural-language BIM request
 + structured BIM/runtime context
 + safety and evidence constraints
-        →
+        ->
 IFC-aware semantic JSON record
-        →
+        ->
 schema validation
-        →
+        ->
 field-level comparison
-        →
-evidence and replay checks
+        ->
+evidence-trace structure and stored-record checks
 ```
 
 The target is not a generic BIM chatbot. The target is a prompt-to-IFC contract
@@ -65,6 +69,9 @@ missing-field handling and Pset recall.
 Interpretation: this smoke test should not be read as a performance claim. Its
 value is methodological: it confirms that the harness can both detect valid
 structured outputs and expose measurable failure modes.
+
+`evidence_trace_completeness` is a stored-field completeness measure inside the
+public harness. It is not an external evidence-supportedness score.
 
 ## V4 5k preliminary run
 
@@ -137,7 +144,7 @@ These runs do not claim that:
 
 ## Relation to future work
 
-The public repository provides a minimal reproducibility sample and replayable
+The public repository provides a minimal reproducibility sample and stored-record
 validation protocol. A systematic benchmark, a broader public dataset, and
 further adaptation experiments remain future work. These preliminary
-experiments are starting evidence for a controlled research workflow.
+experiments are methodological support for a controlled research workflow.
