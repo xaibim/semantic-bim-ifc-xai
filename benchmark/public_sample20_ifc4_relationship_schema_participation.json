@@ -1,12 +1,15 @@
 {
   "audit_id": "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V3",
   "audit_metadata": {
+    "hash_contract": "SHA-256 over UTF-8 source bytes after CRLF and CR line endings are normalized to LF.",
     "ifc_schema": "IFC4",
     "ifcopenshell_version": "0.8.5",
     "scope_note": "This audit does not demonstrate professional task suitability or real IFC instance validity.",
     "source_commit": "2b8b568b33e5a6852f6353499c9233771ac3c6c2",
+    "source_copy_byte_identity_verified": true,
+    "source_copy_count": 3,
     "source_file": "sample20/sample20_public_records.jsonl",
-    "source_sha256": "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
+    "source_lf_normalized_sha256": "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
   },
   "class_catalog": {
     "IfcAirTerminal": {

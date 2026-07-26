@@ -14,7 +14,9 @@
 
 - commit: `2b8b568b33e5a6852f6353499c9233771ac3c6c2`
 - source JSONL: `sample20/sample20_public_records.jsonl`
-- SHA-256: `2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa`
+- LF-normalized SHA-256: `2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa`
+- hash contract: `SHA-256 over UTF-8 source bytes after CRLF and CR line endings are normalized to LF.`
+- three public JSONL copies byte-identical: `true`
 - IfcOpenShell version: `0.8.5`
 - IFC schema: `IFC4`
 

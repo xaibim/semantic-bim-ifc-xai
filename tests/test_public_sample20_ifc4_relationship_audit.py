@@ -22,8 +22,8 @@ SCHEMA_PATHS = [
 JSON_OUTPUT = ROOT / "benchmark" / "public_sample20_ifc4_relationship_schema_participation.json"
 MARKDOWN_OUTPUT = ROOT / "benchmark" / "public_sample20_ifc4_relationship_schema_participation.md"
 SCRIPT_PATH = ROOT / "scripts" / "generate_public_sample20_ifc4_relationship_audit.py"
-EXPECTED_JSONL_SHA256 = "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
-EXPECTED_SCHEMA_SHA256 = "de9c722f98085d7227906295531aa190755d105a0bf030d360fb26b1298ab216"
+EXPECTED_JSONL_LF_NORMALIZED_SHA256 = "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
+EXPECTED_SCHEMA_LF_NORMALIZED_SHA256 = "de9c722f98085d7227906295531aa190755d105a0bf030d360fb26b1298ab216"
 EXPECTED_SUMMARY = {
     "record_count": 20,
     "positive_count": 18,
@@ -86,18 +86,10 @@ def read_jsonl(path: Path) -> list[dict[str, object]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
-def sha256_path(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
-def sha256_normalized_text(path: Path) -> str:
-    text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
-
-
-def sha256_normalized_text(path: Path) -> str:
-    text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+def sha256_lf_normalized(path: Path) -> str:
+    data = path.read_bytes()
+    normalized = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(normalized).hexdigest()
 
 
 class TestPublicSample20IFC4RelationshipAudit(unittest.TestCase):
@@ -110,14 +102,14 @@ class TestPublicSample20IFC4RelationshipAudit(unittest.TestCase):
     def test_01_jsonl_byte_identity_and_hashes(self) -> None:
         self.assertEqual(JSONL_PATHS[0].read_bytes(), JSONL_PATHS[1].read_bytes())
         self.assertEqual(JSONL_PATHS[0].read_bytes(), JSONL_PATHS[2].read_bytes())
-        self.assertEqual(sha256_normalized_text(JSONL_PATHS[0]), EXPECTED_JSONL_SHA256)
-        self.assertEqual(sha256_normalized_text(JSONL_PATHS[1]), EXPECTED_JSONL_SHA256)
-        self.assertEqual(sha256_normalized_text(JSONL_PATHS[2]), EXPECTED_JSONL_SHA256)
+        self.assertEqual(sha256_lf_normalized(JSONL_PATHS[0]), EXPECTED_JSONL_LF_NORMALIZED_SHA256)
+        self.assertEqual(sha256_lf_normalized(JSONL_PATHS[1]), EXPECTED_JSONL_LF_NORMALIZED_SHA256)
+        self.assertEqual(sha256_lf_normalized(JSONL_PATHS[2]), EXPECTED_JSONL_LF_NORMALIZED_SHA256)
 
     def test_02_schema_hashes(self) -> None:
-        self.assertEqual(sha256_normalized_text(SCHEMA_PATHS[0]), EXPECTED_SCHEMA_SHA256)
-        self.assertEqual(sha256_normalized_text(SCHEMA_PATHS[1]), EXPECTED_SCHEMA_SHA256)
-        self.assertEqual(sha256_normalized_text(SCHEMA_PATHS[2]), EXPECTED_SCHEMA_SHA256)
+        self.assertEqual(sha256_lf_normalized(SCHEMA_PATHS[0]), EXPECTED_SCHEMA_LF_NORMALIZED_SHA256)
+        self.assertEqual(sha256_lf_normalized(SCHEMA_PATHS[1]), EXPECTED_SCHEMA_LF_NORMALIZED_SHA256)
+        self.assertEqual(sha256_lf_normalized(SCHEMA_PATHS[2]), EXPECTED_SCHEMA_LF_NORMALIZED_SHA256)
 
     def test_03_audit_metadata_and_summary(self) -> None:
         self.assertEqual(self.audit["audit_id"], "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V3")
@@ -125,9 +117,27 @@ class TestPublicSample20IFC4RelationshipAudit(unittest.TestCase):
         self.assertNotIn("metadata", self.audit)
         self.assertEqual(self.audit["audit_metadata"]["source_commit"], "2b8b568b33e5a6852f6353499c9233771ac3c6c2")
         self.assertEqual(self.audit["audit_metadata"]["source_file"], "sample20/sample20_public_records.jsonl")
-        self.assertEqual(self.audit["audit_metadata"]["source_sha256"], EXPECTED_JSONL_SHA256)
+        self.assertEqual(self.audit["audit_metadata"]["source_lf_normalized_sha256"], EXPECTED_JSONL_LF_NORMALIZED_SHA256)
+        self.assertNotIn("source_sha256", self.audit["audit_metadata"])
+        self.assertEqual(self.audit["audit_metadata"]["source_copy_count"], 3)
+        self.assertTrue(self.audit["audit_metadata"]["source_copy_byte_identity_verified"])
+        self.assertIn("normalized to LF", self.audit["audit_metadata"]["hash_contract"])
         self.assertEqual(self.audit["audit_metadata"]["ifcopenshell_version"], "0.8.5")
         self.assertEqual(self.audit["audit_metadata"]["ifc_schema"], "IFC4")
+        self.assertEqual(
+            set(self.audit["audit_metadata"]),
+            {
+                "source_commit",
+                "source_file",
+                "source_lf_normalized_sha256",
+                "hash_contract",
+                "source_copy_count",
+                "source_copy_byte_identity_verified",
+                "ifcopenshell_version",
+                "ifc_schema",
+                "scope_note",
+            },
+        )
         self.assertEqual(self.audit["summary"], EXPECTED_SUMMARY)
         self.assertTrue(self.audit["interpretation_boundary"]["schema_participation_only"])
         self.assertFalse(self.audit["interpretation_boundary"]["semantic_task_alignment_evaluated"])

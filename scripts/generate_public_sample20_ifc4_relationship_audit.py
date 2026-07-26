@@ -11,9 +11,13 @@ from ifcopenshell.util.schema import is_a
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_COMMIT = "2b8b568b33e5a6852f6353499c9233771ac3c6c2"
-SOURCE_JSONL = ROOT / "sample20" / "sample20_public_records.jsonl"
-EXPECTED_JSONL_SHA256 = "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
-EXPECTED_SCHEMA_SHA256 = "769a6dad5517cb97860b00a2c4fc33ab3c0e6362b30059172bc55735834cdb25"
+JSONL_PATHS = [
+    ROOT / "sample20" / "sample20_public_records.jsonl",
+    ROOT / "spaces" / "huggingface" / "sample20_public_predictions.jsonl",
+    ROOT / "spaces" / "huggingface_harness" / "sample20_public_predictions.jsonl",
+]
+SOURCE_JSONL = JSONL_PATHS[0]
+EXPECTED_JSONL_LF_NORMALIZED_SHA256 = "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
 EXPECTED_RECORD_COUNT = 20
 EXPECTED_POSITIVE_COUNT = 18
 EXPECTED_EXPECTED_NEGATIVE_COUNT = 2
@@ -32,13 +36,21 @@ def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def sha256_path(path: Path) -> str:
-    return sha256_bytes(path.read_bytes())
+def sha256_lf_normalized(path: Path) -> str:
+    data = path.read_bytes()
+    normalized = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return sha256_bytes(normalized)
 
 
-def sha256_normalized_text(path: Path) -> str:
-    text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
-    return sha256_bytes(text.encode("utf-8"))
+def ensure_jsonl_sources() -> None:
+    base_bytes = JSONL_PATHS[0].read_bytes()
+    for path in JSONL_PATHS[1:]:
+        if path.read_bytes() != base_bytes:
+            raise SystemExit("STOP_PR15_MICRO_06C_JSONL_COPY_OR_HASH_MISMATCH")
+    expected_hash = EXPECTED_JSONL_LF_NORMALIZED_SHA256
+    for path in JSONL_PATHS:
+        if sha256_lf_normalized(path) != expected_hash:
+            raise SystemExit("STOP_PR15_MICRO_06C_JSONL_COPY_OR_HASH_MISMATCH")
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -279,11 +291,12 @@ def build_record_audits(
 
 
 def build_audit() -> dict[str, Any]:
+    ensure_jsonl_sources()
     schema = ifcopenshell.schema_by_name("IFC4")
     records = load_jsonl(SOURCE_JSONL)
-    source_sha256 = sha256_normalized_text(SOURCE_JSONL)
-    if source_sha256.lower() != EXPECTED_JSONL_SHA256:
-        raise SystemExit("STOP_PR15_MICRO_06B_SOURCE_HASH_MISMATCH")
+    source_lf_normalized_sha256 = sha256_lf_normalized(SOURCE_JSONL)
+    if source_lf_normalized_sha256.lower() != EXPECTED_JSONL_LF_NORMALIZED_SHA256:
+        raise SystemExit("STOP_PR15_MICRO_06C_JSONL_COPY_OR_HASH_MISMATCH")
     if len(records) != EXPECTED_RECORD_COUNT:
         raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
     sample_ids = [record.get("sample_id") for record in records]
@@ -348,7 +361,10 @@ def build_audit() -> dict[str, Any]:
         "audit_metadata": {
             "source_commit": SOURCE_COMMIT,
             "source_file": "sample20/sample20_public_records.jsonl",
-            "source_sha256": EXPECTED_JSONL_SHA256,
+            "source_lf_normalized_sha256": EXPECTED_JSONL_LF_NORMALIZED_SHA256,
+            "hash_contract": "SHA-256 over UTF-8 source bytes after CRLF and CR line endings are normalized to LF.",
+            "source_copy_count": 3,
+            "source_copy_byte_identity_verified": True,
             "ifcopenshell_version": ifcopenshell.version,
             "ifc_schema": "IFC4",
             "scope_note": "This audit does not demonstrate professional task suitability or real IFC instance validity.",
@@ -414,7 +430,9 @@ def render_markdown(result: dict[str, Any]) -> str:
         [
             f"- commit: `{metadata['source_commit']}`",
             f"- source JSONL: `{metadata['source_file']}`",
-            f"- SHA-256: `{metadata['source_sha256']}`",
+            f"- LF-normalized SHA-256: `{metadata['source_lf_normalized_sha256']}`",
+            f"- hash contract: `{metadata['hash_contract']}`",
+            f"- three public JSONL copies byte-identical: `{markdown_cell(metadata['source_copy_byte_identity_verified'])}`",
             f"- IfcOpenShell version: `{metadata['ifcopenshell_version']}`",
             f"- IFC schema: `{metadata['ifc_schema']}`",
         ]

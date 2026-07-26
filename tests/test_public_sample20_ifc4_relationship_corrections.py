@@ -15,7 +15,7 @@ JSONL_PATHS = [
 ]
 AUDIT_JSON_PATH = ROOT / "benchmark" / "public_sample20_ifc4_relationship_schema_participation.json"
 CORRECTION_MD_PATH = ROOT / "benchmark" / "public_sample20_ifc4_relationship_correction.md"
-EXPECTED_JSONL_SHA256 = "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
+EXPECTED_JSONL_LF_NORMALIZED_SHA256 = "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
 EXPECTED_AUDIT_SUMMARY = {
     "record_count": 20,
     "positive_count": 18,
@@ -71,13 +71,10 @@ def read_jsonl(path: Path) -> list[dict[str, object]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
-def sha256_path(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
-def sha256_normalized_text(path: Path) -> str:
-    text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+def sha256_lf_normalized(path: Path) -> str:
+    data = path.read_bytes()
+    normalized = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(normalized).hexdigest()
 
 
 class TestPublicSample20IFC4RelationshipCorrections(unittest.TestCase):
@@ -91,7 +88,7 @@ class TestPublicSample20IFC4RelationshipCorrections(unittest.TestCase):
         self.assertEqual(JSONL_PATHS[0].read_bytes(), JSONL_PATHS[1].read_bytes())
         self.assertEqual(JSONL_PATHS[0].read_bytes(), JSONL_PATHS[2].read_bytes())
         for path in JSONL_PATHS:
-            self.assertEqual(sha256_normalized_text(path), EXPECTED_JSONL_SHA256)
+            self.assertEqual(sha256_lf_normalized(path), EXPECTED_JSONL_LF_NORMALIZED_SHA256)
 
     def test_02_fixture_counts_and_correspondence(self) -> None:
         self.assertEqual(len(self.records), 20)
@@ -124,6 +121,7 @@ class TestPublicSample20IFC4RelationshipCorrections(unittest.TestCase):
         for record in negatives:
             self.assertFalse(record["canonical_check"]["ok"])
             self.assertEqual(record["canonical_check"]["errors"], ["ifc_class_out_of_operation_scope"])
+            self.assertEqual(record["record_status"], "EXPECTED_REJECTION_PASS")
 
     def test_05_agreement_and_value_modes(self) -> None:
         agreement_required_relationships_recall = {record["agreement"]["required_relationships_recall"] for record in self.records}
@@ -136,7 +134,8 @@ class TestPublicSample20IFC4RelationshipCorrections(unittest.TestCase):
     def test_06_audit_v3_summary(self) -> None:
         self.assertEqual(self.audit["audit_id"], "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V3")
         self.assertEqual(self.audit["summary"], EXPECTED_AUDIT_SUMMARY)
-        self.assertEqual(self.audit["audit_metadata"]["source_sha256"], EXPECTED_JSONL_SHA256)
+        self.assertEqual(self.audit["audit_metadata"]["source_lf_normalized_sha256"], EXPECTED_JSONL_LF_NORMALIZED_SHA256)
+        self.assertNotIn("source_sha256", self.audit["audit_metadata"])
         self.assertEqual(self.audit["audit_metadata"]["source_commit"], "2b8b568b33e5a6852f6353499c9233771ac3c6c2")
         self.assertEqual(self.audit["record_audits"][0]["relationship_audits"][0]["interpretation_state"], "NOT_EVALUATED")
         rows = [row for record in self.audit["record_audits"] for row in record["relationship_audits"]]
@@ -152,6 +151,15 @@ class TestPublicSample20IFC4RelationshipCorrections(unittest.TestCase):
         self.assertIn("six schema-incompatible pairs", self.correction_md)
         self.assertIn("previous record-relationship pairs: 37", self.correction_md)
         self.assertIn("corrected record-relationship pairs: 36", self.correction_md)
+        self.assertIn("LF-normalized SHA-256", self.correction_md)
+        self.assertIn("MICRO-06B used three commits", self.correction_md)
+        self.assertRegex(
+            self.correction_md,
+            r"no\s+rebase, reset, squash or force push was performed",
+        )
+        self.assertIn("2b8b568b33e5a6852f6353499c9233771ac3c6c2", self.correction_md)
+        self.assertIn("5f467935def3613c2b325fee6ccaec044ba67236", self.correction_md)
+        self.assertIn("92dfddfa911120027f282895aa76bc7897400b08", self.correction_md)
         self.assertIn("exact inverse endpoints: 31", self.correction_md)
         self.assertIn("schema-incompatible: 0", self.correction_md)
         self.assertIn("IfcRelSpaceBoundary", self.correction_md)
