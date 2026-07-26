@@ -31,6 +31,9 @@ BLOCKED_PREREQ = "blocked-by-" + "prerequisite"
 OLD_REPLAY_NOTE = "Deterministic public " + "replay completed successfully"
 OLD_EXECUTED_REPLAY = "Executed " + "Replay"
 OLD_RUN_PUBLIC_REPLAY = "Run the public replay"
+SCHEMA_ONLY_VALIDATION = "schema-only validation"
+NOT_EVALUATED_FIXTURE = "fixture_contract=not_evaluated"
+NOT_CHECKED_INTEGRITY = "integrity=not_checked"
 
 
 def tracked_text_files():
@@ -285,6 +288,20 @@ class TestDocumentationAlignment(unittest.TestCase):
             self.assertNotIn(OLD_REPLAY_NOTE, text)
             self.assertNotIn(OLD_EXECUTED_REPLAY, text)
             self.assertNotIn(OLD_RUN_PUBLIC_REPLAY, text)
+
+    def test_29_schema_validator_docs_updated(self):
+        quickstart = (ROOT / "QUICKSTART.md").read_text(encoding="utf-8").lower()
+        evidence = (ROOT / "PUBLIC_EVIDENCE.md").read_text(encoding="utf-8").lower()
+        summary = (ROOT / "sample20" / "VALIDATION_SUMMARY.md").read_text(encoding="utf-8").lower()
+
+        for text in (quickstart, evidence, summary):
+            self.assertIn(SCHEMA_ONLY_VALIDATION, text)
+            self.assertIn(NOT_EVALUATED_FIXTURE, text)
+            self.assertIn(NOT_CHECKED_INTEGRITY, text)
+
+        self.assertIn("does not evaluate the fixture contract or canonical three-copy integrity", quickstart)
+        self.assertIn("counted directly from both model and reference evidence_trace structures", evidence)
+        self.assertIn("counted directly from both model and reference evidence_trace structures", summary)
 
 
 if __name__ == "__main__":

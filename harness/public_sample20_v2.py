@@ -20,11 +20,11 @@ ALLOWED_VALUE_MODES = {"EXECUTE", "PREVIEW", "PROPOSAL", "GUIDED_RECOVERY"}
 
 
 def _recall(expected: list[Any], actual: list[Any]) -> float:
-    expected_list = list(expected)
-    actual_list = list(actual)
-    if not expected_list:
-        return 1.0 if not actual_list else 0.0
-    return len(set(expected_list) & set(actual_list)) / len(expected_list)
+    expected_set = set(expected)
+    actual_set = set(actual)
+    if not expected_set:
+        return 1.0 if not actual_set else 0.0
+    return len(expected_set & actual_set) / len(expected_set)
 
 
 def _recompute_agreement(
@@ -79,10 +79,6 @@ def _validate_record_coherence(
 
     if canonical_check is None or canonical_check.get("value_mode") != model_output.get("value_mode"):
         errors.append(f"{prefix} canonical_check.value_mode does not match model_output.value_mode")
-
-    canonical_warnings = canonical_check.get("warnings") if canonical_check is not None else None
-    if canonical_warnings != ["reason_codes_at_maximum"]:
-        errors.append(f"{prefix} canonical_check.warnings must equal ['reason_codes_at_maximum']")
 
     recomputed_agreement = _recompute_agreement(model_output, reference_output)
     if agreement != recomputed_agreement:

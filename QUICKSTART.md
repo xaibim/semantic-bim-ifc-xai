@@ -20,7 +20,7 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-The root public replay and validation harnesses use Python standard library only. The optional Hugging Face harness has its own dependency file.
+The public validation commands require the root dependencies in `requirements.txt`. The canonical copy-integrity helper itself uses only the Python standard library.
 
 ## 4. Run deterministic stored-record validation
 
@@ -66,10 +66,22 @@ python harness/schema_validator.py sample20/sample20_public_records.jsonl --sche
 Expected output includes:
 
 * `records=20`
-* `json_parse_rate=1.0`
+* `nonempty_lines=20`
+* `parsed_records=20`
+* `json_parse_rate=1.000000`
+* `json_parse=PASS`
+* `schema_valid_records=20`
+* `schema_valid_rate=1.000000`
+* `schema=PASS`
 * `records_with_required_keys=20`
 * `records_with_evidence_trace=20`
+* `fixture_contract=NOT_EVALUATED`
+* `integrity=NOT_CHECKED`
 * `status=SCHEMA_VALIDATION_OK`
+
+The schema validator does not evaluate the fixture contract or canonical three-copy integrity. Use `harness/replay.py` for those checks.
+
+This is schema-only validation: it checks JSON parsing and JSON Schema compliance, then reports the fixture and integrity fields as `NOT_EVALUATED` and `NOT_CHECKED`.
 
 ## 6. Run the public forbidden-pattern scan
 

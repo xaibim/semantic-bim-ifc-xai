@@ -9,7 +9,7 @@ import sys
 
 sys.path.insert(0, str(ROOT / "harness"))
 
-from public_sample20_v2 import validate_records  # noqa: E402
+from public_sample20_v2 import _recompute_agreement, validate_records  # noqa: E402
 
 
 JSONL_PATH = ROOT / "sample20" / "sample20_public_records.jsonl"
@@ -179,25 +179,35 @@ class TestPublicRuntimeFixtureContract(unittest.TestCase):
             any("evidence relation is not declared in required_relationships" in err for err in errors)
         )
 
-    def test_09_valid_with_canonical_errors(self):
+    def test_09_warnings_are_not_hardcoded(self):
         records = [deep_copy_record(record) for record in self.records]
-        records[6]["canonical_check"]["warnings"] = ["unexpected canonical warning"]
+        records[6]["canonical_check"]["warnings"] = []
         ok, errors, metrics = self._validate(records)
-        self.assertFalse(ok)
+        self.assertTrue(ok, errors)
         self.assertEqual(metrics["public_schema_valid_rate"], 1.0)
-        self.assertTrue(any("canonical_check.warnings must equal" in err for err in errors))
+        self.assertFalse(any("warnings" in err.lower() for err in errors))
 
-    def test_10_expected_rejection_without_error(self):
+    def test_10_recall_uses_unique_elements(self):
         index = next(
-            idx for idx, record in enumerate(self.records)
-            if record["case_expectation"] == "EXPECTED_CANONICAL_REJECTION"
+            idx
+            for idx, record in enumerate(self.records)
+            if isinstance(record.get("model_output"), dict)
+            and isinstance(record["model_output"].get("required_psets"), list)
+            and len(record["model_output"]["required_psets"]) > 0
         )
         records = [deep_copy_record(record) for record in self.records]
-        records[index]["canonical_check"]["warnings"] = []
+        duplicate_pset = records[index]["model_output"]["required_psets"][0]
+        records[index]["model_output"]["required_psets"].append(duplicate_pset)
+        records[index]["reference_output"]["required_psets"].append(duplicate_pset)
         ok, errors, metrics = self._validate(records)
-        self.assertFalse(ok)
+        recomputed = _recompute_agreement(
+            records[index]["model_output"],
+            records[index]["reference_output"],
+        )
+        self.assertTrue(ok, errors)
         self.assertEqual(metrics["public_schema_valid_rate"], 1.0)
-        self.assertTrue(any("canonical_check.warnings must equal" in err for err in errors))
+        self.assertEqual(recomputed["required_psets_recall"], 1.0)
+        self.assertEqual(recomputed["required_relationships_recall"], records[index]["agreement"]["required_relationships_recall"])
 
     def _all_relationships(self) -> list[str]:
         relations: list[str] = []
