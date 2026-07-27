@@ -30,6 +30,30 @@ certification, a production-readiness claim, or a final benchmark.
 - **Status**: Preliminary research artifact. The comparative multi-model
   benchmark is planned, not executed.
 
+## Product Boundary
+
+- The repository is a public general scientific research artifact.
+- This repository is a general public scientific research artifact. It is not
+  the application package, technical resource request or administrative
+  documentation of any specific funding or computing call.
+- It is not a peer-reviewed publication.
+- It is not a final benchmark.
+- It is not an operational product.
+
+See [research positioning and originality boundary](docs/methodology/research_positioning_and_originality.md).
+
+## Research Positioning
+
+- Retrieval, compliance, agents, multi-agent BIM, ontology-aided querying,
+  spatial queries and Text2BIM already have prior art.
+- The current public contribution is narrower: structured contract + expected
+  negatives + deterministic stored-record validation + integrity + bounded
+  evidence terminology.
+- The comparative benchmark remains planned and not executed.
+
+See [literature capability matrix](benchmark/literature_capability_matrix.md)
+and [baseline matrix](benchmark/baseline_matrix.md).
+
 ## Research Contributions
 
 - **Structured BIM/IFC semantic contract**: a fixed field schema connecting
@@ -67,9 +91,10 @@ task.
 | RAG | Retrieval of relevant context fragments | Retrieval alone does not guarantee structured output, schema conformance or field-level evaluation. |
 | This protocol | Structured IFC-aware semantic records, validation, evidence and stored-record checks | It keeps the public boundary on committed records and planned evaluation. |
 
-The contribution is therefore not another combination of existing tools. It is
-the definition and evaluation of a structured semantic contract for BIM/IFC
-reasoning.
+The current public contribution is narrower than a complete BIM-LLM system. It
+defines and validates a stored-record semantic contract and its public
+evidence boundary. The larger governed dataset and comparative evaluation
+remain planned.
 
 ## What "semantic" means here
 

@@ -1,0 +1,273 @@
+from __future__ import annotations
+
+import re
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+REQUIRED_FILES = [
+    ROOT / "README.md",
+    ROOT / "PUBLIC_EVIDENCE.md",
+    ROOT / "benchmark" / "baseline_matrix.md",
+    ROOT / "benchmark" / "literature_capability_matrix.md",
+    ROOT / "docs" / "methodology" / "research_positioning_and_originality.md",
+    ROOT / "tests" / "test_public_research_positioning.py",
+]
+
+POSITIVES_CORE_DOCS = [
+    ROOT / "README.md",
+    ROOT / "PUBLIC_EVIDENCE.md",
+    ROOT / "benchmark" / "baseline_matrix.md",
+    ROOT / "docs" / "methodology" / "dataset_construction_and_training_readiness.md",
+    ROOT / "docs" / "methodology" / "dataset_scope_and_compute_scaling.md",
+    ROOT / "docs" / "methodology" / "xai_evaluation_position.md",
+    ROOT / "docs" / "methodology" / "xai_evidence_positioning.md",
+]
+
+CHANGED_MARKDOWN_DOCS = [
+    ROOT / "README.md",
+    ROOT / "PUBLIC_EVIDENCE.md",
+    ROOT / "benchmark" / "baseline_matrix.md",
+    ROOT / "benchmark" / "literature_capability_matrix.md",
+    ROOT / "docs" / "methodology" / "research_positioning_and_originality.md",
+]
+
+
+def read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
+
+
+def normalized(path: Path) -> str:
+    return " ".join(read_text(path).split())
+
+
+def lower_normalized(path: Path) -> str:
+    return normalized(path).lower()
+
+
+class TestPublicResearchPositioning(unittest.TestCase):
+    def test_01_required_files_exist(self):
+        for path in REQUIRED_FILES:
+            with self.subTest(path=path):
+                self.assertTrue(path.exists(), msg=str(path))
+
+    def test_02_readme_links_exact_relative_paths(self):
+        text = read_text(ROOT / "README.md")
+        self.assertIn("docs/methodology/research_positioning_and_originality.md", text)
+        self.assertIn("benchmark/literature_capability_matrix.md", text)
+        self.assertIn("benchmark/baseline_matrix.md", text)
+
+    def test_03_research_positioning_headings(self):
+        text = read_text(ROOT / "docs" / "methodology" / "research_positioning_and_originality.md")
+        headings = [
+            "## 1. Purpose",
+            "## 2. Product Boundary",
+            "## 3. What Is Already Established",
+            "## 4. Claims Not Made",
+            "## 5. Current Public Contribution",
+            "## 6. Provisional Research Gap",
+            "## 7. Planned Methodological Contribution",
+            "## 8. Evidence Boundary",
+            "## 9. Limitations",
+        ]
+        for heading in headings:
+            with self.subTest(heading=heading):
+                self.assertIn(heading, text)
+
+    def test_04_product_boundary_rows(self):
+        text = lower_normalized(ROOT / "docs" / "methodology" / "research_positioning_and_originality.md")
+        self.assertIn("product | purpose | audience | public repository status", text)
+        rows = [
+            "public scientific repository | public scientific research artifact for reproducible semantic bim/ifc evidence. | scientific readers and reviewers. | public, neutral and reusable.",
+            "external application or administrative package | submission material for a specific external call. | funding, procurement or administrative reviewers. | not part of this repository.",
+            "future scientific publications | planned dissemination in future articles or proceedings. | academic and professional readership. | not yet published or peer reviewed.",
+            "private or controlled research data | restricted datasets and controlled experimental inputs. | internal research team only. | not distributed publicly.",
+        ]
+        for row in rows:
+            with self.subTest(row=row):
+                self.assertIn(row, text)
+
+    def test_05_current_public_contribution(self):
+        text = lower_normalized(ROOT / "docs" / "methodology" / "research_positioning_and_originality.md")
+        phrases = [
+            "sample20 as a minimal sanitized reproducibility fixture",
+            "20 stored records",
+            "18 valid cases",
+            "2 expected canonical rejections",
+            "strict json schema draft 2020-12 contract",
+            "deterministic stored-record validation",
+            "separate parsing, schema, fixture-contract and integrity states",
+            "canonical three-copy integrity checking",
+            "ifc4 pset class-applicability audit",
+            "ifc4 relationship schema-participation audit",
+            "evidence-trace structural validation",
+            "external-source supportedness not evaluated",
+            "preliminary qlora aggregate compute-feasibility evidence",
+            "comparative benchmark planned and not executed",
+        ]
+        for phrase in phrases:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, text)
+        self.assertIn("no live generation", text)
+        self.assertIn("no final benchmark", text)
+        self.assertIn("no claim of professional correctness from ifc schema participation", text)
+
+    def test_06_evidence_levels(self):
+        text = read_text(ROOT / "docs" / "methodology" / "research_positioning_and_originality.md")
+        for phrase in [
+            "E0",
+            "TRACE_PRESENT",
+            "E1",
+            "REFERENCE_RESOLVABLE",
+            "E2",
+            "CLAIM_SUPPORTED",
+            "E3",
+            "PROFESSIONALLY_SUFFICIENT",
+        ]:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, text)
+
+    def test_07_current_artifact_demonstrates_e0_only(self):
+        text = lower_normalized(ROOT / "docs" / "methodology" / "research_positioning_and_originality.md")
+        self.assertIn("the current public artifact demonstrates e0 only", text)
+
+    def test_08_literature_matrix_families(self):
+        text = lower_normalized(ROOT / "benchmark" / "literature_capability_matrix.md")
+        families = [
+            "iso 19650-1 and iso 19650-2",
+            "iso 16739-1 and exchange-model research",
+            "bim lifecycle information-management research",
+            "bim semantic-enrichment reviews",
+            "semantic nlp bim extension",
+            "semantic nlp and logic reasoning for code checking",
+            "bim–llm workflow reviews",
+            "prompt-based bim information search",
+            "ontology-aided multi-constraint querying",
+            "query dsl and library-function alignment",
+            "spatial bim query systems",
+            "llm interpretation of building regulations",
+            "llm-based bim compliance checking",
+            "bim and knowledge-graph compliance checking",
+            "ethics and ai governance in aeco",
+            "retrieval-augmented generation research",
+            "autonomous-agent and tool-use research",
+            "multi-agent systems",
+            "text2bim",
+            "ifc-bench and recent ifc evaluation research",
+        ]
+        for family in families:
+            with self.subTest(family=family):
+                self.assertIn(family, text)
+
+    def test_09_established_in_literature_count(self):
+        text = read_text(ROOT / "benchmark" / "literature_capability_matrix.md")
+        self.assertEqual(text.count("ESTABLISHED_IN_LITERATURE"), 20)
+
+    def test_10_baseline_matrix_rows_and_statuses(self):
+        text = read_text(ROOT / "benchmark" / "baseline_matrix.md")
+        expected_rows = {
+            "A": r"(?m)^\| A \| Deterministic IFC/schema/catalogue lookup \| REQUIRED \|",
+            "B": r"(?m)^\| B \| Base LLM, prompt-only \| REQUIRED \|",
+            "C": r"(?m)^\| C \| Base LLM with retrieved IFC/bSDD/IDS context \| REQUIRED \|",
+            "D": r"(?m)^\| D \| Graph or ontology-grounded retrieval \| CONDITIONAL \|",
+            "E": r"(?m)^\| E \| Tool-using adaptive IFC exploration \| CONDITIONAL \|",
+            "F": r"(?m)^\| F \| Single-agent planner \| OPTIONAL \|",
+            "G": r"(?m)^\| G \| Multi-agent workflow \| OPTIONAL \|",
+            "H": r"(?m)^\| H \| QLoRA-adapted model \| OPTIONAL_AFTER_GATES \|",
+        }
+        for ident, pattern in expected_rows.items():
+            with self.subTest(ident=ident):
+                self.assertRegex(text, pattern, msg=f"Missing or mismatched row for {ident}")
+
+    def test_11_baseline_identifiers_unique(self):
+        text = read_text(ROOT / "benchmark" / "baseline_matrix.md")
+        for ident in "ABCDEFGH":
+            with self.subTest(ident=ident):
+                self.assertEqual(len(re.findall(rf"^\| {ident} \|", text, flags=re.MULTILINE)), 1)
+
+    def test_12_baseline_h_q_lora_and_d_not_q_lora(self):
+        text = read_text(ROOT / "benchmark" / "baseline_matrix.md")
+        self.assertIn("| H | QLoRA-adapted model | OPTIONAL_AFTER_GATES |", text)
+        d_line = re.search(r"^\| D \|.*$", text, flags=re.MULTILINE)
+        self.assertIsNotNone(d_line)
+        self.assertNotIn("QLoRA", d_line.group(0))
+
+    def test_13_planned_metrics_present(self):
+        text = lower_normalized(ROOT / "benchmark" / "baseline_matrix.md")
+        metrics = [
+            "strict schema validity",
+            "reference-resolution rate",
+            "entity-grounding accuracy",
+            "evidence-supportedness precision",
+            "evidence-supportedness recall",
+            "expected-negative accuracy",
+            "abstention precision",
+            "missing-input recall",
+            "safe-recovery rate",
+            "invalid ifc claim rate",
+            "task-family stratification",
+            "complexity-level stratification",
+            "repeated-run variability",
+            "wall-clock time",
+            "cpu core.hours",
+            "gpu.hours",
+            "peak ram",
+            "peak vram",
+            "storage footprint",
+        ]
+        for metric in metrics:
+            with self.subTest(metric=metric):
+                self.assertIn(metric, text)
+        self.assertIn("cannot be calculated from sample20", text)
+
+    def test_14_no_positive_priority_claims(self):
+        for path in POSITIVES_CORE_DOCS:
+            text = lower_normalized(path)
+            for phrase in [
+                "first bim-llm system",
+                "first semantic bim dataset",
+                "first natural-language ifc benchmark",
+                "first ifc benchmark",
+                "first bim multi-agent framework",
+                "first llm-based compliance checker",
+                "first text-to-bim method",
+                "state-of-the-art system",
+                "proven superiority",
+                "general aeco generalization",
+                "iso compliant ai",
+                "ai act compliant",
+                "professionally certified",
+            ]:
+                with self.subTest(path=path, phrase=phrase):
+                    self.assertNotIn(phrase, text)
+
+    def test_15_no_application_specific_tokens(self):
+        forbidden_markdown = [
+            "CPCA",
+            "MyFCT",
+            "FCT/CPCA",
+            "FCCN",
+            "RNCA",
+            "lote E",
+            "funding application",
+            "resource application",
+            "advanced computing access work",
+            "advanced-computing access work",
+            "planned advanced computing work",
+            "planned advanced-computing work",
+        ]
+        word_boundary_tokens = ["A0", "A1", "A2", "A3"]
+        for path in CHANGED_MARKDOWN_DOCS:
+            text = read_text(path)
+            low = text.lower()
+            for phrase in forbidden_markdown:
+                with self.subTest(path=path, phrase=phrase):
+                    self.assertNotIn(phrase.lower(), low)
+            for token in word_boundary_tokens:
+                with self.subTest(path=path, token=token):
+                    self.assertIsNone(re.search(rf"\b{re.escape(token)}\b", text, flags=re.IGNORECASE))
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -40,6 +40,21 @@ The evidence does not claim:
 - Deployment approval.
 - Exhaustive benchmark coverage.
 
+## Scientific Positioning Boundary
+
+This page records public executable evidence for the committed stored-record
+fixture and its validation helpers.
+
+It does not:
+
+- evaluate universal originality;
+- substitute for a systematic literature review;
+- turn `sample20` into a final benchmark;
+- replace the broader research-positioning boundary documents.
+
+See [research positioning and originality boundary](docs/methodology/research_positioning_and_originality.md)
+and [literature capability matrix](benchmark/literature_capability_matrix.md).
+
 ## Dataset Structure and Metrics Wording
 
 The public `sample20` dataset contains 20 records: 18 valid cases and 2 expected canonical rejections.
