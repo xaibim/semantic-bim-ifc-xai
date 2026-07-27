@@ -15,6 +15,27 @@ REQUIRED_FILES = [
     ROOT / "tests" / "test_public_research_positioning.py",
 ]
 
+RESEARCH_STATUS_PAIRS = [
+    ("Structured contract", "CURRENT_PUBLIC_STRUCTURAL", "PLANNED"),
+    ("Stored-record validation", "CURRENT_PUBLIC_EXECUTABLE", "PLANNED"),
+    ("Dataset governance", "CURRENT_PUBLIC_DOCUMENTED", "PLANNED"),
+    ("Root-case grouping", "NOT_CURRENTLY_EVALUATED", "PLANNED"),
+    ("Duplicate control", "CURRENT_PUBLIC_DOCUMENTED", "PLANNED"),
+    ("Leakage control", "CURRENT_PUBLIC_DOCUMENTED", "PLANNED"),
+    ("Frozen splits", "NOT_CURRENTLY_EVALUATED", "PLANNED"),
+    ("Resolvable IFC grounding", "NOT_CURRENTLY_EVALUATED", "PLANNED"),
+    ("Evidence supportedness", "NOT_CURRENTLY_EVALUATED", "PLANNED"),
+    ("Expected-negative handling", "CURRENT_PUBLIC_EXECUTABLE", "PLANNED"),
+    ("Safe recovery", "CURRENT_PUBLIC_STRUCTURAL", "PLANNED"),
+    ("Capability stratification", "NOT_CURRENTLY_EVALUATED", "PLANNED"),
+    ("Complexity stratification", "NOT_CURRENTLY_EVALUATED", "PLANNED"),
+    ("Professional review", "NOT_CURRENTLY_EVALUATED", "PLANNED"),
+    ("Statistical evaluation", "NOT_CURRENTLY_EVALUATED", "PLANNED"),
+    ("Computational measurement", "CURRENT_PUBLIC_DOCUMENTED", "PLANNED"),
+    ("Comparative benchmark", "CURRENT_PUBLIC_DOCUMENTED", "PLANNED"),
+    ("Optional model adaptation", "CURRENT_PUBLIC_DOCUMENTED", "CONDITIONAL"),
+]
+
 POSITIVES_CORE_DOCS = [
     ROOT / "README.md",
     ROOT / "PUBLIC_EVIDENCE.md",
@@ -75,7 +96,11 @@ class TestPublicResearchPositioning(unittest.TestCase):
             with self.subTest(heading=heading):
                 self.assertIn(heading, text)
 
-    def test_04_product_boundary_rows(self):
+    def test_04_no_delimites_typo(self):
+        text = read_text(ROOT / "docs" / "methodology" / "research_positioning_and_originality.md")
+        self.assertNotIn("This document delimites", text)
+
+    def test_05_product_boundary_rows(self):
         text = lower_normalized(ROOT / "docs" / "methodology" / "research_positioning_and_originality.md")
         self.assertIn("product | purpose | audience | public repository status", text)
         rows = [
@@ -88,7 +113,7 @@ class TestPublicResearchPositioning(unittest.TestCase):
             with self.subTest(row=row):
                 self.assertIn(row, text)
 
-    def test_05_current_public_contribution(self):
+    def test_06_current_public_contribution(self):
         text = lower_normalized(ROOT / "docs" / "methodology" / "research_positioning_and_originality.md")
         phrases = [
             "sample20 as a minimal sanitized reproducibility fixture",
@@ -109,11 +134,22 @@ class TestPublicResearchPositioning(unittest.TestCase):
         for phrase in phrases:
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, text)
-        self.assertIn("no live generation", text)
-        self.assertIn("no final benchmark", text)
-        self.assertIn("no claim of professional correctness from ifc schema participation", text)
+        self.assertIn(
+            "it does not include live generation, a final benchmark, or any claim of professional correctness from ifc schema participation.",
+            text,
+        )
+        self.assertNotIn("- no live generation;", text)
+        self.assertNotIn("- no final benchmark;", text)
+        self.assertNotIn("- no claim of professional correctness from ifc schema participation.", text)
 
-    def test_06_evidence_levels(self):
+    def test_07_research_status_table(self):
+        text = read_text(ROOT / "docs" / "methodology" / "research_positioning_and_originality.md")
+        for dimension, current_status, planned_status in RESEARCH_STATUS_PAIRS:
+            pattern = rf"(?m)^\| {re.escape(dimension)} \| {re.escape(current_status)} \| {re.escape(planned_status)} \|"
+            with self.subTest(dimension=dimension):
+                self.assertRegex(text, pattern)
+
+    def test_08_evidence_levels(self):
         text = read_text(ROOT / "docs" / "methodology" / "research_positioning_and_originality.md")
         for phrase in [
             "E0",
@@ -128,11 +164,16 @@ class TestPublicResearchPositioning(unittest.TestCase):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, text)
 
-    def test_07_current_artifact_demonstrates_e0_only(self):
+    def test_09_current_artifact_demonstrates_e0_only(self):
         text = lower_normalized(ROOT / "docs" / "methodology" / "research_positioning_and_originality.md")
         self.assertIn("the current public artifact demonstrates e0 only", text)
 
-    def test_08_literature_matrix_families(self):
+    def test_10_seed_bibliography_identifiers(self):
+        text = read_text(ROOT / "benchmark" / "literature_capability_matrix.md")
+        identifiers = {int(match) for match in re.findall(r"\[(\d+)\]", text)}
+        self.assertEqual(identifiers, set(range(1, 29)))
+
+    def test_11_literature_matrix_families(self):
         text = lower_normalized(ROOT / "benchmark" / "literature_capability_matrix.md")
         families = [
             "iso 19650-1 and iso 19650-2",
@@ -141,7 +182,7 @@ class TestPublicResearchPositioning(unittest.TestCase):
             "bim semantic-enrichment reviews",
             "semantic nlp bim extension",
             "semantic nlp and logic reasoning for code checking",
-            "bim–llm workflow reviews",
+            "bim-llm workflow reviews",
             "prompt-based bim information search",
             "ontology-aided multi-constraint querying",
             "query dsl and library-function alignment",
@@ -160,11 +201,30 @@ class TestPublicResearchPositioning(unittest.TestCase):
             with self.subTest(family=family):
                 self.assertIn(family, text)
 
-    def test_09_established_in_literature_count(self):
+    def test_12_established_in_literature_count(self):
         text = read_text(ROOT / "benchmark" / "literature_capability_matrix.md")
         self.assertEqual(text.count("ESTABLISHED_IN_LITERATURE"), 20)
 
-    def test_10_baseline_matrix_rows_and_statuses(self):
+    def test_13_literature_foundations_and_notes(self):
+        text = read_text(ROOT / "benchmark" / "literature_capability_matrix.md")
+        phrases = [
+            "Methodological and Explanatory Foundations",
+            "[20], [21]",
+            "[22]",
+            "Seed Bibliography Normalization Notes",
+            "article 106905",
+            "article 105067",
+            "article 107066",
+            "article 7065",
+            "COLING 2025",
+            "04025142",
+            "LLM-Based Multi-Agent System Approach",
+        ]
+        for phrase in phrases:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, text)
+
+    def test_14_baseline_matrix_rows_and_statuses(self):
         text = read_text(ROOT / "benchmark" / "baseline_matrix.md")
         expected_rows = {
             "A": r"(?m)^\| A \| Deterministic IFC/schema/catalogue lookup \| REQUIRED \|",
@@ -180,20 +240,20 @@ class TestPublicResearchPositioning(unittest.TestCase):
             with self.subTest(ident=ident):
                 self.assertRegex(text, pattern, msg=f"Missing or mismatched row for {ident}")
 
-    def test_11_baseline_identifiers_unique(self):
+    def test_15_baseline_identifiers_unique(self):
         text = read_text(ROOT / "benchmark" / "baseline_matrix.md")
         for ident in "ABCDEFGH":
             with self.subTest(ident=ident):
                 self.assertEqual(len(re.findall(rf"^\| {ident} \|", text, flags=re.MULTILINE)), 1)
 
-    def test_12_baseline_h_q_lora_and_d_not_q_lora(self):
+    def test_16_baseline_h_q_lora_and_d_not_q_lora(self):
         text = read_text(ROOT / "benchmark" / "baseline_matrix.md")
         self.assertIn("| H | QLoRA-adapted model | OPTIONAL_AFTER_GATES |", text)
         d_line = re.search(r"^\| D \|.*$", text, flags=re.MULTILINE)
         self.assertIsNotNone(d_line)
         self.assertNotIn("QLoRA", d_line.group(0))
 
-    def test_13_planned_metrics_present(self):
+    def test_17_planned_metrics_present(self):
         text = lower_normalized(ROOT / "benchmark" / "baseline_matrix.md")
         metrics = [
             "strict schema validity",
@@ -221,7 +281,32 @@ class TestPublicResearchPositioning(unittest.TestCase):
                 self.assertIn(metric, text)
         self.assertIn("cannot be calculated from sample20", text)
 
-    def test_14_no_positive_priority_claims(self):
+    def test_18_readme_updates(self):
+        text = lower_normalized(ROOT / "README.md")
+        phrases = [
+            "eight-family baseline matrix",
+            "deterministic lookup",
+            "retrieved ifc/bsdd/ids context",
+            "multi-agent workflows",
+            "optional qlora adaptation",
+            "planned",
+            "not executed",
+        ]
+        for phrase in phrases:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, text)
+        expected = (
+            "this repository is a general public scientific research artifact. it is not "
+            "the application package, technical resource request or administrative "
+            "documentation of any specific funding or computing call."
+        )
+        self.assertIn(expected, text)
+        self.assertEqual(
+            text.count("this repository is a general public scientific research artifact"),
+            1,
+        )
+
+    def test_19_no_positive_priority_claims(self):
         for path in POSITIVES_CORE_DOCS:
             text = lower_normalized(path)
             for phrase in [
@@ -242,7 +327,7 @@ class TestPublicResearchPositioning(unittest.TestCase):
                 with self.subTest(path=path, phrase=phrase):
                     self.assertNotIn(phrase, text)
 
-    def test_15_no_application_specific_tokens(self):
+    def test_20_no_application_specific_tokens(self):
         forbidden_markdown = [
             "C" + "PCA",
             "My" + "FCT",

@@ -32,7 +32,6 @@ certification, a production-readiness claim, or a final benchmark.
 
 ## Product Boundary
 
-- The repository is a public general scientific research artifact.
 - This repository is a general public scientific research artifact. It is not
   the application package, technical resource request or administrative
   documentation of any specific funding or computing call.
@@ -74,9 +73,11 @@ and [baseline matrix](benchmark/baseline_matrix.md).
 - **Preliminary QLoRA compute calibration**: bounded GPU-hour / VRAM
   calibration from a private, controlled, synthetic pilot (private pilot with
   public aggregate evidence only; not a comparative benchmark result).
-- **Planned comparative benchmark**: a baseline matrix (rule/schema lookup,
-  prompt-only LLM, retrieved-context LLM, optional graph/ontology retrieval)
-  to be executed, not yet reported.
+- **Planned comparative benchmark**: an eight-family baseline matrix covering
+  deterministic lookup, prompt-only LLMs, retrieved IFC/bSDD/IDS context,
+  graph or ontology grounding, adaptive tool use, single-agent planning,
+  multi-agent workflows and optional QLoRA adaptation after prerequisite
+  gates, to be executed, not yet reported.
 
 ## Why not just IfcOpenShell + LLM + RAG?
 

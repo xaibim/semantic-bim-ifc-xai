@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-This document delimites the scientific position of the repository. It
+This document delimits the scientific position of the repository. It
 separates current public evidence from planned work, avoids universal priority
 claims, and frames the repository as a general public scientific research
 artifact rather than a submission package.
@@ -86,10 +86,6 @@ The current public contribution is limited to:
 It does not include live generation, a final benchmark, or any claim of
 professional correctness from IFC schema participation.
 
-- no live generation;
-- no final benchmark;
-- no claim of professional correctness from IFC schema participation.
-
 ## 6. Provisional Research Gap
 
 The reviewed research landscape already includes BIM information retrieval,
@@ -110,21 +106,32 @@ not a universal priority claim.
 | Structured contract | CURRENT_PUBLIC_STRUCTURAL | PLANNED | Contract definition and field inventory |
 | Stored-record validation | CURRENT_PUBLIC_EXECUTABLE | PLANNED | Deterministic validation outputs |
 | Dataset governance | CURRENT_PUBLIC_DOCUMENTED | PLANNED | Governance notes and frozen fixtures |
-| Root-case grouping | CURRENT_PUBLIC_DOCUMENTED | PLANNED | Grouping rules and annotations |
+| Root-case grouping | NOT_CURRENTLY_EVALUATED | PLANNED | Grouping rules and annotations |
 | Duplicate control | CURRENT_PUBLIC_DOCUMENTED | PLANNED | Deduplication audit evidence |
 | Leakage control | CURRENT_PUBLIC_DOCUMENTED | PLANNED | Leakage screening protocol |
-| Frozen splits | CURRENT_PUBLIC_DOCUMENTED | PLANNED | Split specification and freeze record |
-| Resolvable IFC grounding | CURRENT_PUBLIC_STRUCTURAL | PLANNED | Reference-resolvable grounding links |
-| Evidence supportedness | CURRENT_PUBLIC_STRUCTURAL | PLANNED | Supportedness labels and review traces |
+| Frozen splits | NOT_CURRENTLY_EVALUATED | PLANNED | Split specification and freeze record |
+| Resolvable IFC grounding | NOT_CURRENTLY_EVALUATED | PLANNED | Reference-resolvable grounding links |
+| Evidence supportedness | NOT_CURRENTLY_EVALUATED | PLANNED | Supportedness labels and review traces |
 | Expected-negative handling | CURRENT_PUBLIC_EXECUTABLE | PLANNED | Rejection and abstention outcomes |
 | Safe recovery | CURRENT_PUBLIC_STRUCTURAL | PLANNED | Recovery-state records |
-| Capability stratification | CURRENT_PUBLIC_DOCUMENTED | PLANNED | Task-family stratification scheme |
-| Complexity stratification | CURRENT_PUBLIC_DOCUMENTED | PLANNED | Complexity tiers and annotations |
-| Professional review | CURRENT_PUBLIC_DOCUMENTED | PLANNED | Reviewer protocol and notes |
-| Statistical evaluation | CURRENT_PUBLIC_DOCUMENTED | PLANNED | Summary statistics and uncertainty measures |
+| Capability stratification | NOT_CURRENTLY_EVALUATED | PLANNED | Task-family stratification scheme |
+| Complexity stratification | NOT_CURRENTLY_EVALUATED | PLANNED | Complexity tiers and annotations |
+| Professional review | NOT_CURRENTLY_EVALUATED | PLANNED | Reviewer protocol and notes |
+| Statistical evaluation | NOT_CURRENTLY_EVALUATED | PLANNED | Summary statistics and uncertainty measures |
 | Computational measurement | CURRENT_PUBLIC_DOCUMENTED | PLANNED | Runtime, CPU, GPU and memory measurements |
 | Comparative benchmark | CURRENT_PUBLIC_DOCUMENTED | PLANNED | Baseline comparison protocol |
 | Optional model adaptation | CURRENT_PUBLIC_DOCUMENTED | CONDITIONAL | Adaptation gate criteria and bounded pilot evidence |
+
+Status interpretation:
+
+- `CURRENT_PUBLIC_EXECUTABLE` means that an executable public check exists.
+- `CURRENT_PUBLIC_STRUCTURAL` means that the public contract contains the
+  relevant fields or states, without proving external correctness.
+- `CURRENT_PUBLIC_DOCUMENTED` means that methodology, planning or bounded
+  aggregate evidence is publicly documented, but the final evaluation has not
+  been executed.
+- `NOT_CURRENTLY_EVALUATED` means that the current public artifact does not
+  provide an executable or evidentiary assessment of that dimension.
 
 ## 8. Evidence Boundary
 
