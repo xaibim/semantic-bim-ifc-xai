@@ -42,10 +42,9 @@ was rejected for several critical reasons:
    canonical classification catalogues and standard property sets. Plain text
    outputs fail to maintain alignments with these Single Sources of Truth
    (SSOT).
-3. **Absence of Verified Source Linkage and Rationale**: A plain text response
-   cannot easily be audited. Engineering decisions benefit from a structured
-   evidence trace, but the current public fixture only carries structured labels
-   and does not resolve an external source.
+3. **Absence of Verified Source Linkage and Rationale**: Plain text outputs do
+   not by themselves guarantee alignment with canonical catalogues or
+   structured contracts.
 4. **Mutational Safety**: Plain instructions do not distinguish between safe
    queries (read-only preview) and destructive mutations (model alterations),
    presenting risks to the integrity of Common Data Environments (CDE).

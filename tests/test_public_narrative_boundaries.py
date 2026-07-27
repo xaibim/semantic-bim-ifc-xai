@@ -95,13 +95,17 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
         self.assertIn("canonical public position", text)
         self.assertIn("structured audit field", text)
         self.assertIn("external-source supportedness", text)
+        self.assertIn("loading and validating committed stored records", text)
+        self.assertIn("does not mean rerunning model generation or the original prompt-to-output pipeline", text)
         self.assertIn("causal attribution", text)
         self.assertIn("certification", text)
         for phrase in [
             "candidate classes",
-            "confidence and reason codes",
+            "confidence",
+            "evidence relevance",
             "field-level faithfulness",
             "replay reproducibility",
+            "source-to-claim entailment",
         ]:
             self.assertNotIn(phrase, text)
 
@@ -109,11 +113,14 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
         text = normalized_lower_text(
             ROOT / "benchmark" / "qlora" / "XAIBIM_QWEN25_7B_QLORA_PRELIMINARY_RESULTS.md"
         )
-        self.assertIn("agreement against stored structured targets in the public evaluator", text)
+        self.assertIn("evidence-trace exact match and evidence-trace field f1 measure agreement against stored structured target fields", text)
         self.assertIn("external-source supportedness", text)
+        self.assertIn("source-to-claim entailment", text)
+        self.assertIn("causal attribution", text)
+        self.assertIn("professional evidence sufficiency", text)
 
     def test_09_dataset_methodology_boundary(self):
-        text = lower_text(ROOT / "docs" / "methodology" / "dataset_construction_and_training_readiness.md")
+        text = normalized_lower_text(ROOT / "docs" / "methodology" / "dataset_construction_and_training_readiness.md")
         self.assertNotIn("v0.1", text)
         self.assertNotIn("v0.1.1", text)
         self.assertNotIn("v0.2 final public research artifact", text)
@@ -122,6 +129,7 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
         self.assertIn("verifiable current state", text)
         self.assertIn("no tag or release state is claimed", text)
         self.assertIn("public sanitized frozen fixture", text)
+        self.assertIn("do not by themselves guarantee alignment with canonical catalogues or structured contracts", text)
 
     def test_10_validation_gates_boundary(self):
         text = normalized_lower_text(ROOT / "docs" / "methodology" / "validation_gates.md")

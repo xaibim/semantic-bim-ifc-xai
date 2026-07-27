@@ -7,7 +7,7 @@ authors:
     given-names: "Dean Delmo"
 url: "https://github.com/xaibim/semantic-bim-ifc-xai"
 repository-code: "https://github.com/xaibim/semantic-bim-ifc-xai"
-abstract: "Public academic research artifact for stored-record semantic BIM/IFC sample validation, strict schema validation, three-copy integrity verification, expected-negative handling, and preliminary QLoRA compute-feasibility evidence-trace. The comparative multi-model benchmark is planned and has not yet been executed. Code is MIT; public documentation and sample20 data are CC-BY-4.0 (see LICENSES.md)."
+abstract: "Public academic research artifact for stored-record semantic BIM/IFC validation, strict schema validation, three-copy integrity verification, expected-negative handling, evidence-trace structure, and preliminary QLoRA compute-feasibility evidence. The comparative multi-model benchmark is planned and has not yet been executed. Code is MIT; public documentation and sample20 data are CC-BY-4.0 (see LICENSES.md)."
 keywords:
   - BIM
   - IFC

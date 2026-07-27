@@ -1,11 +1,18 @@
 # Internal preliminary semantic BIM experiments
 
+Historical internal aggregate note. The underlying records, predictions and
+reports are not public; the aggregate values are not an independently
+reproducible public benchmark. Current public terminology and validation
+contracts are defined by README.md, PUBLIC_EVIDENCE.md and
+docs/methodology/xai_evaluation_position.md.
+
 ## Status
 
 This document summarizes internal preliminary experiments used to test whether
 the semantic BIM/IFC compilation protocol is technically measurable.
 
-The underlying internal report files are not part of this public release. The
+The underlying internal report files are not part of this public repository
+snapshot. The
 values below are aggregate internal feasibility indicators. They are included
 to document motivation and scope, not to provide an independently reproducible
 public benchmark.
@@ -70,8 +77,8 @@ Interpretation: this smoke test should not be read as a performance claim. Its
 value is methodological: it confirms that the harness can both detect valid
 structured outputs and expose measurable failure modes.
 
-`evidence_trace_completeness` is a stored-field completeness measure inside the
-public harness. It is not an external evidence-supportedness score.
+This historical metric counts stored evidence-trace field completeness. It does
+not establish external evidence grounding or supportedness.
 
 ## V4 5k preliminary run
 

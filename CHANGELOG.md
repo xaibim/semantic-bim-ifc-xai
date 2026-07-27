@@ -1,7 +1,10 @@
 # Changelog
 
-This changelog is historical chronology only. It does not by itself declare a
-Git tag, GitHub Release, or publication milestone.
+Historical repository chronology notice: headings below describe repository
+development notes. They do not assert that corresponding Git tags or GitHub
+Releases exist. Current commands, output states and evidentiary terminology are
+defined by README.md, QUICKSTART.md, PUBLIC_EVIDENCE.md and the sample20 v2
+contract.
 
 ## Unreleased
 

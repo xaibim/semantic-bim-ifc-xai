@@ -108,9 +108,10 @@ The original evaluator treated `evidence_trace` as a list. The dataset
 contract uses an object. The reevaluation corrected the evaluator using the
 stored predictions. No retraining was required.
 
-These `evidence_trace` metrics measure agreement against stored structured
-targets in the public evaluator. They do not measure external-source
-supportedness, citation truth, or source-based certification.
+Evidence-trace exact match and evidence-trace field F1 measure agreement
+against stored structured target fields. They do not measure external-source
+supportedness, source-to-claim entailment, causal attribution or professional
+evidence sufficiency.
 
 | Metric | Base model | QLoRA adapter |
 |---|---:|---:|
