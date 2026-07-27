@@ -1,16 +1,23 @@
 from __future__ import annotations
 
+import copy
 import json
 import subprocess
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 OLD_PHRASE = "evidence-" + "grounded"
 REF_SHA = "91d2ac59ed29d5b2a1ddf528acd2df76cb77d104"
-REF_JSON_TITLE = "Preliminary QLoRA Computational Feasibility Run for Evidence-Grounded Semantic BIM/IFC Outputs"
-REF_JSON_PURPOSE = "Demonstrate that a bounded QLoRA workflow can be executed and measured on commodity GPU infrastructure."
-REF_JSON_BOUNDARY = "evidence_trace_exact_match and evidence_trace_field_f1 measure agreement against stored structured target fields; they do not evaluate external-source supportedness, source-to-claim entailment, causal attribution or professional evidence sufficiency."
+REF_JSON_TITLE = (
+    "Preliminary QLoRA Computational Feasibility Run for Evidence-"
+    "Grounded Semantic BIM/IFC Outputs"
+)
+REF_JSON_PURPOSE = (
+    "Demonstrate that a bounded QLoRA workflow can be executed and measured on "
+    "commodity GPU infrastructure."
+)
 
 
 def read_text(path: Path) -> str:
@@ -23,11 +30,18 @@ def load_reference_json() -> dict:
         raw = subprocess.check_output(["git", "show", ref_spec], cwd=ROOT, text=True)
         return json.loads(raw)
     except subprocess.CalledProcessError:
-        current = json.loads(read_text(ROOT / "benchmark" / "qlora" / "xaibim_qwen25_7b_qlora_preliminary_public_results.json"))
-        current["title"] = REF_JSON_TITLE
-        current["scope"]["purpose"] = REF_JSON_PURPOSE
-        current["corrected_held_out_results"]["evidence_trace_metric_boundary"] = REF_JSON_BOUNDARY
-        return current
+        current = json.loads(
+            read_text(ROOT / "benchmark" / "qlora" / "xaibim_qwen25_7b_qlora_preliminary_public_results.json")
+        )
+        return reconstruct_reference_json(current)
+
+
+def reconstruct_reference_json(current: dict) -> dict:
+    reference = copy.deepcopy(current)
+    reference["title"] = REF_JSON_TITLE
+    reference["scope"]["purpose"] = REF_JSON_PURPOSE
+    reference["corrected_held_out_results"].pop("evidence_trace_metric_boundary", None)
+    return reference
 
 
 def leaf_paths(value, prefix=""):
@@ -133,6 +147,33 @@ class TestPublicEvidenceTraceTerminology(unittest.TestCase):
         ref_hashes = {path: value for path, value in leaf_paths(ref) if path.endswith("sha256")}
         data_hashes = {path: value for path, value in leaf_paths(data) if path.endswith("sha256")}
         self.assertEqual(ref_hashes, data_hashes)
+
+    def test_03b_forced_shallow_fallback_reference_reconstruction(self):
+        with patch(
+            "subprocess.check_output",
+            side_effect=subprocess.CalledProcessError(128, ["git", "show"]),
+        ):
+            reference = load_reference_json()
+
+        current = json.loads(
+            read_text(ROOT / "benchmark" / "qlora" / "xaibim_qwen25_7b_qlora_preliminary_public_results.json")
+        )
+        delta = diff_paths(reference, current)
+        self.assertEqual(
+            delta,
+            {
+                "title",
+                "scope.purpose",
+                "corrected_held_out_results.evidence_trace_metric_boundary",
+            },
+        )
+        self.assertNotIn("evidence_trace_metric_boundary", reference["corrected_held_out_results"])
+        ref_numeric = {path: value for path, value in leaf_paths(reference) if isinstance(value, (int, float)) and not isinstance(value, bool)}
+        current_numeric = {path: value for path, value in leaf_paths(current) if isinstance(value, (int, float)) and not isinstance(value, bool)}
+        self.assertEqual(ref_numeric, current_numeric)
+        ref_hashes = {path: value for path, value in leaf_paths(reference) if path.endswith("sha256")}
+        current_hashes = {path: value for path, value in leaf_paths(current) if path.endswith("sha256")}
+        self.assertEqual(ref_hashes, current_hashes)
 
     def test_04_xai_compatibility_note(self):
         text = " ".join(read_text(ROOT / "docs" / "methodology" / "xai_evidence_positioning.md").lower().split())
