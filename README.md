@@ -79,6 +79,19 @@ and [baseline matrix](benchmark/baseline_matrix.md).
   multi-agent workflows and optional QLoRA adaptation after prerequisite
   gates, to be executed, not yet reported.
 
+## Planned Benchmark Methodology
+
+- [benchmark/benchmark_execution_protocol.md](benchmark/benchmark_execution_protocol.md)
+- [benchmark/statistical_analysis_plan.md](benchmark/statistical_analysis_plan.md)
+- [docs/methodology/dataset_governance_split_and_leakage_protocol.md](docs/methodology/dataset_governance_split_and_leakage_protocol.md)
+- [benchmark/baseline_matrix.md](benchmark/baseline_matrix.md)
+
+These documents define planned methodology. They do not report comparative
+benchmark results, and they do not convert sample20 into a benchmark.
+
+Measured pilot compute values and independently calculated resource-capacity
+estimates are distinct from unexecuted comparative performance claims.
+
 ## Why not just IfcOpenShell + LLM + RAG?
 
 IfcOpenShell, LLMs, and retrieval-augmented generation are useful components,

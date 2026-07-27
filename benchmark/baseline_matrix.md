@@ -17,6 +17,28 @@ does not establish comparative performance for any method.
 | G | Multi-agent workflow | OPTIONAL | Multiple agents cooperate in a workflow; it is not presumed superior to the single-agent planner. |
 | H | QLoRA-adapted model | OPTIONAL_AFTER_GATES | Bounded adaptation studied only after dataset-quality and baseline gates. |
 
+## Execution Prerequisites
+
+The benchmark may only be executed after these gates are frozen:
+
+- scope freeze;
+- dataset version freeze;
+- root-case grouping;
+- deduplication audit;
+- cross-split leakage audit;
+- retrieval-corpus leakage audit;
+- resolvable-reference gate;
+- metric implementation freeze;
+- statistical-analysis freeze;
+- compute instrumentation;
+- professional-review protocol where applicable.
+
+## Canonical Planned Protocols
+
+- [Planned Semantic BIM/IFC Benchmark Execution Protocol](benchmark_execution_protocol.md)
+- [Planned Statistical Analysis Plan](statistical_analysis_plan.md)
+- [Planned Dataset Governance, Split and Leakage Protocol](../docs/methodology/dataset_governance_split_and_leakage_protocol.md)
+
 ## Metrics
 
 Planned metrics:
@@ -53,6 +75,8 @@ that are resolvable. They cannot be calculated from sample20.
 - QLoRA adaptation is optional and is not required for successful completion
   of the dataset and benchmark work.
 - The matrix will be executed after scope freeze and prerequisite dataset-quality gates.
+- Measured compute values may calibrate resource expectations, but they do
+  not establish superiority.
 
 ## Links
 

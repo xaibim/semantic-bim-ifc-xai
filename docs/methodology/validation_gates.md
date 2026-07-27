@@ -101,6 +101,38 @@ currently executable check.
 
 ---
 
+## Layer C - Planned Comparative Benchmark Gates
+
+The planned comparative benchmark gates are methodology controls and not public
+currently executed checks. This current public planned methodology is frozen
+for future use. Every gate below is `PLANNED_NOT_EXECUTED`.
+
+| Gate | Meaning | Evidence required |
+| --- | --- | --- |
+| G0 | `SCOPE_AND_MANIFEST_FROZEN` | Frozen benchmark scope and manifest snapshot. |
+| G1 | `DATASET_LINEAGE_AND_RIGHTS_REVIEWED` | Dataset lineage, permissions and rights review record. |
+| G2 | `ROOT_CASE_DEDUP_AND_LEAKAGE_AUDITED` | Root-case grouping, deduplication and leakage audit log. |
+| G3 | `RESOLVABLE_GROUNDING_AVAILABLE` | Verified resolvable references and grounding resources. |
+| G4 | `REQUIRED_BASELINES_EXECUTABLE` | Executable baseline definitions for A, B and C. |
+| G5 | `METRICS_AND_STATISTICAL_PLAN_FROZEN` | Frozen metric implementation and statistical-analysis plan. |
+| G6 | `PROFESSIONAL_REVIEW_PROTOCOL_READY` | Frozen professional-review protocol where professional sufficiency is claimed. |
+| G7 | `COMPUTE_MEASUREMENT_READY` | Frozen compute instrumentation and resource-measurement plan. |
+| G8 | `FINAL_SCORING_LOCKED` | Locked scoring manifest and immutable final-scoring rules. |
+
+The planned gates do not authorize certification or production. A, B and C
+require G0, G1, G2, G3, G4, G5 and G7 before final scoring. D and E require
+those gates plus real grounding tools and verified grounding resources. F and G
+remain optional. H requires the dataset-quality gates and results from A, B and
+C. G6 is mandatory only for metrics that claim professional sufficiency.
+
+Links to the planned methodology documents:
+
+- [Planned Semantic BIM/IFC Benchmark Execution Protocol](../../benchmark/benchmark_execution_protocol.md)
+- [Planned Statistical Analysis Plan](../../benchmark/statistical_analysis_plan.md)
+- [Planned Dataset Governance, Split and Leakage Protocol](dataset_governance_split_and_leakage_protocol.md)
+
+---
+
 ## Planned Baselines
 
 The canonical identifiers, names and statuses are maintained in [Baseline
