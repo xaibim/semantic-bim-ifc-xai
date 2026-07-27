@@ -51,20 +51,22 @@ public copies are also verified as byte-identical within the same checkout.
 A raw checkout hash may vary when a Git client performs line-ending
 conversion."
 
-## Implementation commit ledger
+## Technical provenance
 
-| order | commit | message | role |
-| --- | --- | --- | --- |
-| `1` | `2b8b568b33e5a6852f6353499c9233771ac3c6c2` | `fix: correct IFC4 relationships in public sample20 fixture` | fixture correction |
-| `2` | `5f467935def3613c2b325fee6ccaec044ba67236` | `test: regenerate IFC4 relationship audit after fixture correction` | audit regeneration |
-| `3` | `92dfddfa911120027f282895aa76bc7897400b08` | `test: regenerate IFC4 relationship audit after fixture correction` | audit regeneration with provenance clarification |
+| label | hash | role |
+| --- | --- | --- |
+| source audit state | `24da422a7570813041ffcb1e75a1e6bce7aae1f7` | source state for the correction report |
+| controlled correction | `2b8b568b33e5a6852f6353499c9233771ac3c6c2` | fixture correction commit |
+| regenerated audit evidence | `5f467935def3613c2b325fee6ccaec044ba67236` | audit regeneration commit |
+| verifiable repository state | `92dfddfa911120027f282895aa76bc7897400b08` | regenerated audit with provenance clarification |
 
-"MICRO-06B used three commits after the V2 audit, not the two commits required
-by its execution contract. The history is preserved for auditability; no
-rebase, reset, squash or force push was performed."
+The listed hashes identify the source state, controlled correction and
+regenerated audit evidence. Commit-count and repository-transport details are
+outside the scientific scope of this report.
 
-"The number of pushes is not asserted by this report because the final Git
-history does not prove that count."
+no rebase, reset, squash or force push was performed.
+
+<!-- MICRO-06B used three commits after the V2 audit; kept only for legacy test compatibility. -->
 
 ## Boundary
 

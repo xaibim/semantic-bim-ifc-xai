@@ -26,8 +26,8 @@ source SHA-256:
 1. applicable original Psets were preserved;
 2. incompatible and unknown names were removed;
 3. `Pset_QuantityTakeOff` was not converted into a Qto inside `required_psets`;
-4. reviewed class-specific occurrence Psets were introduced only where semantically appropriate;
-5. an empty `required_psets` array is intentional where no Pset is required or where the missing context prevents safe Pset selection;
+4. reviewed class-specific occurrence Psets were introduced only where class-applicable and selected for fixture consistency; professional-task suitability was not evaluated;
+5. an empty `required_psets` array is intentional where no class-applicable Pset was selected for this fixture record or where the missing context prevents safe Pset selection;
 6. `model_output` and `reference_output` remain identical;
 7. the stored agreement remains fixture consistency, not model performance.
 
@@ -53,6 +53,10 @@ source SHA-256:
 | `3dab4b257ae52bfc` | `IfcFlowTerminal` | `["Pset_DistributionFlowElementCommon", "Pset_QuantityTakeOff", "Pset_WallCommon"]` | `[]` | no safe Pset remains for this record |
 | `8f91faebc05dd115` | `IfcAsset` | `["Pset_QuantityTakeOff", "Pset_MaterialCommon"]` | `[]` | no safe Pset remains for this record |
 | `7f1ea524d9fdbdcb` | `IfcColumn` | `["Pset_QuantityTakeOff", "Pset_ColumnCommon", "Pset_BeamCommon", "Pset_SlabCommon"]` | `["Pset_ColumnCommon"]` | preserve the class-applicable Pset only |
+
+This audit verifies IFC4 class applicability only. Selection for a stored
+fixture record does not establish task-level semantic suitability, safety,
+necessity or professional sufficiency.
 
 The IFC4 Pset correction applies only to the frozen public sample20 fixture.
 The broader future research dataset will define Psets, quantity sets and material associations as separate semantic dimensions.

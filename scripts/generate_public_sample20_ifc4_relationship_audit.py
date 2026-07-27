@@ -46,11 +46,11 @@ def ensure_jsonl_sources() -> None:
     base_bytes = JSONL_PATHS[0].read_bytes()
     for path in JSONL_PATHS[1:]:
         if path.read_bytes() != base_bytes:
-            raise SystemExit("STOP_PR15_MICRO_06C_JSONL_COPY_OR_HASH_MISMATCH")
+            raise SystemExit("PUBLIC_SAMPLE_JSONL_COPY_OR_HASH_MISMATCH")
     expected_hash = EXPECTED_JSONL_LF_NORMALIZED_SHA256
     for path in JSONL_PATHS:
         if sha256_lf_normalized(path) != expected_hash:
-            raise SystemExit("STOP_PR15_MICRO_06C_JSONL_COPY_OR_HASH_MISMATCH")
+            raise SystemExit("PUBLIC_SAMPLE_JSONL_COPY_OR_HASH_MISMATCH")
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -62,7 +62,7 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
         try:
             records.append(json.loads(line))
         except json.JSONDecodeError as exc:
-            raise SystemExit(f"STOP_PR15_MICRO_06B_JSONL_PARSE_ERROR:{path}:{line_number}:{exc}") from exc
+            raise SystemExit(f"PUBLIC_SAMPLE_JSONL_PARSE_ERROR:{path}:{line_number}:{exc}") from exc
     return records
 
 
@@ -296,18 +296,18 @@ def build_audit() -> dict[str, Any]:
     records = load_jsonl(SOURCE_JSONL)
     source_lf_normalized_sha256 = sha256_lf_normalized(SOURCE_JSONL)
     if source_lf_normalized_sha256.lower() != EXPECTED_JSONL_LF_NORMALIZED_SHA256:
-        raise SystemExit("STOP_PR15_MICRO_06C_JSONL_COPY_OR_HASH_MISMATCH")
+        raise SystemExit("PUBLIC_SAMPLE_JSONL_COPY_OR_HASH_MISMATCH")
     if len(records) != EXPECTED_RECORD_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
     sample_ids = [record.get("sample_id") for record in records]
     if len(set(sample_ids)) != EXPECTED_RECORD_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
     if sum(record.get("case_expectation") == "VALID" for record in records) != EXPECTED_POSITIVE_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
     if sum(record.get("case_expectation") == "EXPECTED_CANONICAL_REJECTION" for record in records) != EXPECTED_EXPECTED_NEGATIVE_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
     if any(record.get("model_output") != record.get("reference_output") for record in records):
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
 
     class_catalog, relationship_catalog, relationship_declarations = build_catalogs(schema, records)
     record_audits = build_record_audits(records, class_catalog, relationship_catalog, relationship_declarations)
@@ -326,21 +326,21 @@ def build_audit() -> dict[str, Any]:
     schema_incompatible_count = sum(row["compatibility_state"] == "SCHEMA_INCOMPATIBLE" for row in relationship_rows)
 
     if len(class_catalog) != EXPECTED_UNIQUE_IFC_CLASS_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
     if len(relationship_catalog) != EXPECTED_UNIQUE_RELATIONSHIP_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
     if len(relationship_rows) != EXPECTED_RECORD_RELATIONSHIP_PAIR_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
     if evidence_relation_declared_count != EXPECTED_EVIDENCE_RELATION_DECLARED_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
     if exact_inverse_endpoint_count != EXPECTED_EXACT_INVERSE_ENDPOINT_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
     if inherited_supertype_compatible_count != EXPECTED_INHERITED_SUPERTYPE_COMPATIBLE_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
     if schema_compatible_count != EXPECTED_SCHEMA_COMPATIBLE_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
     if schema_incompatible_count != EXPECTED_SCHEMA_INCOMPATIBLE_COUNT:
-        raise SystemExit("STOP_PR15_MICRO_06B_AUDIT_COUNT_MISMATCH")
+        raise SystemExit("PUBLIC_RELATIONSHIP_AUDIT_COUNT_MISMATCH")
 
     summary = {
         "record_count": EXPECTED_RECORD_COUNT,

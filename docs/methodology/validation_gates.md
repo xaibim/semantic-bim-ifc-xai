@@ -66,8 +66,11 @@ These checks run against the public sample using the public harness and CI.
 8. **Published subtype-aware IFC4 relationship schema audit** - schema
    compatibility only. Schema compatibility does not prove semantic task
    suitability, occurrence in a real IFC model or correct instantiation.
-9. **QLoRA aggregate verifier** - the deterministic verifier checks the
-   published aggregate QLoRA metrics file.
+9. **QLoRA aggregate verifier** - the public verifier checks aggregate
+   structure, value bounds, distribution totals and derived compute
+   arithmetic. It does not rerun training, access raw predictions or
+   independently recompute empirical held-out scores. It does not prove
+   superiority. It does not prove generalization.
 10. **Replay Space self-test** - the Replay Space `--self-test` passes.
 11. **Harness Space self-test** - the Harness Space `--self-test` passes.
 

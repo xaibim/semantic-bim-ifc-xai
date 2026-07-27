@@ -82,6 +82,12 @@
     "training_runtime_share_percent": "training_runtime_seconds / measured_end_to_end_runtime_seconds * 100",
     "non_training_runtime_share_percent": "non_training_overhead_seconds / measured_end_to_end_runtime_seconds * 100"
   },
+  "verification_boundary": {
+    "public_verifier_scope": "aggregate_structure_and_derived_calculation_self_consistency",
+    "raw_predictions_available": false,
+    "held_out_metrics_publicly_recomputable": false,
+    "empirical_results_independently_validated_by_repository": false
+  },
   "corrected_held_out_results": {
     "evaluator_correction_note": "The original evaluator treated evidence_trace as a list. The dataset contract uses an object. Metrics below were recomputed from stored predictions using the object-based contract. No retraining was required.",
     "baseline": {

@@ -1,10 +1,17 @@
 # Internal preliminary semantic BIM experiments
 
+EVIDENCE_STATUS = HISTORICAL_REPORTED_AGGREGATES_NOT_PUBLICLY_RECOMPUTABLE
+
 Historical internal aggregate note. The underlying records, predictions and
 reports are not public; the aggregate values are not an independently
 reproducible public benchmark. Current public terminology and validation
 contracts are defined by README.md, PUBLIC_EVIDENCE.md and
 docs/methodology/xai_evaluation_position.md.
+
+The numerical values below are retained as historical reported aggregates.
+The underlying raw reports, prompts and per-case predictions are not
+distributed in this repository, so the values cannot be independently
+recomputed from the public artifact.
 
 ## Status
 
@@ -17,9 +24,10 @@ values below are aggregate internal feasibility indicators. They are included
 to document motivation and scope, not to provide an independently reproducible
 public benchmark.
 
-These experiments are internal preliminary experiments. They are feasibility
-evidence for the proposed benchmark workflow. They do not establish a final
-benchmark result, claim production readiness, or certify BIM/IFC compliance.
+These experiments are internal preliminary experiments. The historical report
+records feasibility evidence for the proposed benchmark workflow. They do not
+establish a final benchmark result, claim production readiness, or certify
+BIM/IFC compliance.
 
 This historical internal log is retained for methodology context only. It is
 superseded by the public Evidence-Trace boundary language in the repository's
@@ -54,7 +62,7 @@ comparison.
 
 ## Smoke20 diagnostic run
 
-The smoke20 run is a diagnostic smoke test. It demonstrates that the evaluation
+The smoke20 run is a diagnostic smoke test. It records that the evaluation
 pipeline can validate JSON, schema conformance, IFC class mapping and evidence
 trace completeness, while also exposing weaknesses in intent classification,
 missing-field handling and Pset recall.
@@ -122,9 +130,9 @@ The adapter is not presented as a public artifact or product.
 
 Public notebook: <https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai>
 
-## What these experiments demonstrate
+## What these historical reports were intended to measure
 
-The preliminary runs show that the proposed protocol can measure:
+The historical report records that the proposed protocol was intended to measure:
 
 * JSON parse validity;
 * schema conformance;

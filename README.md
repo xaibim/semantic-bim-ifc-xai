@@ -177,7 +177,7 @@ record.
 | Evidence-trace fields | Store evidence labels, observed-relationship labels and ambiguity context. | STRUCTURAL DATA FIELDS |
 | Stored-record validator | Load the committed fixture and validate schema, case expectation and stored conformance. | EXECUTABLE - no model generation |
 | Integrity verifier | Verify byte identity of the three public JSONL/schema copies and consistency of published fixture metrics. | EXECUTABLE |
-| QLoRA aggregate verifier | Independently verify the published aggregate feasibility metrics. | EXECUTABLE OVER PUBLISHED AGGREGATES |
+| QLoRA aggregate verifier | Checks aggregate structure, bounded values, distribution totals and derived compute arithmetic. It does not reproduce the private experiment and does not independently recompute empirical held-out scores. It does not prove superiority. It does not prove generalization. | EXECUTABLE OVER PUBLISHED AGGREGATES |
 | Benchmark layer | Compute public sample metrics and host the planned comparative benchmark matrix. | PARTIAL - sample metrics available; comparative benchmark planned |
 | Interactive Spaces | Replay Space displays and validates stored records; Harness is a constrained conceptual demonstration; neither publishes live private-model inference. | EXECUTABLE / CONCEPTUAL HYBRID |
 

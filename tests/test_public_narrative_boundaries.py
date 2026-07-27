@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import re
 import unittest
 from pathlib import Path
 
@@ -170,6 +172,67 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
         self.assertIn("historical product name", text)
         self.assertIn("does not rerun", text)
         self.assertIn("loads and validates committed records", text)
+
+    def test_15_qlora_verification_boundary(self):
+        data = json.loads(read_text(ROOT / "benchmark" / "qlora" / "xaibim_qwen25_7b_qlora_preliminary_public_results.json"))
+        boundary = data["verification_boundary"]
+        self.assertEqual(
+            boundary["public_verifier_scope"],
+            "aggregate_structure_and_derived_calculation_self_consistency",
+        )
+        self.assertFalse(boundary["raw_predictions_available"])
+        self.assertFalse(boundary["held_out_metrics_publicly_recomputable"])
+        self.assertFalse(boundary["empirical_results_independently_validated_by_repository"])
+
+    def test_16_qlora_verifier_token(self):
+        script = read_text(ROOT / "scripts" / "verify_qlora_public_metrics.py")
+        old_token = "QLORA" + "_PUBLIC" + "_METRICS_VALID"
+        self.assertIn("QLORA_PUBLIC_AGGREGATE_SELF_CONSISTENCY_VALID", script)
+        self.assertNotIn(old_token, script)
+
+    def test_17_qlora_narrative_boundary(self):
+        expectations = {
+            ROOT / "README.md": [
+                "derived compute arithmetic",
+                "does not independently recompute empirical held-out scores",
+                "does not prove superiority",
+                "does not prove generalization",
+            ],
+            ROOT / "docs" / "methodology" / "validation_gates.md": [
+                "derived compute arithmetic",
+                "independently recompute empirical held-out scores",
+                "does not prove superiority",
+                "does not prove generalization",
+            ],
+            ROOT / "benchmark" / "qlora" / "README.md": [
+                "derived compute arithmetic",
+                "raw predictions",
+                "does not independently recompute empirical held-out scores",
+                "does not prove superiority",
+                "does not prove generalization",
+            ],
+            ROOT / "benchmark" / "qlora" / "XAIBIM_QWEN25_7B_QLORA_PRELIMINARY_RESULTS.md": [
+                "public verification boundary",
+                "raw predictions and per-case outputs are not distributed",
+                "cannot be independently recomputed",
+                "does not reproduce training",
+                "does not prove superiority",
+                "does not prove generalization",
+            ],
+        }
+        for path, phrases in expectations.items():
+            text = normalized_lower_text(path)
+            with self.subTest(path=path):
+                for phrase in phrases:
+                    self.assertIn(phrase, text)
+
+    def test_18_historical_report_boundary(self):
+        text = normalized_lower_text(ROOT / "docs" / "experiments" / "internal_preliminary_semantic_bim_runs.md")
+        self.assertIn("evidence_status = historical_reported_aggregates_not_publicly_recomputable", text)
+        self.assertIn("historical reported aggregates", text)
+        self.assertIn("cannot be independently recomputed", text)
+        self.assertNotIn("what these experiments demonstrate", text)
+        self.assertNotIn("these results show", text)
 
 
 if __name__ == "__main__":

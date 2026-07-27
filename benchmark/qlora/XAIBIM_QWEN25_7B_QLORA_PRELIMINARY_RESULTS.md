@@ -175,9 +175,19 @@ discriminative classification ability.
 
 ---
 
+## Public Verification Boundary
+
+Published compute-derived calculations and aggregate structure are publicly
+checkable. Held-out target-agreement values are reported aggregates from the
+private controlled run. Raw predictions and per-case outputs are not
+distributed. Empirical held-out values cannot be independently recomputed from
+this repository. The verifier does not reproduce training. The verifier does
+not prove superiority. The verifier does not prove generalization. The
+verifier does not prove production readiness.
+
 ## Interpretation
 
-The adapter demonstrated:
+The historical report records:
 
 - **strong controlled held-out target agreement** across the 100-record test
   split;
