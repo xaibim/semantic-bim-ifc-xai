@@ -98,6 +98,31 @@ currently executable check.
 
 ---
 
+## Planned Baselines
+
+The canonical identifiers, names and statuses are maintained in [Baseline
+Matrix](../../benchmark/baseline_matrix.md).
+
+| ID | Baseline | Status |
+| --- | --- | --- |
+| A | Deterministic IFC/schema/catalogue lookup | REQUIRED |
+| B | Base LLM, prompt-only | REQUIRED |
+| C | Base LLM with retrieved IFC/bSDD/IDS context | REQUIRED |
+| D | Graph or ontology-grounded retrieval | CONDITIONAL |
+| E | Tool-using adaptive IFC exploration | CONDITIONAL |
+| F | Single-agent planner | OPTIONAL |
+| G | Multi-agent workflow | OPTIONAL |
+| H | QLoRA-adapted model | OPTIONAL_AFTER_GATES |
+
+- No comparative baseline results are reported by the current public artifact.
+- Conditional and optional baselines must be compared against the required
+  simpler baselines when executed.
+- A multi-agent workflow is not presumed superior to a single-agent planner.
+- QLoRA adaptation may be executed only after dataset-quality and required
+  baseline gates have passed.
+
+---
+
 ## Dataset candidate states (neutral)
 
 When candidate records are evaluated for dataset inclusion, the artifact uses

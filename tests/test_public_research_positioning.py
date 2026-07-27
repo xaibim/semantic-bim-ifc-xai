@@ -6,6 +6,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
+VALIDATION_GATES = ROOT / "docs" / "methodology" / "validation_gates.md"
+
 REQUIRED_FILES = [
     ROOT / "README.md",
     ROOT / "PUBLIC_EVIDENCE.md",
@@ -352,6 +354,45 @@ class TestPublicResearchPositioning(unittest.TestCase):
             for token in word_boundary_tokens:
                 with self.subTest(path=path, token=token):
                     self.assertIsNone(re.search(rf"\b{re.escape(token)}\b", text, flags=re.IGNORECASE))
+
+    def test_21_validation_gates_baseline_matrix_alignment(self):
+        text = read_text(VALIDATION_GATES)
+        text_norm = lower_normalized(VALIDATION_GATES)
+        self.assertIn("../../benchmark/baseline_matrix.md", text)
+        rows = {
+            "A": r"(?m)^\| A \| Deterministic IFC/schema/catalogue lookup \| REQUIRED \|$",
+            "B": r"(?m)^\| B \| Base LLM, prompt-only \| REQUIRED \|$",
+            "C": r"(?m)^\| C \| Base LLM with retrieved IFC/bSDD/IDS context \| REQUIRED \|$",
+            "D": r"(?m)^\| D \| Graph or ontology-grounded retrieval \| CONDITIONAL \|$",
+            "E": r"(?m)^\| E \| Tool-using adaptive IFC exploration \| CONDITIONAL \|$",
+            "F": r"(?m)^\| F \| Single-agent planner \| OPTIONAL \|$",
+            "G": r"(?m)^\| G \| Multi-agent workflow \| OPTIONAL \|$",
+            "H": r"(?m)^\| H \| QLoRA-adapted model \| OPTIONAL_AFTER_GATES \|$",
+        }
+        for ident, pattern in rows.items():
+            with self.subTest(ident=ident):
+                self.assertRegex(text, pattern)
+                self.assertEqual(len(re.findall(pattern, text)), 1)
+        self.assertIn("No comparative baseline results", text)
+        self.assertIn("not presumed superior", text)
+        self.assertIn("dataset-quality", text_norm)
+        self.assertIn("required baseline gates", text_norm)
+
+        d_line = re.search(r"(?m)^\| D \|.*$", text)
+        h_line = re.search(r"(?m)^\| H \|.*$", text)
+        self.assertIsNotNone(d_line)
+        self.assertIsNotNone(h_line)
+        self.assertNotIn("QLoRA", d_line.group(0))
+        self.assertIn("QLoRA", h_line.group(0))
+        self.assertNotIn("D = QLoRA", text)
+        self.assertNotIn("E = graph/ontology", text)
+        self.assertNotIn("D = QLoRA".lower(), text.lower())
+        self.assertNotIn("E = graph/ontology".lower(), text.lower())
+
+        table_rows = re.findall(r"(?m)^\| ([A-H]) \|", text)
+        for ident in "ABCDEFGH":
+            with self.subTest(unique_ident=ident):
+                self.assertEqual(table_rows.count(ident), 1)
 
 
 if __name__ == "__main__":
