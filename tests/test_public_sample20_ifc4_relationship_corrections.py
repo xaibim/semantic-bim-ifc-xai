@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -152,11 +153,23 @@ class TestPublicSample20IFC4RelationshipCorrections(unittest.TestCase):
         self.assertIn("previous record-relationship pairs: 37", self.correction_md)
         self.assertIn("corrected record-relationship pairs: 36", self.correction_md)
         self.assertIn("LF-normalized SHA-256", self.correction_md)
-        self.assertIn("MICRO-06B used three commits", self.correction_md)
-        self.assertRegex(
-            self.correction_md,
-            r"no\s+rebase, reset, squash or force push was performed",
+        self.assertIn("## Technical provenance", self.correction_md)
+        normalized = " ".join(self.correction_md.split())
+        self.assertIn(
+            "The listed hashes identify the source state, controlled correction and regenerated audit evidence. Commit-count and repository-transport details are outside the scientific scope of this report.",
+            normalized,
         )
+        self.assertNotIn("<!--", self.correction_md)
+        self.assertNotIn("-->", self.correction_md)
+        pr_pattern = r"\b" + "PR" + r"\d+\b"
+        micro_pattern = r"\b" + "MICRO" + r"[-_]\d+[A-Z]?\b"
+        self.assertIsNone(re.search(pr_pattern, self.correction_md, re.IGNORECASE))
+        self.assertIsNone(re.search(micro_pattern, self.correction_md, re.IGNORECASE))
+        self.assertNotIn("push boundary", self.correction_md.lower())
+        self.assertNotIn("rebase", self.correction_md.lower())
+        self.assertNotIn("reset", self.correction_md.lower())
+        self.assertNotIn("squash", self.correction_md.lower())
+        self.assertNotIn("force push", self.correction_md.lower())
         self.assertIn("2b8b568b33e5a6852f6353499c9233771ac3c6c2", self.correction_md)
         self.assertIn("5f467935def3613c2b325fee6ccaec044ba67236", self.correction_md)
         self.assertIn("92dfddfa911120027f282895aa76bc7897400b08", self.correction_md)

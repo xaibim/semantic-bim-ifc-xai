@@ -144,6 +144,18 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
         self.assertNotIn("full future [external phase] dataset", text)
         self.assertNotIn("broader future [external phase] dataset", text)
 
+    def test_10b_pset_audit_fixture_boundary_language(self):
+        text = read_text(ROOT / "benchmark" / "public_sample20_ifc4_pset_audit.md")
+        table_section = text.split("## Correction table", 1)[1].split("This audit verifies", 1)[0]
+        normalized_table = " ".join(table_section.split())
+        self.assertNotIn("no safe Pset remains", text)
+        self.assertEqual(
+            normalized_table.count("no class-applicable Pset was selected for this fixture record"),
+            4,
+        )
+        self.assertIn("This audit verifies IFC4 class applicability only", text)
+        self.assertIn("professional-task suitability was not evaluated", text)
+
     def test_11_readme_qlora_boundary_language(self):
         text = normalized_text(ROOT / "README.md")
         self.assertIn("private pilot with public aggregate evidence only; not a comparative benchmark result", text)
@@ -225,6 +237,30 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
             with self.subTest(path=path):
                 for phrase in phrases:
                     self.assertIn(phrase, text)
+
+    def test_19_relationship_correction_boundary(self):
+        text = read_text(ROOT / "benchmark" / "public_sample20_ifc4_relationship_correction.md")
+        normalized = " ".join(text.split())
+        self.assertIn("## Technical provenance", text)
+        self.assertIn(
+            "The listed hashes identify the source state, controlled correction and regenerated audit evidence. Commit-count and repository-transport details are outside the scientific scope of this report.",
+            normalized,
+        )
+        self.assertNotIn("<!--", text)
+        self.assertNotIn("-->", text)
+        pr_pattern = r"\b" + "PR" + r"\d+\b"
+        micro_pattern = r"\b" + "MICRO" + r"[-_]\d+[A-Z]?\b"
+        self.assertIsNone(re.search(pr_pattern, text, re.IGNORECASE))
+        self.assertIsNone(re.search(micro_pattern, text, re.IGNORECASE))
+        lowered = text.lower()
+        for phrase in [
+            "push boundary",
+            "rebase",
+            "reset",
+            "squash",
+            "force push",
+        ]:
+            self.assertNotIn(phrase, lowered)
 
     def test_18_historical_report_boundary(self):
         text = normalized_lower_text(ROOT / "docs" / "experiments" / "internal_preliminary_semantic_bim_runs.md")

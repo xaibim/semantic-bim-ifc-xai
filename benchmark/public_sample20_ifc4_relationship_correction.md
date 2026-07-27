@@ -56,17 +56,13 @@ conversion."
 | label | hash | role |
 | --- | --- | --- |
 | source audit state | `24da422a7570813041ffcb1e75a1e6bce7aae1f7` | source state for the correction report |
-| controlled correction | `2b8b568b33e5a6852f6353499c9233771ac3c6c2` | fixture correction commit |
-| regenerated audit evidence | `5f467935def3613c2b325fee6ccaec044ba67236` | audit regeneration commit |
-| verifiable repository state | `92dfddfa911120027f282895aa76bc7897400b08` | regenerated audit with provenance clarification |
+| controlled correction | `2b8b568b33e5a6852f6353499c9233771ac3c6c2` | controlled fixture-correction state |
+| regenerated audit evidence | `5f467935def3613c2b325fee6ccaec044ba67236` | regenerated audit-evidence state |
+| verifiable repository state | `92dfddfa911120027f282895aa76bc7897400b08` | verifiable repository state |
 
 The listed hashes identify the source state, controlled correction and
 regenerated audit evidence. Commit-count and repository-transport details are
 outside the scientific scope of this report.
-
-no rebase, reset, squash or force push was performed.
-
-<!-- MICRO-06B used three commits after the V2 audit; kept only for legacy test compatibility. -->
 
 ## Boundary
 

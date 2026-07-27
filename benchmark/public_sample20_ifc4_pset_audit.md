@@ -41,7 +41,7 @@ source SHA-256:
 | `ae47e72e2af2b182` | `IfcBeam` | `["Pset_QuantityTakeOff", "Pset_SlabCommon"]` | `["Pset_BeamCommon"]` | replace the incompatible mix with the beam-occurrence Pset |
 | `8c0052ccd9bc96e4` | `IfcPump` | `["Pset_DistributionFlowElementCommon", "Pset_MaterialCommon", "Pset_WallCommon"]` | `["Pset_PumpOccurrence"]` | replace incompatible names with the pump-occurrence Pset |
 | `21129edbbd73ebef` | `IfcSpace` | `["Pset_SpaceCommon", "Pset_WindowCommon", "Pset_SlabCommon", "Pset_WallCommon"]` | `["Pset_SpaceCommon"]` | preserve the class-applicable Pset only |
-| `d2ed814a93840a19` | `IfcFlowTerminal` | `["Pset_WallCommon", "Pset_DistributionFlowElementCommon"]` | `[]` | no safe Pset remains for this record |
+| `d2ed814a93840a19` | `IfcFlowTerminal` | `["Pset_WallCommon", "Pset_DistributionFlowElementCommon"]` | `[]` | no class-applicable Pset was selected for this fixture record |
 | `fa3bca1c51085557` | `IfcAirTerminal` | `["Pset_DistributionFlowElementCommon", "Pset_WallCommon", "Pset_QuantityTakeOff"]` | `["Pset_AirTerminalOccurrence"]` | replace the incompatible mix with the air-terminal-occurrence Pset |
 | `048b754023b7b6b4` | `IfcColumn` | `["Pset_QuantityTakeOff", "Pset_ColumnCommon"]` | `["Pset_ColumnCommon"]` | preserve the class-applicable Pset only |
 | `5af537f550afd4aa` | `IfcFan` | `["Pset_MaterialCommon", "Pset_DistributionFlowElementCommon"]` | `["Pset_FanOccurrence"]` | replace the incompatible mix with the fan-occurrence Pset |
@@ -49,9 +49,9 @@ source SHA-256:
 | `ca455e91ed772fd8` | `IfcColumn` | `["Pset_QuantityTakeOff", "Pset_WallCommon", "Pset_BeamCommon"]` | `["Pset_ColumnCommon"]` | replace incompatible names with the column-occurrence Pset |
 | `f72f31f4c063475b` | `IfcSpace` | `["Pset_SlabCommon", "Pset_SpaceCommon", "Pset_DoorCommon"]` | `["Pset_SpaceCommon"]` | preserve the class-applicable Pset only |
 | `f84721ef28e281d1` | `IfcSpace` | `["Pset_SpaceCommon", "Pset_SlabCommon", "Pset_DoorCommon", "Pset_QuantityTakeOff"]` | `["Pset_SpaceCommon"]` | preserve the class-applicable Pset only |
-| `23dad325e1a64458` | `IfcAsset` | `["Pset_QuantityTakeOff", "Pset_WallCommon", "Pset_MaterialCommon"]` | `[]` | no safe Pset remains for this record |
-| `3dab4b257ae52bfc` | `IfcFlowTerminal` | `["Pset_DistributionFlowElementCommon", "Pset_QuantityTakeOff", "Pset_WallCommon"]` | `[]` | no safe Pset remains for this record |
-| `8f91faebc05dd115` | `IfcAsset` | `["Pset_QuantityTakeOff", "Pset_MaterialCommon"]` | `[]` | no safe Pset remains for this record |
+| `23dad325e1a64458` | `IfcAsset` | `["Pset_QuantityTakeOff", "Pset_WallCommon", "Pset_MaterialCommon"]` | `[]` | no class-applicable Pset was selected for this fixture record |
+| `3dab4b257ae52bfc` | `IfcFlowTerminal` | `["Pset_DistributionFlowElementCommon", "Pset_QuantityTakeOff", "Pset_WallCommon"]` | `[]` | no class-applicable Pset was selected for this fixture record |
+| `8f91faebc05dd115` | `IfcAsset` | `["Pset_QuantityTakeOff", "Pset_MaterialCommon"]` | `[]` | no class-applicable Pset was selected for this fixture record |
 | `7f1ea524d9fdbdcb` | `IfcColumn` | `["Pset_QuantityTakeOff", "Pset_ColumnCommon", "Pset_BeamCommon", "Pset_SlabCommon"]` | `["Pset_ColumnCommon"]` | preserve the class-applicable Pset only |
 
 This audit verifies IFC4 class applicability only. Selection for a stored

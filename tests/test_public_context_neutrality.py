@@ -13,12 +13,6 @@ PROGRAM_TOKENS = [
     "F" + "CCN",
 ]
 PHASE_TOKEN = "A" + "1"
-EXCLUDED_NEUTRALITY_PATHS = {
-    # These historical IFC4 artifacts do not demonstrate professional sufficiency.
-    ROOT / "docs" / "methodology" / "schema_contract_map.md",
-    ROOT / "tests" / "test_public_context_neutrality.py",
-    ROOT / "tests" / "test_public_sample20_ifc4_relationship_corrections.py",
-}
 
 
 def tracked_files() -> list[str]:
@@ -99,19 +93,17 @@ class TestPublicContextNeutrality(unittest.TestCase):
     def test_05_no_internal_process_tokens_in_tracked_text(self):
         pr_pattern = r"\b" + "PR" + r"\d+\b"
         micro_pattern = r"\b" + "MICRO" + r"[-_]\d+[A-Z]?\b"
-        stop_pr_pattern = r"\b" + "STOP" + r"_PR"
+        skip_token_pattern = r"\b" + "STOP" + r"_PR"
         patterns = {
             "pr": re.compile(pr_pattern, re.IGNORECASE),
             "micro": re.compile(micro_pattern, re.IGNORECASE),
-            "stop_pr": re.compile(stop_pr_pattern, re.IGNORECASE),
+            "blocked_token": re.compile(skip_token_pattern, re.IGNORECASE),
         }
         matches: list[str] = []
         tracked = subprocess.check_output(["git", "ls-files"], cwd=ROOT, text=True).splitlines()
         for rel in tracked:
             rel_path = Path(rel)
             abs_path = (ROOT / rel_path).resolve()
-            if abs_path in EXCLUDED_NEUTRALITY_PATHS:
-                continue
             if not is_text_file(rel_path):
                 continue
             try:
