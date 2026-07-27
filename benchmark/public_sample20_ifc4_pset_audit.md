@@ -5,7 +5,7 @@
 - This report covers only the public `sample20` fixture.
 - It uses IFC4.
 - It uses `IfcOpenShell 0.8.5` with `PsetQto("IFC4")`.
-- It does not freeze the future A1 dataset schema.
+- It does not freeze the future expanded research dataset schema.
 - It is not IFC certification.
 - It does not validate relationships, geometry, materials, or evidence traces.
 
@@ -55,4 +55,4 @@ source SHA-256:
 | `7f1ea524d9fdbdcb` | `IfcColumn` | `["Pset_QuantityTakeOff", "Pset_ColumnCommon", "Pset_BeamCommon", "Pset_SlabCommon"]` | `["Pset_ColumnCommon"]` | preserve the class-applicable Pset only |
 
 The IFC4 Pset correction applies only to the frozen public sample20 fixture.
-The future A1 dataset protocol will define Psets, quantity sets and material associations as separate semantic dimensions.
+The broader future research dataset will define Psets, quantity sets and material associations as separate semantic dimensions.

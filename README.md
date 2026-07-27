@@ -48,8 +48,8 @@ certification, a production-readiness claim, or a final benchmark.
 - **Integrity verification**: three-copy schema/JSONL integrity and a
   forbidden scan.
 - **Preliminary QLoRA compute calibration**: bounded GPU-hour / VRAM
-  calibration from a private, controlled, synthetic pilot (not a public
-  result).
+  calibration from a private, controlled, synthetic pilot (private pilot with
+  public aggregate evidence only; not a comparative benchmark result).
 - **Planned comparative benchmark**: a baseline matrix (rule/schema lookup,
   prompt-only LLM, retrieved-context LLM, optional graph/ontology retrieval)
   to be executed, not yet reported.
@@ -229,7 +229,7 @@ is not a final benchmark.
 - No broad AECO generalization established.
 - No SHAP/LIME mathematical attribution.
 - No certification or automated engineering approval.
-- No public private adapters/checkpoints.
+- No private adapters or checkpoints are public.
 - No public claim of multilingual coverage.
 - No public claim of building-typology coverage.
 

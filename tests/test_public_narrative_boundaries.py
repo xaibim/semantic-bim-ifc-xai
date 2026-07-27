@@ -130,8 +130,25 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
         self.assertIn("no tag or release state is claimed", text)
         self.assertIn("public sanitized frozen fixture", text)
         self.assertIn("do not by themselves guarantee alignment with canonical catalogues or structured contracts", text)
+        self.assertIn("broader / private or planned", text)
+        self.assertIn("current public executable", text)
+        self.assertIn("external-source supportedness is not evaluated", text)
 
-    def test_10_validation_gates_boundary(self):
+    def test_10_pset_audit_boundary_language(self):
+        text = normalized_lower_text(ROOT / "benchmark" / "public_sample20_ifc4_pset_audit.md")
+        self.assertIn("future expanded research dataset", text)
+        self.assertIn("broader future research dataset", text)
+        self.assertNotIn("full future [external phase] dataset", text)
+        self.assertNotIn("broader future [external phase] dataset", text)
+
+    def test_11_readme_qlora_boundary_language(self):
+        text = normalized_text(ROOT / "README.md")
+        self.assertIn("private pilot with public aggregate evidence only; not a comparative benchmark result", text)
+        self.assertIn("No private adapters or checkpoints are public.", text)
+        self.assertNotIn("not a public result", text)
+        self.assertNotIn("No public private adapters/checkpoints.", text)
+
+    def test_12_validation_gates_boundary(self):
         text = normalized_lower_text(ROOT / "docs" / "methodology" / "validation_gates.md")
         self.assertIn("schema-only", text)
         self.assertIn("model/reference equality", text)
@@ -140,14 +157,14 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
         self.assertIn("schema compatibility does not prove", text)
         self.assertIn("external source supportedness is not evaluated", text)
 
-    def test_11_public_evidence_casing(self):
+    def test_13_public_evidence_casing(self):
         evidence = read_text(ROOT / "PUBLIC_EVIDENCE.md")
         summary = read_text(ROOT / "sample20" / "VALIDATION_SUMMARY.md")
         for text in (evidence, summary):
             self.assertIn("fixture_contract=NOT_EVALUATED", text)
             self.assertIn("integrity=NOT_CHECKED", text)
 
-    def test_12_huggingface_readme_boundary(self):
+    def test_14_huggingface_readme_boundary(self):
         text = normalized_lower_text(ROOT / "spaces" / "huggingface" / "README.md")
         self.assertIn("historical product name", text)
         self.assertIn("does not rerun", text)

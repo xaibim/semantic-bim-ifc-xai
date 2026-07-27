@@ -42,7 +42,7 @@ was rejected for several critical reasons:
    canonical classification catalogues and standard property sets. Plain text
    outputs fail to maintain alignments with these Single Sources of Truth
    (SSOT).
-3. **Absence of Verified Source Linkage and Rationale**: Plain text outputs do
+3. **Absence of Resolvable External Source Linkage**: Plain text outputs do
    not by themselves guarantee alignment with canonical catalogues or
    structured contracts.
 4. **Mutational Safety**: Plain instructions do not distinguish between safe
@@ -56,22 +56,33 @@ payloads mapped to canonical catalogues.
 
 ## 3. Runtime and Payload Architecture
 
+The current public executable boundary begins with committed structured
+records. Runtime Payload/SSOT and the Capabilities Catalog describe broader
+private or planned architecture and are not executed by the current public
+artefact.
+
+The current public evidence_trace contains structured labels; validation
+checks presence, type, and internal coherence. No source identifiers or source
+locations are resolved, external-source supportedness is not evaluated,
+source-to-claim review belongs to future methodology, and no professional or
+normative certification is inferred.
+
 The dataset and pipeline infrastructure is governed by several key concepts:
 
-- **Runtime Payload and SSOT**: BROADER / PRIVATE OR PLANNED. A structured
+- **Runtime Payload / SSOT**: BROADER / PRIVATE OR PLANNED. A structured
   payload encapsulates the input request, the active database schema, and the
-  target catalogues, ensuring any generated output is evaluated against a
-  Single Source of Truth.
+  target catalogues.
 - **Capabilities Catalog**: BROADER / PRIVATE OR PLANNED. A registry of
-  supported operations, classes, and properties, preventing the AI from
-  generating arbitrary properties or violating schema rules.
-- **Public record contract**: The strict `sample20` v2 schema
-  (`sample20/schema_public_sample20_v2.json`, JSON Schema Draft 2020-12) encodes
-  the public fields, value modes, and neutral dataset-candidate states.
-- **private pilot dataset**: PRIVATE. A private development pilot used for
-  early LoRA/QLoRA adaptation experiments (not published).
-- **private high-fidelity internal dataset**: PRIVATE. A private high-fidelity
-  seed dataset used for closed-loop testing (not published).
+  supported operations, classes, and properties.
+- **Public record contract**: CURRENT PUBLIC EXECUTABLE. The strict `sample20`
+  v2 schema (`sample20/schema_public_sample20_v2.json`, JSON Schema Draft
+  2020-12) encodes the public fields, value modes, and neutral
+  dataset-candidate states.
+- **private pilot dataset**: PRIVATE / NOT DISTRIBUTED. A private development
+  pilot used for early LoRA/QLoRA adaptation experiments.
+- **private high-fidelity internal dataset**: PRIVATE / NOT DISTRIBUTED. A
+  private high-fidelity seed dataset used for closed-loop testing.
+- **Private datasets and runtime payloads**: PRIVATE / NOT DISTRIBUTED.
 - **sample20**: CURRENT PUBLIC EXECUTABLE. A public sanitized frozen fixture of
   20 illustrative records.
 - **Stored-record validation**: CURRENT PUBLIC EXECUTABLE. Code that loads
