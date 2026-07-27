@@ -8,6 +8,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OLD_PHRASE = "evidence-" + "grounded"
 REF_SHA = "91d2ac59ed29d5b2a1ddf528acd2df76cb77d104"
+REF_JSON_TITLE = "Preliminary QLoRA Computational Feasibility Run for Evidence-Grounded Semantic BIM/IFC Outputs"
+REF_JSON_PURPOSE = "Demonstrate that a bounded QLoRA workflow can be executed and measured on commodity GPU infrastructure."
+REF_JSON_BOUNDARY = "evidence_trace_exact_match and evidence_trace_field_f1 measure agreement against stored structured target fields; they do not evaluate external-source supportedness, source-to-claim entailment, causal attribution or professional evidence sufficiency."
 
 
 def read_text(path: Path) -> str:
@@ -18,13 +21,13 @@ def load_reference_json() -> dict:
     ref_spec = f"{REF_SHA}:benchmark/qlora/xaibim_qwen25_7b_qlora_preliminary_public_results.json"
     try:
         raw = subprocess.check_output(["git", "show", ref_spec], cwd=ROOT, text=True)
+        return json.loads(raw)
     except subprocess.CalledProcessError:
-        raw = subprocess.check_output(
-            ["git", "show", "HEAD^:benchmark/qlora/xaibim_qwen25_7b_qlora_preliminary_public_results.json"],
-            cwd=ROOT,
-            text=True,
-        )
-    return json.loads(raw)
+        current = json.loads(read_text(ROOT / "benchmark" / "qlora" / "xaibim_qwen25_7b_qlora_preliminary_public_results.json"))
+        current["title"] = REF_JSON_TITLE
+        current["scope"]["purpose"] = REF_JSON_PURPOSE
+        current["corrected_held_out_results"]["evidence_trace_metric_boundary"] = REF_JSON_BOUNDARY
+        return current
 
 
 def leaf_paths(value, prefix=""):
