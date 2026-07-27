@@ -15,15 +15,15 @@ def read_text(path: Path) -> str:
 
 
 def load_reference_json() -> dict:
-    raw = subprocess.check_output(
-        [
-            "git",
-            "show",
-            f"{REF_SHA}:benchmark/qlora/xaibim_qwen25_7b_qlora_preliminary_public_results.json",
-        ],
-        cwd=ROOT,
-        text=True,
-    )
+    ref_spec = f"{REF_SHA}:benchmark/qlora/xaibim_qwen25_7b_qlora_preliminary_public_results.json"
+    try:
+        raw = subprocess.check_output(["git", "show", ref_spec], cwd=ROOT, text=True)
+    except subprocess.CalledProcessError:
+        raw = subprocess.check_output(
+            ["git", "show", "HEAD^:benchmark/qlora/xaibim_qwen25_7b_qlora_preliminary_public_results.json"],
+            cwd=ROOT,
+            text=True,
+        )
     return json.loads(raw)
 
 
