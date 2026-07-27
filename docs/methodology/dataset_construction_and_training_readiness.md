@@ -39,9 +39,7 @@ was rejected for several critical reasons:
    inherently respect the strict syntax and schema requirements of formats like
    IFC, ifcJSON, or structured engineering contracts.
 2. **Hallucination of Catalogues**: In civil engineering, elements must map to
-   canonical classification catalogues and standard property sets. Plain text
-   outputs fail to maintain alignments with these Single Sources of Truth
-   (SSOT).
+   canonical classification catalogues and standard property sets.
 3. **Absence of Resolvable External Source Linkage**: Plain text outputs do
    not by themselves guarantee alignment with canonical catalogues or
    structured contracts.

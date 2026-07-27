@@ -132,6 +132,7 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
         self.assertIn("do not by themselves guarantee alignment with canonical catalogues or structured contracts", text)
         self.assertIn("broader / private or planned", text)
         self.assertIn("current public executable", text)
+        self.assertNotIn("fail to maintain alignments", text)
         self.assertIn("external-source supportedness is not evaluated", text)
 
     def test_10_pset_audit_boundary_language(self):
