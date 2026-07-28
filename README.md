@@ -252,8 +252,9 @@ rejections.
 
 Current public validation status: `PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.
 
-- `canonical_validation_rate = 0.9` (18/20): the two expected negatives are
-  rejected as intended.
+- `canonical_acceptance_rate = 0.9` (18/20): 18 records have
+  `canonical_check.ok = true`; this is an acceptance share, not accuracy or
+  validation success.
 - `expectation_met_rate = 1.0` (20/20): each record's actual status matches
   its case expectation.
 - `value_mode` distribution: `GUIDED_RECOVERY = 9`, `PREVIEW = 6`,

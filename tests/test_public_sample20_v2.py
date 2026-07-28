@@ -125,6 +125,12 @@ class TestPublicSample20V2(unittest.TestCase):
         self.assertEqual(metrics["valid_case_count"], 18)
         self.assertEqual(metrics["expected_canonical_rejection_count"], 2)
         self.assertEqual(metrics["expectation_met_rate"], 1.0)
+        self.assertEqual(
+            metrics["canonical_acceptance_rate"],
+            0.9,
+        )
+        obsolete_metric_key = "canonical_" + "validation_rate"
+        self.assertNotIn(obsolete_metric_key, metrics)
         self.assertEqual(metrics["PREVIEW"], 6)
         self.assertEqual(metrics["PROPOSAL"], 5)
         self.assertEqual(metrics["GUIDED_RECOVERY"], 9)

@@ -12,7 +12,7 @@ This is a deterministic stored-record validation run over the committed sample20
 - Records: `20`
 - Valid Cases: `18`
 - Expected Canonical Rejections: `2`
-- Canonical Validation Rate: `canonical_validation_rate = 0.9` (since the 2 expected negatives are successfully rejected)
+- Canonical Acceptance Rate: `canonical_acceptance_rate = 0.9` (18/20 records have `canonical_check.ok = true`; acceptance share, not accuracy or validation success)
 - Expectation Met Rate: `expectation_met_rate = 1.0` (all 20 records match their case expectations)
 - JSON parsing: `PASS`
 - Schema validation: `PASS`

@@ -21,5 +21,5 @@ Status: `PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`
 - `sample20` is the public sanitized sample dataset.
 - `smoke20` is the deterministic stored-record validation run executed on `sample20`.
 - The public sample contains 20 records: 18 valid positive cases and 2 expected canonical rejections.
-- Expected metrics are: `canonical_validation_rate = 0.9` and `expectation_met_rate = 1.0`.
+- Expected metrics are: `canonical_acceptance_rate = 0.9` (18/20 records have `canonical_check.ok = true`; acceptance share, not accuracy or validation success) and `expectation_met_rate = 1.0` (20/20 declared outcomes are met).
 - This summary reports public evidence only.

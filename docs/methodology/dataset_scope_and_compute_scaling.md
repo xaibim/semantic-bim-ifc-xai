@@ -13,7 +13,7 @@ using the public test suite. They are descriptive of this sample only.
 - **18 valid cases** (`case_expectation = VALID`, `record_status = PASS`).
 - **2 expected negatives** (`case_expectation = EXPECTED_CANONICAL_REJECTION`,
   `record_status = EXPECTED_REJECTION_PASS`).
-- `canonical_validation_rate = 0.9` (18/20).
+- `canonical_acceptance_rate = 0.9` (18/20 records have `canonical_check.ok = true`; acceptance share, not accuracy or validation success).
 - `expectation_met_rate = 1.0` (20/20).
 
 ### Discipline distribution (20 records)

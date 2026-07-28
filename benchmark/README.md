@@ -15,7 +15,7 @@ The public validation expects:
 - **Record Count**: 20 records;
 - **Valid Cases**: 18 valid cases;
 - **Expected Rejections**: 2 expected canonical rejections;
-- **Canonical Validation Rate**: `canonical_validation_rate = 0.9`;
+- **Canonical Acceptance Rate**: `canonical_acceptance_rate = 0.9` (18/20 records have `canonical_check.ok = true`; acceptance share, not accuracy);
 - **Expectation Met Rate**: `expectation_met_rate = 1.0`;
 - **Status**: `status = PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.
 

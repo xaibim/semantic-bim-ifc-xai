@@ -201,8 +201,9 @@ For the `sample20` dataset, the public validation expects:
 - **Record count**: 20 records;
 - **Valid cases**: 18 valid cases;
 - **Expected rejections**: 2 expected canonical rejections;
-- **Canonical validation rate**: `canonical_validation_rate = 0.9` (the 2
-  expected negatives are rejected as intended);
+- **Canonical acceptance rate**: `canonical_acceptance_rate = 0.9` (18/20
+  records have `canonical_check.ok = true`; acceptance share, not accuracy or
+  validation success);
 - **Expectation met rate**: `expectation_met_rate = 1.0` (all 20 records match
   their case expectation);
 - **Status**: `PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.

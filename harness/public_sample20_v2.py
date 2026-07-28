@@ -177,6 +177,7 @@ def validate_records(records: list[dict[str, Any]], schema: dict[str, Any]) -> t
     valid_cases = 0
     expected_rejections = 0
     expectation_met_count = 0
+    canonical_acceptance_count = 0
     value_mode_counts: dict[str, int] = {vm: 0 for vm in ALLOWED_VALUE_MODES}
 
     schema_valid_count = 0
@@ -203,6 +204,9 @@ def validate_records(records: list[dict[str, Any]], schema: dict[str, Any]) -> t
         rec_status = r.get("record_status")
         exp_met = r.get("expectation_met")
         canonical_check = r.get("canonical_check") or {}
+
+        if canonical_check.get("ok") is True:
+            canonical_acceptance_count += 1
 
         if case_exp == "VALID":
             valid_cases += 1
@@ -293,7 +297,7 @@ def validate_records(records: list[dict[str, Any]], schema: dict[str, Any]) -> t
         "record_count": len(records),
         "unique_sample_id_count": len(unique_ids),
         "public_schema_valid_rate": public_schema_valid_rate,
-        "canonical_validation_rate": valid_cases / len(records) if records else 0.0,
+        "canonical_acceptance_rate": canonical_acceptance_count / len(records) if records else 0.0,
         "valid_case_count": valid_cases,
         "expected_canonical_rejection_count": expected_rejections,
         "expectation_met_rate": expectation_met_rate,

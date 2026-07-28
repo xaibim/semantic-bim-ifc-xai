@@ -58,7 +58,7 @@ and [literature capability matrix](benchmark/literature_capability_matrix.md).
 ## Dataset Structure and Metrics Wording
 
 The public `sample20` dataset contains 20 records: 18 valid cases and 2 expected canonical rejections.
-- The `canonical_validation_rate` is 0.9 (18/20) because the two expected negative cases are rejected as intended.
+- The `canonical_acceptance_rate` is 0.9 (18/20): 18 records have `canonical_check.ok = true`. This is an acceptance share, not accuracy or validation success.
 - The `expectation_met_rate` is 1.0 (20/20) since the model's actual status matches the expected case expectation in all 20 records.
 - All 1.0 metrics indicate consistency within this reduced sample, not general model performance or generalization.
 - The `sample20` dataset is not a complete corpus and is not a final benchmark.
