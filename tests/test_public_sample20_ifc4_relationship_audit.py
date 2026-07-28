@@ -23,7 +23,7 @@ JSON_OUTPUT = ROOT / "benchmark" / "public_sample20_ifc4_relationship_schema_par
 MARKDOWN_OUTPUT = ROOT / "benchmark" / "public_sample20_ifc4_relationship_schema_participation.md"
 SCRIPT_PATH = ROOT / "scripts" / "generate_public_sample20_ifc4_relationship_audit.py"
 EXPECTED_JSONL_LF_NORMALIZED_SHA256 = "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
-EXPECTED_SCHEMA_LF_NORMALIZED_SHA256 = "de9c722f98085d7227906295531aa190755d105a0bf030d360fb26b1298ab216"
+EXPECTED_SCHEMA_LF_NORMALIZED_SHA256 = "8e4de7f560ef24dac0404c45b8d62661dd52c538876e17b7ad975a254306f7f9"
 EXPECTED_SUMMARY = {
     "record_count": 20,
     "positive_count": 18,

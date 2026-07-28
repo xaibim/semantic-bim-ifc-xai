@@ -100,8 +100,8 @@
         "discipline":           { "type": ["string", "null"] },
         "major_ifc_class_group":{ "type": ["string", "null"] },
         "semantic_type":        { "type": ["string", "null"] },
-        "ambiguity_flags":      { "type": "array", "items": { "type": "string" } },
-        "missing_inputs":       { "type": "array", "items": { "type": "string" } },
+        "ambiguity_flags":      { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "missing_inputs":       { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
         "recovery_type":        { "type": ["string", "null"] }
       }
     },
@@ -130,10 +130,10 @@
         "ifc_class":                { "type": ["string", "null"] },
         "value_mode":               { "$ref": "#/$defs/value_mode" },
         "normalized_dimensions_m":  { "type": ["object", "null"], "additionalProperties": { "type": "number" } },
-        "required_psets":           { "type": "array", "items": { "type": "string" } },
-        "required_relationships":   { "type": "array", "items": { "type": "string" } },
-        "missing_inputs":           { "type": "array", "items": { "type": "string" } },
-        "ambiguity_flags":          { "type": "array", "items": { "type": "string" } },
+        "required_psets":           { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "required_relationships":   { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "missing_inputs":           { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "ambiguity_flags":          { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
         "recovery_needed":          { "type": "boolean" },
         "recovery_type":            { "type": ["string", "null"] },
         "safe_next_action": {
@@ -141,7 +141,7 @@
           "minLength": 1,
           "description": "Non-empty human-readable guidance."
         },
-        "reason_codes":   { "type": "array", "items": { "type": "string" } },
+        "reason_codes":   { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
         "evidence_trace": { "$ref": "#/$defs/evidence_trace" }
       }
     },
@@ -153,8 +153,8 @@
         "ok":        { "type": "boolean" },
         "ifc_class": { "type": ["string", "null"] },
         "value_mode":{ "$ref": "#/$defs/value_mode" },
-        "errors":    { "type": "array", "items": { "type": "string" } },
-        "warnings":  { "type": "array", "items": { "type": "string" } }
+        "errors":    { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "warnings":  { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
       }
     },
     "agreement": {

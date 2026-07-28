@@ -46,7 +46,8 @@ These checks run against the public sample using the public harness and CI.
 
 1. **JSON parsing** - every record parses as syntactically valid JSON.
 2. **Schema-only JSON Schema validation** - every record conforms to the
-   strict `sample20` v2 contract.
+   strict `sample20` v2 contract. Set-like string arrays reject duplicate
+   entries through `uniqueItems: true`.
 3. **Runtime fixture-contract coherence** - model/reference equality,
    canonical class/value-mode equality, stored agreement recomputation,
    input-summary equality, recovery/value-mode coherence, evidence relation

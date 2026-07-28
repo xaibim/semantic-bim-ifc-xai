@@ -34,7 +34,7 @@ See [../QUICKSTART.md](../QUICKSTART.md) for the minimal local run.
 
 ## Public Sample Validation Metrics
 
-The `sample20` dataset is governed by the strict public sample20 v2 contract using JSON Schema Draft 2020-12 (defined in `schema_public_sample20_v2.json`).
+The `sample20` dataset is governed by the strict public sample20 v2 contract using JSON Schema Draft 2020-12 (defined in `schema_public_sample20_v2.json`). Set-like string arrays in the strict contract reject duplicate items through `uniqueItems: true`.
 
 Expected metrics are:
 - **Record Count**: 20 records;

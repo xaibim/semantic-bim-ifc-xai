@@ -9,7 +9,7 @@ import sys
 
 sys.path.insert(0, str(ROOT / "harness"))
 
-from public_sample20_v2 import _recompute_agreement, validate_records  # noqa: E402
+from public_sample20_v2 import validate_records  # noqa: E402
 
 
 JSONL_PATH = ROOT / "sample20" / "sample20_public_records.jsonl"
@@ -187,7 +187,7 @@ class TestPublicRuntimeFixtureContract(unittest.TestCase):
         self.assertEqual(metrics["public_schema_valid_rate"], 1.0)
         self.assertFalse(any("warnings" in err.lower() for err in errors))
 
-    def test_10_recall_uses_unique_elements(self):
+    def test_10_duplicate_required_psets_rejected_by_schema(self):
         index = next(
             idx
             for idx, record in enumerate(self.records)
@@ -200,14 +200,16 @@ class TestPublicRuntimeFixtureContract(unittest.TestCase):
         records[index]["model_output"]["required_psets"].append(duplicate_pset)
         records[index]["reference_output"]["required_psets"].append(duplicate_pset)
         ok, errors, metrics = self._validate(records)
-        recomputed = _recompute_agreement(
-            records[index]["model_output"],
-            records[index]["reference_output"],
+        self.assertFalse(ok)
+        self.assertLess(metrics["public_schema_valid_rate"], 1.0)
+        self.assertEqual(metrics["package_status"], "PUBLIC_SAMPLE_INVALID")
+        self.assertTrue(
+            any(
+                "schema error" in error.lower()
+                and "non-unique elements" in error.lower()
+                for error in errors
+            )
         )
-        self.assertTrue(ok, errors)
-        self.assertEqual(metrics["public_schema_valid_rate"], 1.0)
-        self.assertEqual(recomputed["required_psets_recall"], 1.0)
-        self.assertEqual(recomputed["required_relationships_recall"], records[index]["agreement"]["required_relationships_recall"])
 
     def test_11_unhashable_required_psets_are_failure_safe(self):
         records = [deep_copy_record(record) for record in self.records]

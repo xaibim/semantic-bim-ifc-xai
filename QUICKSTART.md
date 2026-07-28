@@ -49,7 +49,7 @@ Expected output includes:
 * `jsonl_lf_normalized_sha256=2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa`
 * `schema_copy_count=3`
 * `schema_copy_byte_identity=PASS`
-* `schema_lf_normalized_sha256=de9c722f98085d7227906295531aa190755d105a0bf030d360fb26b1298ab216`
+* `schema_lf_normalized_sha256=8e4de7f560ef24dac0404c45b8d62661dd52c538876e17b7ad975a254306f7f9`
 * `integrity=PASS`
 * `status=PUBLIC_SAMPLE20_V2_VALID`
 
