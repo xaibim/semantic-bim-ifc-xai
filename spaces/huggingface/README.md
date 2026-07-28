@@ -6,7 +6,7 @@ colorTo: indigo
 sdk: gradio
 app_file: app.py
 pinned: false
-short_description: Public stored-record validation demo for Semantic BIM/IFC structured outputs
+short_description: Stored-record validation for semantic BIM/IFC outputs
 tags:
   - bim
   - ifc
