@@ -198,7 +198,6 @@ class TestPlannedBenchmarkProtocol(unittest.TestCase):
         for phrase in [
             "planned comparative benchmark gates",
             "planned_not_executed",
-            "current public planned methodology",
         ]:
             self.assertIn(phrase.lower(), text.lower())
 

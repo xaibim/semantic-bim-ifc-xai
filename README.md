@@ -50,8 +50,12 @@ See [research positioning and originality boundary](docs/methodology/research_po
   evidence terminology.
 - The comparative benchmark remains planned and not executed.
 
-See [literature capability matrix](benchmark/literature_capability_matrix.md)
+See [literature capability matrix](benchmark/literature_capability_matrix.md),
+[curated positioning bibliography](docs/literature/semantic_bim_ifc_bibliography_ieee.md),
 and [baseline matrix](benchmark/baseline_matrix.md).
+
+The literature capability matrix and curated positioning bibliography are
+public positioning resources. They are not results of a systematic or scoping review.
 
 ## Research Contributions
 

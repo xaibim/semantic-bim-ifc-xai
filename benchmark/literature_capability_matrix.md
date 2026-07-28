@@ -7,6 +7,9 @@ It does not demonstrate universal absence.
 It is based on reference families already reviewed by the scientific team.
 It prevents established capabilities from being claimed as original.
 
+Canonical source metadata is defined in
+[Semantic BIM/IFC Research Positioning Bibliography](../docs/literature/semantic_bim_ifc_bibliography_ieee.md).
+
 | Reference group | Seed references | Research area | Capability already demonstrated | Typical evaluation scope | Implication for this repository | Positioning status |
 | --- | --- | --- | --- | --- | --- | --- |
 | ISO 19650-1 and ISO 19650-2 | [1], [2] | Information management standards | Collaborative information management and delivery planning. | Project information workflows and governance. | Establishes that BIM information management is already established. | ESTABLISHED_IN_LITERATURE |
@@ -37,31 +40,16 @@ It prevents established capabilities from being claimed as original.
 | [20], [21] | PRISMA-ScR and JBI scoping-review guidance | Methodological basis for the separate planned literature review; not a computational novelty claim. |
 | [22] | Social-science-informed explanation research | Supports the distinction between trace presence, supported evidence and professionally useful explanation. |
 
-## Seed Bibliography Normalization Notes
+## Bibliography Contract
 
-- `[10]` must be treated as the published 2026 article in *Automation in
-  Construction*, volume 187, article 106905, not as "in press".
-- `[11]` must use the final peer-reviewed BIMS-GPT publication:
-  Zheng and Fischer, "Dynamic prompt-based virtual assistant framework for
-  BIM information search", *Automation in Construction*, volume 155,
-  article 105067, 2023.
-- `[12]` must use the final *Journal of Building Engineering* publication,
-  volume 76, article 107066, 2023.
-- `[15]` must use the final *Journal of Engineering, Project, and Production
-  Management* publication, volume 14, issue 4,
-  DOI 10.32738/JEPPM-2024-0035.
-- `[17]` must use Junlong Peng and Xiangjun Liu, *Scientific Reports*,
-  volume 13, article 7065, 2023.
-- `[21]` must use the complete official Peters et al. author record.
-- `[26]` should use the peer-reviewed COLING 2025 publication rather than
-  only the preprint.
-- `[27]` must use *Journal of Computing in Civil Engineering*, volume 40,
-  issue 2, article 04025142.
-- `[28]` must use the title "Natural Language Information Retrieval from BIM Models: An LLM-Based Multi-Agent System Approach".
-
-The numbered seed references correspond to the project bibliography supplied
-for the positioning exercise. This matrix is not a replacement for the final
-formatted bibliography.
+- Seed identifiers `[1]` through `[28]` map directly to the canonical public
+  bibliography.
+- Each seed identifier has exactly one canonical bibliography entry.
+- Supplementary entries `[S1]` and `[S2]` provide recent context but are not
+  seed identifiers.
+- The matrix is a positioning resource, not the result of a systematic or scoping review.
+- Bibliographic presence does not imply that every capability, dataset or
+  result has been reproduced by this repository.
 
 ## Cross-Cutting Gap Considered by This Repository
 

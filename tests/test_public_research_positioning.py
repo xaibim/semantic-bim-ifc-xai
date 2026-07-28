@@ -11,6 +11,7 @@ VALIDATION_GATES = ROOT / "docs" / "methodology" / "validation_gates.md"
 REQUIRED_FILES = [
     ROOT / "README.md",
     ROOT / "PUBLIC_EVIDENCE.md",
+    ROOT / "docs" / "literature" / "semantic_bim_ifc_bibliography_ieee.md",
     ROOT / "benchmark" / "baseline_matrix.md",
     ROOT / "benchmark" / "literature_capability_matrix.md",
     ROOT / "docs" / "methodology" / "research_positioning_and_originality.md",
@@ -79,6 +80,7 @@ class TestPublicResearchPositioning(unittest.TestCase):
         text = read_text(ROOT / "README.md")
         self.assertIn("docs/methodology/research_positioning_and_originality.md", text)
         self.assertIn("benchmark/literature_capability_matrix.md", text)
+        self.assertIn("docs/literature/semantic_bim_ifc_bibliography_ieee.md", text)
         self.assertIn("benchmark/baseline_matrix.md", text)
 
     def test_03_research_positioning_headings(self):
@@ -213,18 +215,31 @@ class TestPublicResearchPositioning(unittest.TestCase):
             "Methodological and Explanatory Foundations",
             "[20], [21]",
             "[22]",
-            "Seed Bibliography Normalization Notes",
-            "article 106905",
-            "article 105067",
-            "article 107066",
-            "article 7065",
-            "COLING 2025",
-            "04025142",
-            "LLM-Based Multi-Agent System Approach",
+            "Bibliography Contract",
+            "Canonical source metadata is defined in",
+            "Seed identifiers `[1]` through `[28]`",
+            "Supplementary entries `[S1]` and `[S2]`",
+            "positioning resource",
+            "not the result of a systematic or scoping review",
+            "Query DSL and library-function alignment",
+            "Text2BIM",
+            "IFC-Bench and recent IFC evaluation research",
         ]
         for phrase in phrases:
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, text)
+
+    def test_13b_validation_gates_bibliography_alignment(self):
+        text = read_text(ROOT / "docs" / "methodology" / "validation_gates.md")
+        normalized = " ".join(text.split())
+        self.assertIn("experiment-specific values remain `TO_BE_FROZEN` before execution", normalized)
+        self.assertIn("The protocol structure is public and versioned", normalized)
+        self.assertNotIn("current public planned methodology is frozen for future use", text)
+        self.assertNotIn("The current public planned methodology is public and versioned", normalized)
+
+    def test_13c_bibliography_link_in_readme(self):
+        text = read_text(ROOT / "README.md")
+        self.assertIn("docs/literature/semantic_bim_ifc_bibliography_ieee.md", text)
 
     def test_14_baseline_matrix_rows_and_statuses(self):
         text = read_text(ROOT / "benchmark" / "baseline_matrix.md")

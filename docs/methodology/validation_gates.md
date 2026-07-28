@@ -103,9 +103,10 @@ currently executable check.
 
 ## Layer C - Planned Comparative Benchmark Gates
 
-The planned comparative benchmark gates are methodology controls and not public
-currently executed checks. This current public planned methodology is frozen
-for future use. Every gate below is `PLANNED_NOT_EXECUTED`.
+The planned comparative benchmark gates are methodology controls and are not
+currently executed public checks. The protocol structure is public and
+versioned; experiment-specific values remain `TO_BE_FROZEN` before execution.
+Every gate below is `PLANNED_NOT_EXECUTED`.
 
 | Gate | Meaning | Evidence required |
 | --- | --- | --- |

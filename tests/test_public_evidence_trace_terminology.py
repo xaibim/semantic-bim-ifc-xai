@@ -138,7 +138,17 @@ class TestPublicEvidenceTraceTerminology(unittest.TestCase):
             {
                 "title",
                 "scope.purpose",
+                "verification_boundary",
                 "corrected_held_out_results.evidence_trace_metric_boundary",
+            },
+        )
+        self.assertEqual(
+            data["verification_boundary"],
+            {
+                "public_verifier_scope": "aggregate_structure_and_derived_calculation_self_consistency",
+                "raw_predictions_available": False,
+                "held_out_metrics_publicly_recomputable": False,
+                "empirical_results_independently_validated_by_repository": False,
             },
         )
         ref_numeric = {path: value for path, value in leaf_paths(ref) if isinstance(value, (int, float)) and not isinstance(value, bool)}
