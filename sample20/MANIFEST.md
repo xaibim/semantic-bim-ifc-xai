@@ -17,5 +17,5 @@
 ## Notes
 
 - The public sample contains 20 records: 18 valid positive cases and 2 expected canonical rejections.
-- `smoke20` refers to the replay/validation run executed on `sample20`.
+- `smoke20` refers to deterministic stored-record validation over the committed sample20 fixture.
 

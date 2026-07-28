@@ -10,7 +10,7 @@ These metrics measure the consistency within the public sample20 v2 dataset. The
 | Unique Sample ID Count | 20 | Unique hexadecimal identifiers |
 | JSON Parse Rate | 1.0 | Compliance with JSON line parsing |
 | Public Schema Valid Rate | 1.0 | Compliance with Draft 2020-12 strict schema |
-| Canonical Validation Rate | 0.9 | Percentage of VALID cases (18/20) |
+| Canonical Acceptance Rate (`canonical_acceptance_rate`) | 0.9 | Acceptance share with `canonical_check.ok = true` (18/20); not accuracy or validation success |
 | Valid Case Count | 18 | Number of positive test cases |
 | Expected Canonical Rejection Count | 2 | Number of negative test cases |
 | Expectation Met Rate | 1.0 | Rate at which model meets expectations (20/20) |

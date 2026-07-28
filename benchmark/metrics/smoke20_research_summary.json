@@ -5,7 +5,7 @@
   "unique_sample_id_count": 20,
   "json_parse_rate": 1.0,
   "public_schema_valid_rate": 1.0,
-  "canonical_validation_rate": 0.9,
+  "canonical_acceptance_rate": 0.9,
   "valid_case_count": 18,
   "expected_canonical_rejection_count": 2,
   "expectation_met_rate": 1.0,

@@ -2,7 +2,9 @@
 
 These are public sample validation results over the public `sample20` v2 reproducibility sample. They are not representative of general model performance or generalization.
 
-## Executed Replay
+This is a deterministic stored-record validation run over the committed sample20 fixture.
+
+## Executed stored-record validation
 
 - Command: `python harness/replay.py --sample sample20/`
 - Sample: `sample20/sample20_public_records.jsonl`
@@ -10,11 +12,12 @@ These are public sample validation results over the public `sample20` v2 reprodu
 - Records: `20`
 - Valid Cases: `18`
 - Expected Canonical Rejections: `2`
-- Canonical Validation Rate: `canonical_validation_rate = 0.9` (since the 2 expected negatives are successfully rejected)
+- Canonical Acceptance Rate: `canonical_acceptance_rate = 0.9` (18/20 records have `canonical_check.ok = true`; acceptance share, not accuracy or validation success)
 - Expectation Met Rate: `expectation_met_rate = 1.0` (all 20 records match their case expectations)
-- JSON parse: `PASS`
+- JSON parsing: `PASS`
 - Schema validation: `PASS`
-- Replay: `PASS`
+- Fixture-contract validation: `PASS`
+- Canonical three-copy integrity: `PASS`
 - Status: `PUBLIC_SAMPLE20_V2_VALID`
 
 ## Notes
@@ -23,3 +26,4 @@ These are public sample validation results over the public `sample20` v2 reprodu
 - These results are evidence for public review, not a certification claim.
 - The status of this package is `PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.
 - All 1.0 metrics indicate internal agreement with the stored synthetic reference, not a final benchmark, production deployment, or certification. This is an academic research artifact, not a final benchmark, not a product, and does not claim production readiness or certification.
+- No model generation or original prompt-to-output pipeline was rerun.

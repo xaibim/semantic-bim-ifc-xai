@@ -1,71 +1,61 @@
-# Evidence-Trace Position
+# Evidence-Trace Evaluation Position
 
-## Statement of Position
+## 1. Public executable meaning
 
-Explainability in this research is not an afterthought, a post-hoc visualization tool, or a secondary analysis layer applied to a finished model. It is treated as an evidence-trace requirement across dataset design, validation, and evaluation.
+The public artifact treats `evidence_trace` as a required structured field.
+It contains `evidence_pattern`, `relation_observed` and `ambiguity_context`.
+Public validation checks the field presence, schema type and stored coherence.
+`relation_observed` must be declared in `required_relationships`.
 
----
+## 2. What the public artefact verifies
 
-## 1. Evidence Trace as an Upstream Requirement
+The public artefact verifies only:
 
-At the dataset construction stage, every record must contain an explicit `evidence_trace` field. This field must reference the specific properties, entity relationships, or contextual cues that justified the classification or property assignment.
+- structural presence;
+- JSON Schema conformance;
+- model/reference equality;
+- internal fixture coherence;
+- declared relationship-label coherence;
+- stored expected-negative behavior.
 
-A model cannot be rewarded for producing a correct IFC class assignment without demonstrating why that class was selected. This means:
+## 3. What the public artefact does not verify
 
-- The dataset enforces explainability before the model ever sees the training data.
-- Models trained on this dataset are exposed, from the earliest learning signal, to the requirement that outputs must be grounded in traceable evidence.
-- Records lacking a valid evidence trace fail Gate 5 of the validation matrix and are blocked from ingestion.
+The public artefact does not verify:
 
-This is in contrast to approaches that apply attribution retrospectively. Post-hoc attribution can describe a model's behavior, but cannot correct a model that was never trained to explain itself.
+- existence of an external evidence source;
+- source identifiers or source locations;
+- whether a source supports a technical claim;
+- occurrence of a relationship in a real IFC model;
+- professional sufficiency of the evidence;
+- causal attribution;
+- SHAP or LIME;
+- chain-of-thought;
+- certification.
 
----
+## 4. Future dataset methodology
 
-## 2. Evidence Trace as a Parallel Validation Requirement
+Future dataset methodology may include:
 
-The validation gate matrix (see [validation_gates.md](validation_gates.md)) evaluates explanation quality alongside structural accuracy at every record.
+- resolvable source identifiers;
+- source-to-claim supportedness review;
+- professional reviewer scoring;
+- real IFC instance checks;
+- hallucination and evidence-sufficiency evaluation.
 
-This means:
+These items are planned and are not executed as current public checks.
 
-- The evidence trace must correspond to the actual input context.
-- The selected IFC class and property set must be supported by the trace.
-- Unsupported or hallucinated rationale fails validation.
+## 5. Future benchmark criterion
 
----
+Evidence-supportedness is planned as a future benchmark criterion, separate
+from the current structural validation.
 
-## 3. Evidence Trace as a Downstream Benchmark Criterion
+## 6. Adaptation and quantization
 
-The benchmark protocol measures whether the output is not only structurally valid, but also supported by a trace that a reviewer can inspect.
+QLoRA, LoRA or quantization must preserve the contract if studied later, but
+they are not explanation mechanisms.
 
-The benchmark is intentionally limited. It is a public sample validation protocol, not a final production benchmark.
+## 7. Boundary
 
----
-
-## 4. What This Does Not Mean
-
-- **Evidence trace is not a completed formal attribution system**: The current public harness demonstrates structured replay and validation, but it does not implement mathematical attribution methods such as SHAP or LIME in the public sample.
-- **Evidence trace is not the mechanism of certification**: The explanation quality depends on the evidence trace, the record schema, and the validation gates.
-- **Evidence trace is not a certification claim**: The research does not claim to certify any BIM/IFC deliverable, tool, or dataset.
-
----
-
-## 5. LoRA/QLoRA and Evidence Trace
-
-Any future adaptation work must preserve the evidence-trace contract.
-
-This sequencing ensures that evidence-trace requirements are embedded in the training pipeline rather than added after the fact.
-
----
-
-## 6. QAT / Post-Training Quantization and Evidence Trace
-
-Quantization is a deployment-efficiency topic, not the explanation mechanism. If compressed models are studied later, they must still preserve the public evidence-trace contract.
-
----
-
-## 7. Future Research Directions
-
-| Topic | Direction |
-| --- | --- |
-| SHAP/LIME attribution | Future post-hoc attribution research over live fine-tuned model outputs |
-| Counterfactual explanation | Future prompt perturbation studies |
-| Human evaluation | Future review by domain experts |
+The current public evidence trace is a structured audit field, not proof that
+a model used a cited source, not causal attribution, and not professional or
+normative certification.

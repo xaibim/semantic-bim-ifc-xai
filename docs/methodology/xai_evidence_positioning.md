@@ -1,33 +1,17 @@
-# XAI evidence positioning
+# XAI Evidence Positioning Compatibility Note
 
-## Scope
+This note is retained for compatibility with older references. The canonical
+public position is [Evidence-Trace Evaluation Position](xai_evaluation_position.md).
 
-This repository uses XAI in an evidence-oriented sense.
+`Replay`, where retained as a historical CLI or Space name, means loading and
+validating committed stored records. It does not mean rerunning model
+generation or the original prompt-to-output pipeline.
 
-In this work, traceability and evidence are the operational XAI criterion. The objective is not to expose hidden model internals, but to make the BIM/IFC output auditable through selected classes, properties, relationships, missing information, validation status and evidence traces.
+The public evidence trace is a structured audit field over committed records.
+It supports structural presence checks, JSON Schema conformance, model/reference
+equality, fixture coherence, declared relationship-label coherence, and
+expected-negative behavior. It does not establish external-source supportedness,
+causal attribution, model-internal explanation, or certification.
 
-It does not claim full mathematical interpretability, model-internal explanation or SHAP/LIME-style feature attribution.
-
-## Operational meaning
-
-An output is considered more explainable when it exposes:
-
-- the selected IFC class or candidate classes;
-- the Psets and relationships required;
-- missing or ambiguous information;
-- confidence and reason codes;
-- evidence trace entries;
-- validation and replay status.
-
-## Evaluation direction
-
-Future benchmark work should evaluate explanation quality through criteria such as:
-
-- evidence completeness;
-- evidence relevance;
-- schema-grounded consistency;
-- field-level faithfulness;
-- missing-information detection;
-- replay reproducibility.
-
-This keeps the explainability claim bounded, auditable and compatible with BIM/IFC validation.
+Historical phrasing from the earlier note is superseded by the canonical
+position document.

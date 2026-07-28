@@ -4,7 +4,7 @@
 
 This document describes a **preliminary computational feasibility and resource
 calibration experiment** for QLoRA fine-tuning of Qwen2.5-7B-Instruct on the
-structured, evidence-grounded Semantic BIM/IFC output task.
+structured, evidence-trace Semantic BIM/IFC output task.
 
 It is:
 
@@ -108,6 +108,11 @@ The original evaluator treated `evidence_trace` as a list. The dataset
 contract uses an object. The reevaluation corrected the evaluator using the
 stored predictions. No retraining was required.
 
+Evidence-trace exact match and evidence-trace field F1 measure agreement
+against stored structured target fields. They do not measure external-source
+supportedness, source-to-claim entailment, causal attribution or professional
+evidence sufficiency.
+
 | Metric | Base model | QLoRA adapter |
 |---|---:|---:|
 | JSON parse rate | 100.0% | 100.0% |
@@ -170,14 +175,25 @@ discriminative classification ability.
 
 ---
 
+## Public Verification Boundary
+
+Published compute-derived calculations and aggregate structure are publicly
+checkable. Held-out target-agreement values are reported aggregates from the
+private controlled run. Raw predictions and per-case outputs are not
+distributed. Empirical held-out values cannot be independently recomputed from
+this repository. The verifier does not reproduce training. The verifier does
+not prove superiority. The verifier does not prove generalization. The
+verifier does not prove production readiness.
+
 ## Interpretation
 
-The adapter demonstrated:
+The historical report records:
 
 - **strong controlled held-out target agreement** across the 100-record test
   split;
 - **computational feasibility** on Kaggle GPU infrastructure;
-- **evidence-trace evaluator correction** without retraining.
+- **evidence-trace evaluator correction** against stored targets without
+  retraining.
 
 This result does **not** establish:
 

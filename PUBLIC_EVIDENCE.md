@@ -10,10 +10,12 @@ This repository contains a public, reduced, and sanitized evidence layer for the
 
 | Check | Public executable? | Command/path | Status | Notes |
 | --- | --- | --- | --- | --- |
-| JSON parse | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl` | PASS | 20 records successfully parsed |
-| Strict public sample20 v2 contract validation (JSON Schema Draft 2020-12) | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl --schema sample20/schema_public_sample20_v2.json` | PASS | Validated against strict public sample20 v2 contract |
-| Replay | yes | `python harness/replay.py --sample sample20/` | PASS | Deterministic public replay completed successfully |
-| Evidence trace presence | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl` | PASS | Verified presence and non-emptiness of evidence_trace |
+| Schema-only JSON parsing and JSON Schema validation | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl --schema sample20/schema_public_sample20_v2.json` | PASS | 20/20 records parsed and schema-valid. `fixture_contract=NOT_EVALUATED`; `integrity=NOT_CHECKED`. |
+| JSON parsing | yes | `python harness/replay.py --sample sample20/` | PASS | 20/20 nonempty lines parsed |
+| Strict schema validation | yes | `python harness/replay.py --sample sample20/` | PASS | 20/20 parsed records schema-valid |
+| Fixture-contract validation | yes | `python harness/replay.py --sample sample20/` | PASS | Counts, expected negatives and stored coherence valid |
+| Canonical three-copy integrity | yes | `python harness/replay.py --sample sample20/` | PASS | Three JSONL and three schema copies verified independently |
+| Evidence-trace structure count | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl` | PASS | Counted from model and reference evidence_trace objects. This does not verify external source supportedness. |
 | Forbidden pattern scan | yes | `python scripts/public_forbidden_scan.py` | PASS | Scans tracked files for forbidden patterns and credentials |
 | Leakage/dedupe | no | `not exposed as public executable check` | METHODOLOGICAL | Handled as a methodology-only process |
 | NER sanitization | no | `not exposed as public executable check` | METHODOLOGICAL | Handled as a methodology-only process |
@@ -21,7 +23,7 @@ This repository contains a public, reduced, and sanitized evidence layer for the
 ## Evidence Included
 
 - Public sample20 records.
-- Public smoke/replay execution over sample20.
+- Public deterministic stored-record validation.
 - Public sample validation summary.
 - Replay harness.
 - Schema validator helper.
@@ -29,7 +31,7 @@ This repository contains a public, reduced, and sanitized evidence layer for the
 
 ## Evidence Interpretation
 
-The current evidence shows that a public sanitized sample can be replayed and validated with auditable outputs under a controlled research setting.
+The current evidence shows that a public sanitized sample can be loaded and validated from committed records with auditable outputs under a controlled research setting.
 
 The evidence does not claim:
 
@@ -38,10 +40,25 @@ The evidence does not claim:
 - Deployment approval.
 - Exhaustive benchmark coverage.
 
+## Scientific Positioning Boundary
+
+This page records public executable evidence for the committed stored-record
+fixture and its validation helpers.
+
+It does not:
+
+- evaluate universal originality;
+- substitute for a systematic literature review;
+- turn `sample20` into a final benchmark;
+- replace the broader research-positioning boundary documents.
+
+See [research positioning and originality boundary](docs/methodology/research_positioning_and_originality.md)
+and [literature capability matrix](benchmark/literature_capability_matrix.md).
+
 ## Dataset Structure and Metrics Wording
 
 The public `sample20` dataset contains 20 records: 18 valid cases and 2 expected canonical rejections.
-- The `canonical_validation_rate` is 0.9 (18/20) because the two expected negative cases are rejected as intended.
+- The `canonical_acceptance_rate` is 0.9 (18/20): 18 records have `canonical_check.ok = true`. This is an acceptance share, not accuracy or validation success.
 - The `expectation_met_rate` is 1.0 (20/20) since the model's actual status matches the expected case expectation in all 20 records.
 - All 1.0 metrics indicate consistency within this reduced sample, not general model performance or generalization.
 - The `sample20` dataset is not a complete corpus and is not a final benchmark.

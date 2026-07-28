@@ -146,6 +146,15 @@ def main() -> int:
     if len(records) == 20:
         valid_cases = sum(1 for r in records if r.get("case_expectation") == "VALID")
         expected_rejections = sum(1 for r in records if r.get("case_expectation") == "EXPECTED_CANONICAL_REJECTION")
+        canonical_acceptances = sum(
+            1
+            for r in records
+            if isinstance(r.get("canonical_check"), dict)
+            and r["canonical_check"].get("ok") is True
+        )
+        canonical_acceptance_rate = (
+            canonical_acceptances / len(records)
+        )
         
         vm_counts = {"PREVIEW": 0, "PROPOSAL": 0, "GUIDED_RECOVERY": 0, "EXECUTE": 0}
         for r in records:
@@ -170,7 +179,15 @@ def main() -> int:
                 check_metric("valid_case_count", 18)
                 check_metric("expected_canonical_rejection_count", 2)
                 check_metric("expectation_met_rate", 1.0)
-                check_metric("canonical_validation_rate", 0.9)
+                check_metric(
+                    "canonical_acceptance_rate",
+                    canonical_acceptance_rate,
+                )
+                obsolete_metric_key = "canonical_" + "validation_rate"
+                if obsolete_metric_key in metrics_data:
+                    errors.append(
+                        f"Obsolete metric key present in summary JSON: {obsolete_metric_key}"
+                    )
                 check_metric("PREVIEW", vm_counts["PREVIEW"])
                 check_metric("PROPOSAL", vm_counts["PROPOSAL"])
                 check_metric("GUIDED_RECOVERY", vm_counts["GUIDED_RECOVERY"])

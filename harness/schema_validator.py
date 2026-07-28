@@ -1,124 +1,195 @@
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
 from typing import Any
 
-from public_sample20_v2 import validate_records
+import jsonschema
 
-# Add parent or harness directory to path just in case
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+ROOT = Path(__file__).resolve().parents[1]
+KNOWN_SAMPLE_FILENAMES = ("sample20_public_records.jsonl", "sample20_public_predictions.jsonl")
+SCHEMA_FILENAME = "schema_public_" + "sample20_v2.json"
 
 
-def main() -> int:
-    if len(sys.argv) < 2:
-        print("Usage: python harness/schema_validator.py <sample.jsonl> [--schema <schema.json>]")
-        return 2
+def _resolve_sample_file(sample_path: Path) -> Path | None:
+    if sample_path.is_file():
+        return sample_path
 
-    path = Path(sys.argv[1])
-    if not path.exists():
-        print(f"FILE_NOT_FOUND: {path}")
-        return 2
-
-    # Parse args for optional custom schema path
-    schema_path = None
-    if "--schema" in sys.argv:
-        try:
-            s_idx = sys.argv.index("--schema")
-            if s_idx + 1 < len(sys.argv):
-                schema_path = Path(sys.argv[s_idx + 1])
-        except ValueError:
-            pass
-
-    if schema_path is None:
-        # Fallback to schema_public_sample20_v2.json in same dir or sample20
-        for candidate in (path.parent / "schema_public_sample20_v2.json", path.parent / "schema_public_sample20_v2.json"):
+    if sample_path.is_dir():
+        for name in KNOWN_SAMPLE_FILENAMES:
+            candidate = sample_path / name
             if candidate.exists():
-                schema_path = candidate
-                break
+                return candidate
 
+    return None
+
+
+def _resolve_schema_path(sample_file: Path, explicit_schema: Path | None) -> Path | None:
+    if explicit_schema is not None:
+        return explicit_schema
+
+    candidate = sample_file.parent / SCHEMA_FILENAME
+    return candidate if candidate.exists() else None
+
+
+def _has_required_keys(record: dict[str, Any], required_keys: list[str]) -> bool:
+    return all(key in record for key in required_keys)
+
+
+def _has_evidence_trace(record: dict[str, Any]) -> bool:
+    for output_name in ("model_output", "reference_output"):
+        output = record.get(output_name)
+        if not isinstance(output, dict):
+            return False
+        evidence_trace = output.get("evidence_trace")
+        if not isinstance(evidence_trace, dict):
+            return False
+        if not {"evidence_pattern", "relation_observed", "ambiguity_context"}.issubset(evidence_trace):
+            return False
+    return True
+
+
+def _emit_errors(title: str, errors: list[str]) -> None:
+    if not errors:
+        return
+    print(f"{title}:", file=sys.stderr)
+    for error in errors[:20]:
+        print(f"  {error}", file=sys.stderr)
+    if len(errors) > 20:
+        print(f"  ... (total {len(errors)} errors)", file=sys.stderr)
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Parse JSONL records and validate them against a JSON Schema.",
+    )
+    parser.add_argument("sample", help="Path to sample20/ or the JSONL file.")
+    parser.add_argument(
+        "--schema",
+        help="Optional explicit schema path. Falls back to schema_public_" + "sample20_v2.json.",
+    )
+    args = parser.parse_args(argv)
+
+    sample_input = Path(args.sample)
+    if not sample_input.exists():
+        print("FILE_NOT_FOUND")
+        return 2
+
+    sample_file = _resolve_sample_file(sample_input)
+    if sample_file is None:
+        print("SAMPLE_FILE_NOT_FOUND")
+        return 2
+
+    schema_path = _resolve_schema_path(sample_file, Path(args.schema) if args.schema else None)
     if schema_path is None or not schema_path.exists():
-        # Look in sample20 directory as fallback
-        schema_path = Path(__file__).resolve().parents[1] / "sample20" / "schema_public_sample20_v2.json"
-
-    if not schema_path.exists():
-        print(f"SCHEMA_FILE_NOT_FOUND: {schema_path}")
+        print("SCHEMA_FILE_NOT_FOUND")
         return 2
 
     try:
-        with schema_path.open("r", encoding="utf-8") as sf:
-            schema = json.load(sf)
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
     except Exception as exc:
         print(f"ERROR: failed to read schema: {exc}")
         return 1
 
-    errors: list[str] = []
-    records: list[dict[str, Any]] = []
-    total_lines = 0
-    parsed_lines = 0
+    if not isinstance(schema, dict):
+        print("SCHEMA_DEFINITION_ERROR: schema root must be a JSON object")
+        return 1
 
     try:
-        with path.open("r", encoding="utf-8") as handle:
-            for line_num, line in enumerate(handle, start=1):
+        jsonschema.Draft202012Validator.check_schema(schema)
+    except jsonschema.exceptions.SchemaError as exc:
+        message = exc.message if hasattr(exc, "message") else str(exc)
+        print(f"SCHEMA_DEFINITION_ERROR: {message}")
+        return 1
+
+    parse_errors: list[str] = []
+    schema_errors: list[str] = []
+    records: list[dict[str, Any]] = []
+    nonempty_line_count = 0
+    parsed_record_count = 0
+
+    try:
+        with sample_file.open("r", encoding="utf-8") as handle:
+            for line_number, line in enumerate(handle, start=1):
                 text = line.strip()
                 if not text:
                     continue
-                total_lines += 1
+                nonempty_line_count += 1
                 try:
                     record = json.loads(text)
-                    parsed_lines += 1
-                    records.append(record)
                 except json.JSONDecodeError as exc:
-                    errors.append(f"Line {line_num}: JSON_PARSE_ERROR - {exc}")
+                    parse_errors.append(f"JSON_PARSE_ERROR line={line_number}: {exc}")
                     continue
-
                 if not isinstance(record, dict):
-                    errors.append(f"Line {line_num}: JSON_OBJECT_REQUIRED - parsed record is not an object")
+                    parse_errors.append(f"JSON_OBJECT_REQUIRED line={line_number}")
                     continue
+                records.append(record)
+                parsed_record_count += 1
     except Exception as exc:
         print(f"ERROR: failed to read input file: {exc}")
         return 1
 
-    if total_lines == 0:
-        print("SEMANTIC_XAIBIM_SCHEMA_VALIDATION")
-        print(f"file={path}")
-        print("records=0")
-        print("json_parse_rate=0.0")
-        print("status=SCHEMA_VALIDATION_FAIL")
-        print("Error: JSONL is empty")
-        return 1
+    json_parse_rate = parsed_record_count / nonempty_line_count if nonempty_line_count else 0.0
+    json_parse_ok = (
+        nonempty_line_count > 0
+        and not parse_errors
+        and parsed_record_count == nonempty_line_count
+    )
 
-    json_parse_rate = parsed_lines / total_lines
+    root_required_keys = list(schema.get("required", []))
+    records_with_required_keys = sum(
+        1 for record in records if _has_required_keys(record, root_required_keys)
+    )
+    records_with_evidence_trace = sum(1 for record in records if _has_evidence_trace(record))
 
-    # If any JSON parse errors, we report schema failure
-    if errors:
-        print("SEMANTIC_XAIBIM_SCHEMA_VALIDATION")
-        print(f"file={path}")
-        print(f"records={len(records)}")
-        print(f"json_parse_rate={json_parse_rate:.2f}")
-        print("status=SCHEMA_VALIDATION_FAIL")
-        for err in errors:
-            print(err)
-        return 1
+    schema_valid_records = 0
+    if json_parse_ok:
+        validator = jsonschema.Draft202012Validator(schema)
+        for index, record in enumerate(records):
+            record_errors = sorted(validator.iter_errors(record), key=lambda e: list(e.path))
+            if record_errors:
+                for err in record_errors:
+                    schema_errors.append(
+                        f"Record {index} schema error at {list(err.path)}: {err.message}"
+                    )
+            else:
+                schema_valid_records += 1
 
-    ok, validation_errors, metrics = validate_records(records, schema)
-
-    print("SEMANTIC_XAIBIM_SCHEMA_VALIDATION")
-    print(f"file={path}")
-    print(f"records={len(records)}")
-    print(f"json_parse_rate={json_parse_rate:.1f}")
-    print(f"records_with_required_keys={metrics.get('record_count', 0)}")
-    print(f"records_with_evidence_trace={metrics.get('record_count', 0) if ok else 0}")
-
-    if not ok or validation_errors:
-        print("status=SCHEMA_VALIDATION_FAIL")
-        for err in validation_errors:
-            print(err)
-        return 1
+    schema_valid_rate = schema_valid_records / parsed_record_count if parsed_record_count else 0.0
+    if not json_parse_ok:
+        schema_status = "NOT_EVALUATED"
+    elif parsed_record_count > 0 and schema_valid_records == parsed_record_count:
+        schema_status = "PASS"
     else:
-        print("status=SCHEMA_VALIDATION_OK")
+        schema_status = "FAIL"
+
+    status = "SCHEMA_VALIDATION_OK" if json_parse_ok and schema_status == "PASS" else "SCHEMA_VALIDATION_FAIL"
+
+    print("SEMANTIC_XAIBIM_SCHEMA_VALIDATION_V2")
+    print(f"file={sample_file}")
+    print(f"schema_file={schema_path}")
+    print(f"records={parsed_record_count}")
+    print(f"nonempty_lines={nonempty_line_count}")
+    print(f"parsed_records={parsed_record_count}")
+    print(f"json_parse_rate={json_parse_rate:.6f}")
+    print(f"json_parse={'PASS' if json_parse_ok else 'FAIL'}")
+    print(f"schema_valid_records={schema_valid_records}")
+    print(f"schema_valid_rate={schema_valid_rate:.6f}")
+    print(f"schema={schema_status}")
+    print(f"records_with_required_keys={records_with_required_keys}")
+    print(f"records_with_evidence_trace={records_with_evidence_trace}")
+    print("fixture_contract=NOT_EVALUATED")
+    print("integrity=NOT_CHECKED")
+    print(f"status={status}")
+
+    _emit_errors("Parsing errors", parse_errors)
+    _emit_errors("Schema errors", schema_errors)
+
+    if status == "SCHEMA_VALIDATION_OK":
         return 0
+    return 1
 
 
 if __name__ == "__main__":

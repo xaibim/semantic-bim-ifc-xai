@@ -1,0 +1,3148 @@
+{
+  "audit_id": "XAIBIM_PUBLIC_SAMPLE20_IFC4_RELATIONSHIP_SCHEMA_PARTICIPATION_V3",
+  "audit_metadata": {
+    "hash_contract": "SHA-256 over UTF-8 source bytes after CRLF and CR line endings are normalized to LF.",
+    "ifc_schema": "IFC4",
+    "ifcopenshell_version": "0.8.5",
+    "scope_note": "This audit does not demonstrate professional task suitability or real IFC instance validity.",
+    "source_commit": "2b8b568b33e5a6852f6353499c9233771ac3c6c2",
+    "source_copy_byte_identity_verified": true,
+    "source_copy_count": 3,
+    "source_file": "sample20/sample20_public_records.jsonl",
+    "source_lf_normalized_sha256": "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
+  },
+  "class_catalog": {
+    "IfcAirTerminal": {
+      "all_inverse_attributes": [
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Decomposes",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsDecomposedBy",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssignments",
+          "relationship_entity": "IfcRelAssigns"
+        },
+        {
+          "forward_attribute_name": "RelatingProduct",
+          "inverse_attribute_name": "ReferencedBy",
+          "relationship_entity": "IfcRelAssignsToProduct"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssociations",
+          "relationship_entity": "IfcRelAssociates"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "ConnectedFrom",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "ConnectedTo",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "HasPorts",
+          "relationship_entity": "IfcRelConnectsPortToElement"
+        },
+        {
+          "forward_attribute_name": "RealizingElements",
+          "inverse_attribute_name": "IsConnectionRealization",
+          "relationship_entity": "IfcRelConnectsWithRealizingElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ContainedInStructure",
+          "relationship_entity": "IfcRelContainedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasCoverings",
+          "relationship_entity": "IfcRelCoversBldgElements"
+        },
+        {
+          "forward_attribute_name": "RelatedDefinitions",
+          "inverse_attribute_name": "HasContext",
+          "relationship_entity": "IfcRelDeclares"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "Declares",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDeclaredBy",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDefinedBy",
+          "relationship_entity": "IfcRelDefinesByProperties"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsTypedBy",
+          "relationship_entity": "IfcRelDefinesByType"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "FillsVoids",
+          "relationship_entity": "IfcRelFillsElement"
+        },
+        {
+          "forward_attribute_name": "RelatingFlowElement",
+          "inverse_attribute_name": "HasControlElements",
+          "relationship_entity": "IfcRelFlowControlElements"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "InterferesElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "IsInterferedByElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsNestedBy",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Nests",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "HasProjections",
+          "relationship_entity": "IfcRelProjectsElement"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ReferencedInStructures",
+          "relationship_entity": "IfcRelReferencedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "ProvidesBoundaries",
+          "relationship_entity": "IfcRelSpaceBoundary"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasOpenings",
+          "relationship_entity": "IfcRelVoidsElement"
+        }
+      ],
+      "declaration_exists": true,
+      "is_abstract": false,
+      "supertype_chain": [
+        "IfcAirTerminal",
+        "IfcFlowTerminal",
+        "IfcDistributionFlowElement",
+        "IfcDistributionElement",
+        "IfcElement",
+        "IfcProduct",
+        "IfcObject",
+        "IfcObjectDefinition",
+        "IfcRoot"
+      ]
+    },
+    "IfcAsset": {
+      "all_inverse_attributes": [
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Decomposes",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsDecomposedBy",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssignments",
+          "relationship_entity": "IfcRelAssigns"
+        },
+        {
+          "forward_attribute_name": "RelatingGroup",
+          "inverse_attribute_name": "IsGroupedBy",
+          "relationship_entity": "IfcRelAssignsToGroup"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssociations",
+          "relationship_entity": "IfcRelAssociates"
+        },
+        {
+          "forward_attribute_name": "RelatedDefinitions",
+          "inverse_attribute_name": "HasContext",
+          "relationship_entity": "IfcRelDeclares"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "Declares",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDeclaredBy",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDefinedBy",
+          "relationship_entity": "IfcRelDefinesByProperties"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsTypedBy",
+          "relationship_entity": "IfcRelDefinesByType"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsNestedBy",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Nests",
+          "relationship_entity": "IfcRelNests"
+        }
+      ],
+      "declaration_exists": true,
+      "is_abstract": false,
+      "supertype_chain": [
+        "IfcAsset",
+        "IfcGroup",
+        "IfcObject",
+        "IfcObjectDefinition",
+        "IfcRoot"
+      ]
+    },
+    "IfcBeam": {
+      "all_inverse_attributes": [
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Decomposes",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsDecomposedBy",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssignments",
+          "relationship_entity": "IfcRelAssigns"
+        },
+        {
+          "forward_attribute_name": "RelatingProduct",
+          "inverse_attribute_name": "ReferencedBy",
+          "relationship_entity": "IfcRelAssignsToProduct"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssociations",
+          "relationship_entity": "IfcRelAssociates"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "ConnectedFrom",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "ConnectedTo",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RealizingElements",
+          "inverse_attribute_name": "IsConnectionRealization",
+          "relationship_entity": "IfcRelConnectsWithRealizingElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ContainedInStructure",
+          "relationship_entity": "IfcRelContainedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasCoverings",
+          "relationship_entity": "IfcRelCoversBldgElements"
+        },
+        {
+          "forward_attribute_name": "RelatedDefinitions",
+          "inverse_attribute_name": "HasContext",
+          "relationship_entity": "IfcRelDeclares"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "Declares",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDeclaredBy",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDefinedBy",
+          "relationship_entity": "IfcRelDefinesByProperties"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsTypedBy",
+          "relationship_entity": "IfcRelDefinesByType"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "FillsVoids",
+          "relationship_entity": "IfcRelFillsElement"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "InterferesElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "IsInterferedByElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsNestedBy",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Nests",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "HasProjections",
+          "relationship_entity": "IfcRelProjectsElement"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ReferencedInStructures",
+          "relationship_entity": "IfcRelReferencedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "ProvidesBoundaries",
+          "relationship_entity": "IfcRelSpaceBoundary"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasOpenings",
+          "relationship_entity": "IfcRelVoidsElement"
+        }
+      ],
+      "declaration_exists": true,
+      "is_abstract": false,
+      "supertype_chain": [
+        "IfcBeam",
+        "IfcBuildingElement",
+        "IfcElement",
+        "IfcProduct",
+        "IfcObject",
+        "IfcObjectDefinition",
+        "IfcRoot"
+      ]
+    },
+    "IfcColumn": {
+      "all_inverse_attributes": [
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Decomposes",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsDecomposedBy",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssignments",
+          "relationship_entity": "IfcRelAssigns"
+        },
+        {
+          "forward_attribute_name": "RelatingProduct",
+          "inverse_attribute_name": "ReferencedBy",
+          "relationship_entity": "IfcRelAssignsToProduct"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssociations",
+          "relationship_entity": "IfcRelAssociates"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "ConnectedFrom",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "ConnectedTo",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RealizingElements",
+          "inverse_attribute_name": "IsConnectionRealization",
+          "relationship_entity": "IfcRelConnectsWithRealizingElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ContainedInStructure",
+          "relationship_entity": "IfcRelContainedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasCoverings",
+          "relationship_entity": "IfcRelCoversBldgElements"
+        },
+        {
+          "forward_attribute_name": "RelatedDefinitions",
+          "inverse_attribute_name": "HasContext",
+          "relationship_entity": "IfcRelDeclares"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "Declares",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDeclaredBy",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDefinedBy",
+          "relationship_entity": "IfcRelDefinesByProperties"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsTypedBy",
+          "relationship_entity": "IfcRelDefinesByType"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "FillsVoids",
+          "relationship_entity": "IfcRelFillsElement"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "InterferesElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "IsInterferedByElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsNestedBy",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Nests",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "HasProjections",
+          "relationship_entity": "IfcRelProjectsElement"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ReferencedInStructures",
+          "relationship_entity": "IfcRelReferencedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "ProvidesBoundaries",
+          "relationship_entity": "IfcRelSpaceBoundary"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasOpenings",
+          "relationship_entity": "IfcRelVoidsElement"
+        }
+      ],
+      "declaration_exists": true,
+      "is_abstract": false,
+      "supertype_chain": [
+        "IfcColumn",
+        "IfcBuildingElement",
+        "IfcElement",
+        "IfcProduct",
+        "IfcObject",
+        "IfcObjectDefinition",
+        "IfcRoot"
+      ]
+    },
+    "IfcFan": {
+      "all_inverse_attributes": [
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Decomposes",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsDecomposedBy",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssignments",
+          "relationship_entity": "IfcRelAssigns"
+        },
+        {
+          "forward_attribute_name": "RelatingProduct",
+          "inverse_attribute_name": "ReferencedBy",
+          "relationship_entity": "IfcRelAssignsToProduct"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssociations",
+          "relationship_entity": "IfcRelAssociates"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "ConnectedFrom",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "ConnectedTo",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "HasPorts",
+          "relationship_entity": "IfcRelConnectsPortToElement"
+        },
+        {
+          "forward_attribute_name": "RealizingElements",
+          "inverse_attribute_name": "IsConnectionRealization",
+          "relationship_entity": "IfcRelConnectsWithRealizingElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ContainedInStructure",
+          "relationship_entity": "IfcRelContainedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasCoverings",
+          "relationship_entity": "IfcRelCoversBldgElements"
+        },
+        {
+          "forward_attribute_name": "RelatedDefinitions",
+          "inverse_attribute_name": "HasContext",
+          "relationship_entity": "IfcRelDeclares"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "Declares",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDeclaredBy",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDefinedBy",
+          "relationship_entity": "IfcRelDefinesByProperties"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsTypedBy",
+          "relationship_entity": "IfcRelDefinesByType"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "FillsVoids",
+          "relationship_entity": "IfcRelFillsElement"
+        },
+        {
+          "forward_attribute_name": "RelatingFlowElement",
+          "inverse_attribute_name": "HasControlElements",
+          "relationship_entity": "IfcRelFlowControlElements"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "InterferesElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "IsInterferedByElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsNestedBy",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Nests",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "HasProjections",
+          "relationship_entity": "IfcRelProjectsElement"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ReferencedInStructures",
+          "relationship_entity": "IfcRelReferencedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "ProvidesBoundaries",
+          "relationship_entity": "IfcRelSpaceBoundary"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasOpenings",
+          "relationship_entity": "IfcRelVoidsElement"
+        }
+      ],
+      "declaration_exists": true,
+      "is_abstract": false,
+      "supertype_chain": [
+        "IfcFan",
+        "IfcFlowMovingDevice",
+        "IfcDistributionFlowElement",
+        "IfcDistributionElement",
+        "IfcElement",
+        "IfcProduct",
+        "IfcObject",
+        "IfcObjectDefinition",
+        "IfcRoot"
+      ]
+    },
+    "IfcFlowTerminal": {
+      "all_inverse_attributes": [
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Decomposes",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsDecomposedBy",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssignments",
+          "relationship_entity": "IfcRelAssigns"
+        },
+        {
+          "forward_attribute_name": "RelatingProduct",
+          "inverse_attribute_name": "ReferencedBy",
+          "relationship_entity": "IfcRelAssignsToProduct"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssociations",
+          "relationship_entity": "IfcRelAssociates"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "ConnectedFrom",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "ConnectedTo",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "HasPorts",
+          "relationship_entity": "IfcRelConnectsPortToElement"
+        },
+        {
+          "forward_attribute_name": "RealizingElements",
+          "inverse_attribute_name": "IsConnectionRealization",
+          "relationship_entity": "IfcRelConnectsWithRealizingElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ContainedInStructure",
+          "relationship_entity": "IfcRelContainedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasCoverings",
+          "relationship_entity": "IfcRelCoversBldgElements"
+        },
+        {
+          "forward_attribute_name": "RelatedDefinitions",
+          "inverse_attribute_name": "HasContext",
+          "relationship_entity": "IfcRelDeclares"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "Declares",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDeclaredBy",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDefinedBy",
+          "relationship_entity": "IfcRelDefinesByProperties"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsTypedBy",
+          "relationship_entity": "IfcRelDefinesByType"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "FillsVoids",
+          "relationship_entity": "IfcRelFillsElement"
+        },
+        {
+          "forward_attribute_name": "RelatingFlowElement",
+          "inverse_attribute_name": "HasControlElements",
+          "relationship_entity": "IfcRelFlowControlElements"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "InterferesElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "IsInterferedByElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsNestedBy",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Nests",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "HasProjections",
+          "relationship_entity": "IfcRelProjectsElement"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ReferencedInStructures",
+          "relationship_entity": "IfcRelReferencedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "ProvidesBoundaries",
+          "relationship_entity": "IfcRelSpaceBoundary"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasOpenings",
+          "relationship_entity": "IfcRelVoidsElement"
+        }
+      ],
+      "declaration_exists": true,
+      "is_abstract": false,
+      "supertype_chain": [
+        "IfcFlowTerminal",
+        "IfcDistributionFlowElement",
+        "IfcDistributionElement",
+        "IfcElement",
+        "IfcProduct",
+        "IfcObject",
+        "IfcObjectDefinition",
+        "IfcRoot"
+      ]
+    },
+    "IfcPump": {
+      "all_inverse_attributes": [
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Decomposes",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsDecomposedBy",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssignments",
+          "relationship_entity": "IfcRelAssigns"
+        },
+        {
+          "forward_attribute_name": "RelatingProduct",
+          "inverse_attribute_name": "ReferencedBy",
+          "relationship_entity": "IfcRelAssignsToProduct"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssociations",
+          "relationship_entity": "IfcRelAssociates"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "ConnectedFrom",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "ConnectedTo",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "HasPorts",
+          "relationship_entity": "IfcRelConnectsPortToElement"
+        },
+        {
+          "forward_attribute_name": "RealizingElements",
+          "inverse_attribute_name": "IsConnectionRealization",
+          "relationship_entity": "IfcRelConnectsWithRealizingElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ContainedInStructure",
+          "relationship_entity": "IfcRelContainedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasCoverings",
+          "relationship_entity": "IfcRelCoversBldgElements"
+        },
+        {
+          "forward_attribute_name": "RelatedDefinitions",
+          "inverse_attribute_name": "HasContext",
+          "relationship_entity": "IfcRelDeclares"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "Declares",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDeclaredBy",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDefinedBy",
+          "relationship_entity": "IfcRelDefinesByProperties"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsTypedBy",
+          "relationship_entity": "IfcRelDefinesByType"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "FillsVoids",
+          "relationship_entity": "IfcRelFillsElement"
+        },
+        {
+          "forward_attribute_name": "RelatingFlowElement",
+          "inverse_attribute_name": "HasControlElements",
+          "relationship_entity": "IfcRelFlowControlElements"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "InterferesElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "IsInterferedByElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsNestedBy",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Nests",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "HasProjections",
+          "relationship_entity": "IfcRelProjectsElement"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ReferencedInStructures",
+          "relationship_entity": "IfcRelReferencedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "ProvidesBoundaries",
+          "relationship_entity": "IfcRelSpaceBoundary"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasOpenings",
+          "relationship_entity": "IfcRelVoidsElement"
+        }
+      ],
+      "declaration_exists": true,
+      "is_abstract": false,
+      "supertype_chain": [
+        "IfcPump",
+        "IfcFlowMovingDevice",
+        "IfcDistributionFlowElement",
+        "IfcDistributionElement",
+        "IfcElement",
+        "IfcProduct",
+        "IfcObject",
+        "IfcObjectDefinition",
+        "IfcRoot"
+      ]
+    },
+    "IfcSpace": {
+      "all_inverse_attributes": [
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Decomposes",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsDecomposedBy",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssignments",
+          "relationship_entity": "IfcRelAssigns"
+        },
+        {
+          "forward_attribute_name": "RelatingProduct",
+          "inverse_attribute_name": "ReferencedBy",
+          "relationship_entity": "IfcRelAssignsToProduct"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssociations",
+          "relationship_entity": "IfcRelAssociates"
+        },
+        {
+          "forward_attribute_name": "RelatingStructure",
+          "inverse_attribute_name": "ContainsElements",
+          "relationship_entity": "IfcRelContainedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatingSpace",
+          "inverse_attribute_name": "HasCoverings",
+          "relationship_entity": "IfcRelCoversSpaces"
+        },
+        {
+          "forward_attribute_name": "RelatedDefinitions",
+          "inverse_attribute_name": "HasContext",
+          "relationship_entity": "IfcRelDeclares"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "Declares",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDeclaredBy",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDefinedBy",
+          "relationship_entity": "IfcRelDefinesByProperties"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsTypedBy",
+          "relationship_entity": "IfcRelDefinesByType"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsNestedBy",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Nests",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatingStructure",
+          "inverse_attribute_name": "ReferencesElements",
+          "relationship_entity": "IfcRelReferencedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildings",
+          "inverse_attribute_name": "ServicedBySystems",
+          "relationship_entity": "IfcRelServicesBuildings"
+        },
+        {
+          "forward_attribute_name": "RelatingSpace",
+          "inverse_attribute_name": "BoundedBy",
+          "relationship_entity": "IfcRelSpaceBoundary"
+        }
+      ],
+      "declaration_exists": true,
+      "is_abstract": false,
+      "supertype_chain": [
+        "IfcSpace",
+        "IfcSpatialStructureElement",
+        "IfcSpatialElement",
+        "IfcProduct",
+        "IfcObject",
+        "IfcObjectDefinition",
+        "IfcRoot"
+      ]
+    },
+    "IfcSystem": {
+      "all_inverse_attributes": [
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Decomposes",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsDecomposedBy",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssignments",
+          "relationship_entity": "IfcRelAssigns"
+        },
+        {
+          "forward_attribute_name": "RelatingGroup",
+          "inverse_attribute_name": "IsGroupedBy",
+          "relationship_entity": "IfcRelAssignsToGroup"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssociations",
+          "relationship_entity": "IfcRelAssociates"
+        },
+        {
+          "forward_attribute_name": "RelatedDefinitions",
+          "inverse_attribute_name": "HasContext",
+          "relationship_entity": "IfcRelDeclares"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "Declares",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDeclaredBy",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDefinedBy",
+          "relationship_entity": "IfcRelDefinesByProperties"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsTypedBy",
+          "relationship_entity": "IfcRelDefinesByType"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsNestedBy",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Nests",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatingSystem",
+          "inverse_attribute_name": "ServicesBuildings",
+          "relationship_entity": "IfcRelServicesBuildings"
+        }
+      ],
+      "declaration_exists": true,
+      "is_abstract": false,
+      "supertype_chain": [
+        "IfcSystem",
+        "IfcGroup",
+        "IfcObject",
+        "IfcObjectDefinition",
+        "IfcRoot"
+      ]
+    },
+    "IfcWall": {
+      "all_inverse_attributes": [
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Decomposes",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsDecomposedBy",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssignments",
+          "relationship_entity": "IfcRelAssigns"
+        },
+        {
+          "forward_attribute_name": "RelatingProduct",
+          "inverse_attribute_name": "ReferencedBy",
+          "relationship_entity": "IfcRelAssignsToProduct"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssociations",
+          "relationship_entity": "IfcRelAssociates"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "ConnectedFrom",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "ConnectedTo",
+          "relationship_entity": "IfcRelConnectsElements"
+        },
+        {
+          "forward_attribute_name": "RealizingElements",
+          "inverse_attribute_name": "IsConnectionRealization",
+          "relationship_entity": "IfcRelConnectsWithRealizingElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ContainedInStructure",
+          "relationship_entity": "IfcRelContainedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasCoverings",
+          "relationship_entity": "IfcRelCoversBldgElements"
+        },
+        {
+          "forward_attribute_name": "RelatedDefinitions",
+          "inverse_attribute_name": "HasContext",
+          "relationship_entity": "IfcRelDeclares"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "Declares",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDeclaredBy",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDefinedBy",
+          "relationship_entity": "IfcRelDefinesByProperties"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsTypedBy",
+          "relationship_entity": "IfcRelDefinesByType"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "FillsVoids",
+          "relationship_entity": "IfcRelFillsElement"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "InterferesElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatedElement",
+          "inverse_attribute_name": "IsInterferedByElements",
+          "relationship_entity": "IfcRelInterferesElements"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsNestedBy",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Nests",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatingElement",
+          "inverse_attribute_name": "HasProjections",
+          "relationship_entity": "IfcRelProjectsElement"
+        },
+        {
+          "forward_attribute_name": "RelatedElements",
+          "inverse_attribute_name": "ReferencedInStructures",
+          "relationship_entity": "IfcRelReferencedInSpatialStructure"
+        },
+        {
+          "forward_attribute_name": "RelatedBuildingElement",
+          "inverse_attribute_name": "ProvidesBoundaries",
+          "relationship_entity": "IfcRelSpaceBoundary"
+        },
+        {
+          "forward_attribute_name": "RelatingBuildingElement",
+          "inverse_attribute_name": "HasOpenings",
+          "relationship_entity": "IfcRelVoidsElement"
+        }
+      ],
+      "declaration_exists": true,
+      "is_abstract": false,
+      "supertype_chain": [
+        "IfcWall",
+        "IfcBuildingElement",
+        "IfcElement",
+        "IfcProduct",
+        "IfcObject",
+        "IfcObjectDefinition",
+        "IfcRoot"
+      ]
+    },
+    "IfcZone": {
+      "all_inverse_attributes": [
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Decomposes",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsDecomposedBy",
+          "relationship_entity": "IfcRelAggregates"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssignments",
+          "relationship_entity": "IfcRelAssigns"
+        },
+        {
+          "forward_attribute_name": "RelatingGroup",
+          "inverse_attribute_name": "IsGroupedBy",
+          "relationship_entity": "IfcRelAssignsToGroup"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "HasAssociations",
+          "relationship_entity": "IfcRelAssociates"
+        },
+        {
+          "forward_attribute_name": "RelatedDefinitions",
+          "inverse_attribute_name": "HasContext",
+          "relationship_entity": "IfcRelDeclares"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "Declares",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDeclaredBy",
+          "relationship_entity": "IfcRelDefinesByObject"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsDefinedBy",
+          "relationship_entity": "IfcRelDefinesByProperties"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "IsTypedBy",
+          "relationship_entity": "IfcRelDefinesByType"
+        },
+        {
+          "forward_attribute_name": "RelatingObject",
+          "inverse_attribute_name": "IsNestedBy",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatedObjects",
+          "inverse_attribute_name": "Nests",
+          "relationship_entity": "IfcRelNests"
+        },
+        {
+          "forward_attribute_name": "RelatingSystem",
+          "inverse_attribute_name": "ServicesBuildings",
+          "relationship_entity": "IfcRelServicesBuildings"
+        }
+      ],
+      "declaration_exists": true,
+      "is_abstract": false,
+      "supertype_chain": [
+        "IfcZone",
+        "IfcSystem",
+        "IfcGroup",
+        "IfcObject",
+        "IfcObjectDefinition",
+        "IfcRoot"
+      ]
+    }
+  },
+  "interpretation_boundary": {
+    "corrections_authorized": false,
+    "ifc_certification_claimed": false,
+    "real_ifc_model_evaluated": false,
+    "relationship_instances_created": false,
+    "schema_participation_only": true,
+    "semantic_task_alignment_evaluated": false
+  },
+  "record_audits": [
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelConnectsElements",
+      "ifc_class": "IfcColumn",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelConnectsElements",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedElement",
+              "inverse_attribute_name": "ConnectedFrom",
+              "relationship_entity": "IfcRelConnectsElements"
+            },
+            {
+              "forward_attribute_name": "RelatingElement",
+              "inverse_attribute_name": "ConnectedTo",
+              "relationship_entity": "IfcRelConnectsElements"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelConnectsElements",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelConnectsElements",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelConnectsElements",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "IsDefinedBy",
+              "relationship_entity": "IfcRelDefinesByProperties"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelDefinesByProperties",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelDefinesByProperties",
+            "IfcRelDefines",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "4eeac340747306fd",
+      "semantic_type": "semantic_enrichment"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelNests",
+      "ifc_class": "IfcWall",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelNests",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingObject",
+              "inverse_attribute_name": "IsNestedBy",
+              "relationship_entity": "IfcRelNests"
+            },
+            {
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "Nests",
+              "relationship_entity": "IfcRelNests"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelNests",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelNests",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "INHERITED_SUPERTYPE_COMPATIBLE",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelNests",
+          "exact_inverse_endpoints": [],
+          "inherited_supertype_endpoints": [
+            {
+              "declared_relationship_supertype": "IfcRelAssigns",
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "HasAssignments"
+            }
+          ],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAssignsToGroup",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAssignsToGroup",
+            "IfcRelAssigns",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "495a677407a7f05a",
+      "semantic_type": "ambiguity_resolution"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelVoidsElement",
+      "ifc_class": "IfcBeam",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelVoidsElement",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingBuildingElement",
+              "inverse_attribute_name": "HasOpenings",
+              "relationship_entity": "IfcRelVoidsElement"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelVoidsElement",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelVoidsElement",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelVoidsElement",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedBuildingElement",
+              "inverse_attribute_name": "FillsVoids",
+              "relationship_entity": "IfcRelFillsElement"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelFillsElement",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelFillsElement",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "1ae42de17ac977f7",
+      "semantic_type": "evidence_generation"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelConnectsElements",
+      "ifc_class": "IfcBeam",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelConnectsElements",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedElement",
+              "inverse_attribute_name": "ConnectedFrom",
+              "relationship_entity": "IfcRelConnectsElements"
+            },
+            {
+              "forward_attribute_name": "RelatingElement",
+              "inverse_attribute_name": "ConnectedTo",
+              "relationship_entity": "IfcRelConnectsElements"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelConnectsElements",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelConnectsElements",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelConnectsElements",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "Decomposes",
+              "relationship_entity": "IfcRelAggregates"
+            },
+            {
+              "forward_attribute_name": "RelatingObject",
+              "inverse_attribute_name": "IsDecomposedBy",
+              "relationship_entity": "IfcRelAggregates"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAggregates",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAggregates",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "ae47e72e2af2b182",
+      "semantic_type": "evidence_generation"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelAssociatesMaterial",
+      "ifc_class": "IfcPump",
+      "relationship_audits": [
+        {
+          "compatibility_state": "INHERITED_SUPERTYPE_COMPATIBLE",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelAssociatesMaterial",
+          "exact_inverse_endpoints": [],
+          "inherited_supertype_endpoints": [
+            {
+              "declared_relationship_supertype": "IfcRelAssociates",
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "HasAssociations"
+            }
+          ],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAssociatesMaterial",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAssociatesMaterial",
+            "IfcRelAssociates",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelAssociatesMaterial",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingBuildingElement",
+              "inverse_attribute_name": "HasOpenings",
+              "relationship_entity": "IfcRelVoidsElement"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelVoidsElement",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelVoidsElement",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "8c0052ccd9bc96e4",
+      "semantic_type": "geometric_validation"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelContainedInSpatialStructure",
+      "ifc_class": "IfcSpace",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelContainedInSpatialStructure",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingStructure",
+              "inverse_attribute_name": "ContainsElements",
+              "relationship_entity": "IfcRelContainedInSpatialStructure"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelContainedInSpatialStructure",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelContainedInSpatialStructure",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelContainedInSpatialStructure",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingSpace",
+              "inverse_attribute_name": "BoundedBy",
+              "relationship_entity": "IfcRelSpaceBoundary"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelSpaceBoundary",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelSpaceBoundary",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "21129edbbd73ebef",
+      "semantic_type": "semantic_enrichment"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelVoidsElement",
+      "ifc_class": "IfcFlowTerminal",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelVoidsElement",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingBuildingElement",
+              "inverse_attribute_name": "HasOpenings",
+              "relationship_entity": "IfcRelVoidsElement"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelVoidsElement",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelVoidsElement",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelVoidsElement",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedBuildingElement",
+              "inverse_attribute_name": "FillsVoids",
+              "relationship_entity": "IfcRelFillsElement"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelFillsElement",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelFillsElement",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "d2ed814a93840a19",
+      "semantic_type": "element_deletion"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelNests",
+      "ifc_class": "IfcAirTerminal",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelNests",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingObject",
+              "inverse_attribute_name": "IsNestedBy",
+              "relationship_entity": "IfcRelNests"
+            },
+            {
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "Nests",
+              "relationship_entity": "IfcRelNests"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelNests",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelNests",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelNests",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedBuildingElement",
+              "inverse_attribute_name": "FillsVoids",
+              "relationship_entity": "IfcRelFillsElement"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelFillsElement",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelFillsElement",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "fa3bca1c51085557",
+      "semantic_type": "evidence_generation"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelConnectsElements",
+      "ifc_class": "IfcColumn",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelConnectsElements",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedElement",
+              "inverse_attribute_name": "ConnectedFrom",
+              "relationship_entity": "IfcRelConnectsElements"
+            },
+            {
+              "forward_attribute_name": "RelatingElement",
+              "inverse_attribute_name": "ConnectedTo",
+              "relationship_entity": "IfcRelConnectsElements"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelConnectsElements",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelConnectsElements",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelConnectsElements",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "Decomposes",
+              "relationship_entity": "IfcRelAggregates"
+            },
+            {
+              "forward_attribute_name": "RelatingObject",
+              "inverse_attribute_name": "IsDecomposedBy",
+              "relationship_entity": "IfcRelAggregates"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAggregates",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAggregates",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "048b754023b7b6b4",
+      "semantic_type": "element_modification"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelContainedInSpatialStructure",
+      "ifc_class": "IfcFan",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelContainedInSpatialStructure",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedElements",
+              "inverse_attribute_name": "ContainedInStructure",
+              "relationship_entity": "IfcRelContainedInSpatialStructure"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelContainedInSpatialStructure",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelContainedInSpatialStructure",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelContainedInSpatialStructure",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingObject",
+              "inverse_attribute_name": "IsNestedBy",
+              "relationship_entity": "IfcRelNests"
+            },
+            {
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "Nests",
+              "relationship_entity": "IfcRelNests"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelNests",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelNests",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "5af537f550afd4aa",
+      "semantic_type": "ambiguity_resolution"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelVoidsElement",
+      "ifc_class": "IfcColumn",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelVoidsElement",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingBuildingElement",
+              "inverse_attribute_name": "HasOpenings",
+              "relationship_entity": "IfcRelVoidsElement"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelVoidsElement",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelVoidsElement",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "INHERITED_SUPERTYPE_COMPATIBLE",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelVoidsElement",
+          "exact_inverse_endpoints": [],
+          "inherited_supertype_endpoints": [
+            {
+              "declared_relationship_supertype": "IfcRelAssigns",
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "HasAssignments"
+            }
+          ],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAssignsToGroup",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAssignsToGroup",
+            "IfcRelAssigns",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "6ebb6c9ea431c6a7",
+      "semantic_type": "element_modification"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelVoidsElement",
+      "ifc_class": "IfcColumn",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelVoidsElement",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingBuildingElement",
+              "inverse_attribute_name": "HasOpenings",
+              "relationship_entity": "IfcRelVoidsElement"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelVoidsElement",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelVoidsElement",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "INHERITED_SUPERTYPE_COMPATIBLE",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelVoidsElement",
+          "exact_inverse_endpoints": [],
+          "inherited_supertype_endpoints": [
+            {
+              "declared_relationship_supertype": "IfcRelAssigns",
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "HasAssignments"
+            }
+          ],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAssignsToGroup",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAssignsToGroup",
+            "IfcRelAssigns",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "ca455e91ed772fd8",
+      "semantic_type": "recovery_request"
+    },
+    {
+      "case_expectation": "EXPECTED_CANONICAL_REJECTION",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelAssignsToGroup",
+      "ifc_class": "IfcSystem",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelAssignsToGroup",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingGroup",
+              "inverse_attribute_name": "IsGroupedBy",
+              "relationship_entity": "IfcRelAssignsToGroup"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAssignsToGroup",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAssignsToGroup",
+            "IfcRelAssigns",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "ee5057a4b7f15e3c",
+      "semantic_type": "element_deletion"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelSpaceBoundary",
+      "ifc_class": "IfcSpace",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelSpaceBoundary",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingSpace",
+              "inverse_attribute_name": "BoundedBy",
+              "relationship_entity": "IfcRelSpaceBoundary"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelSpaceBoundary",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelSpaceBoundary",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "f72f31f4c063475b",
+      "semantic_type": "recovery_request"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelAggregates",
+      "ifc_class": "IfcSpace",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelAggregates",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "Decomposes",
+              "relationship_entity": "IfcRelAggregates"
+            },
+            {
+              "forward_attribute_name": "RelatingObject",
+              "inverse_attribute_name": "IsDecomposedBy",
+              "relationship_entity": "IfcRelAggregates"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAggregates",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAggregates",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelAggregates",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingStructure",
+              "inverse_attribute_name": "ContainsElements",
+              "relationship_entity": "IfcRelContainedInSpatialStructure"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelContainedInSpatialStructure",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelContainedInSpatialStructure",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "f84721ef28e281d1",
+      "semantic_type": "relationship_inference"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelAssignsToGroup",
+      "ifc_class": "IfcAsset",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelAssignsToGroup",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingGroup",
+              "inverse_attribute_name": "IsGroupedBy",
+              "relationship_entity": "IfcRelAssignsToGroup"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAssignsToGroup",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAssignsToGroup",
+            "IfcRelAssigns",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "23dad325e1a64458",
+      "semantic_type": "element_deletion"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelNests",
+      "ifc_class": "IfcFlowTerminal",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelNests",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingObject",
+              "inverse_attribute_name": "IsNestedBy",
+              "relationship_entity": "IfcRelNests"
+            },
+            {
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "Nests",
+              "relationship_entity": "IfcRelNests"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelNests",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelNests",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelNests",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedBuildingElement",
+              "inverse_attribute_name": "FillsVoids",
+              "relationship_entity": "IfcRelFillsElement"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelFillsElement",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelFillsElement",
+            "IfcRelConnects",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "3dab4b257ae52bfc",
+      "semantic_type": "pset_assignment"
+    },
+    {
+      "case_expectation": "EXPECTED_CANONICAL_REJECTION",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelAssignsToGroup",
+      "ifc_class": "IfcZone",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelAssignsToGroup",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingGroup",
+              "inverse_attribute_name": "IsGroupedBy",
+              "relationship_entity": "IfcRelAssignsToGroup"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAssignsToGroup",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAssignsToGroup",
+            "IfcRelAssigns",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "45f540e38ef9fe81",
+      "semantic_type": "element_deletion"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelDefinesByProperties",
+      "ifc_class": "IfcAsset",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelDefinesByProperties",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "IsDefinedBy",
+              "relationship_entity": "IfcRelDefinesByProperties"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelDefinesByProperties",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelDefinesByProperties",
+            "IfcRelDefines",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelDefinesByProperties",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatingObject",
+              "inverse_attribute_name": "IsNestedBy",
+              "relationship_entity": "IfcRelNests"
+            },
+            {
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "Nests",
+              "relationship_entity": "IfcRelNests"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelNests",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelNests",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "8f91faebc05dd115",
+      "semantic_type": "material_assignment"
+    },
+    {
+      "case_expectation": "VALID",
+      "evidence_relation_declared": true,
+      "evidence_relation_observed": "IfcRelAggregates",
+      "ifc_class": "IfcColumn",
+      "relationship_audits": [
+        {
+          "compatibility_state": "EXACT_INVERSE_ENDPOINT",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelAggregates",
+          "exact_inverse_endpoints": [
+            {
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "Decomposes",
+              "relationship_entity": "IfcRelAggregates"
+            },
+            {
+              "forward_attribute_name": "RelatingObject",
+              "inverse_attribute_name": "IsDecomposedBy",
+              "relationship_entity": "IfcRelAggregates"
+            }
+          ],
+          "inherited_supertype_endpoints": [],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAggregates",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAggregates",
+            "IfcRelDecomposes",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        },
+        {
+          "compatibility_state": "INHERITED_SUPERTYPE_COMPATIBLE",
+          "declaration_exists": true,
+          "evidence_relation_declared": true,
+          "evidence_relation_observed": "IfcRelAggregates",
+          "exact_inverse_endpoints": [],
+          "inherited_supertype_endpoints": [
+            {
+              "declared_relationship_supertype": "IfcRelAssociates",
+              "forward_attribute_name": "RelatedObjects",
+              "inverse_attribute_name": "HasAssociations"
+            }
+          ],
+          "interpretation_state": "NOT_EVALUATED",
+          "is_ifc_relationship": true,
+          "relationship": "IfcRelAssociatesMaterial",
+          "relationship_is_abstract": false,
+          "required_relationship_supertype_chain": [
+            "IfcRelAssociatesMaterial",
+            "IfcRelAssociates",
+            "IfcRelationship",
+            "IfcRoot"
+          ],
+          "schema_compatible": true
+        }
+      ],
+      "sample_id": "7f1ea524d9fdbdcb",
+      "semantic_type": "ambiguity_resolution"
+    }
+  ],
+  "relationship_catalog": {
+    "IfcRelAggregates": {
+      "all_attributes": [
+        "Description",
+        "GlobalId",
+        "Name",
+        "OwnerHistory",
+        "RelatedObjects",
+        "RelatingObject"
+      ],
+      "argument_types": [
+        "STRING",
+        "ENTITY INSTANCE",
+        "STRING",
+        "STRING",
+        "ENTITY INSTANCE",
+        "AGGREGATE OF ENTITY INSTANCE"
+      ],
+      "declaration_exists": true,
+      "forward_attributes": [
+        {
+          "argument_type": "STRING",
+          "index": 0,
+          "name": "GlobalId"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 1,
+          "name": "OwnerHistory"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 2,
+          "name": "Name"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 3,
+          "name": "Description"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 4,
+          "name": "RelatingObject"
+        },
+        {
+          "argument_type": "AGGREGATE OF ENTITY INSTANCE",
+          "index": 5,
+          "name": "RelatedObjects"
+        }
+      ],
+      "is_abstract": false,
+      "is_ifc_relationship": true,
+      "supertype_chain": [
+        "IfcRelAggregates",
+        "IfcRelDecomposes",
+        "IfcRelationship",
+        "IfcRoot"
+      ]
+    },
+    "IfcRelAssignsToGroup": {
+      "all_attributes": [
+        "Description",
+        "GlobalId",
+        "Name",
+        "OwnerHistory",
+        "RelatedObjects",
+        "RelatedObjectsType",
+        "RelatingGroup"
+      ],
+      "argument_types": [
+        "STRING",
+        "ENTITY INSTANCE",
+        "STRING",
+        "STRING",
+        "AGGREGATE OF ENTITY INSTANCE",
+        "ENUMERATION",
+        "ENTITY INSTANCE"
+      ],
+      "declaration_exists": true,
+      "forward_attributes": [
+        {
+          "argument_type": "STRING",
+          "index": 0,
+          "name": "GlobalId"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 1,
+          "name": "OwnerHistory"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 2,
+          "name": "Name"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 3,
+          "name": "Description"
+        },
+        {
+          "argument_type": "AGGREGATE OF ENTITY INSTANCE",
+          "index": 4,
+          "name": "RelatedObjects"
+        },
+        {
+          "argument_type": "ENUMERATION",
+          "index": 5,
+          "name": "RelatedObjectsType"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 6,
+          "name": "RelatingGroup"
+        }
+      ],
+      "is_abstract": false,
+      "is_ifc_relationship": true,
+      "supertype_chain": [
+        "IfcRelAssignsToGroup",
+        "IfcRelAssigns",
+        "IfcRelationship",
+        "IfcRoot"
+      ]
+    },
+    "IfcRelAssociatesMaterial": {
+      "all_attributes": [
+        "Description",
+        "GlobalId",
+        "Name",
+        "OwnerHistory",
+        "RelatedObjects",
+        "RelatingMaterial"
+      ],
+      "argument_types": [
+        "STRING",
+        "ENTITY INSTANCE",
+        "STRING",
+        "STRING",
+        "AGGREGATE OF ENTITY INSTANCE",
+        "ENTITY INSTANCE"
+      ],
+      "declaration_exists": true,
+      "forward_attributes": [
+        {
+          "argument_type": "STRING",
+          "index": 0,
+          "name": "GlobalId"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 1,
+          "name": "OwnerHistory"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 2,
+          "name": "Name"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 3,
+          "name": "Description"
+        },
+        {
+          "argument_type": "AGGREGATE OF ENTITY INSTANCE",
+          "index": 4,
+          "name": "RelatedObjects"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 5,
+          "name": "RelatingMaterial"
+        }
+      ],
+      "is_abstract": false,
+      "is_ifc_relationship": true,
+      "supertype_chain": [
+        "IfcRelAssociatesMaterial",
+        "IfcRelAssociates",
+        "IfcRelationship",
+        "IfcRoot"
+      ]
+    },
+    "IfcRelConnectsElements": {
+      "all_attributes": [
+        "ConnectionGeometry",
+        "Description",
+        "GlobalId",
+        "Name",
+        "OwnerHistory",
+        "RelatedElement",
+        "RelatingElement"
+      ],
+      "argument_types": [
+        "STRING",
+        "ENTITY INSTANCE",
+        "STRING",
+        "STRING",
+        "ENTITY INSTANCE",
+        "ENTITY INSTANCE",
+        "ENTITY INSTANCE"
+      ],
+      "declaration_exists": true,
+      "forward_attributes": [
+        {
+          "argument_type": "STRING",
+          "index": 0,
+          "name": "GlobalId"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 1,
+          "name": "OwnerHistory"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 2,
+          "name": "Name"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 3,
+          "name": "Description"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 4,
+          "name": "ConnectionGeometry"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 5,
+          "name": "RelatingElement"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 6,
+          "name": "RelatedElement"
+        }
+      ],
+      "is_abstract": false,
+      "is_ifc_relationship": true,
+      "supertype_chain": [
+        "IfcRelConnectsElements",
+        "IfcRelConnects",
+        "IfcRelationship",
+        "IfcRoot"
+      ]
+    },
+    "IfcRelContainedInSpatialStructure": {
+      "all_attributes": [
+        "Description",
+        "GlobalId",
+        "Name",
+        "OwnerHistory",
+        "RelatedElements",
+        "RelatingStructure"
+      ],
+      "argument_types": [
+        "STRING",
+        "ENTITY INSTANCE",
+        "STRING",
+        "STRING",
+        "AGGREGATE OF ENTITY INSTANCE",
+        "ENTITY INSTANCE"
+      ],
+      "declaration_exists": true,
+      "forward_attributes": [
+        {
+          "argument_type": "STRING",
+          "index": 0,
+          "name": "GlobalId"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 1,
+          "name": "OwnerHistory"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 2,
+          "name": "Name"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 3,
+          "name": "Description"
+        },
+        {
+          "argument_type": "AGGREGATE OF ENTITY INSTANCE",
+          "index": 4,
+          "name": "RelatedElements"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 5,
+          "name": "RelatingStructure"
+        }
+      ],
+      "is_abstract": false,
+      "is_ifc_relationship": true,
+      "supertype_chain": [
+        "IfcRelContainedInSpatialStructure",
+        "IfcRelConnects",
+        "IfcRelationship",
+        "IfcRoot"
+      ]
+    },
+    "IfcRelDefinesByProperties": {
+      "all_attributes": [
+        "Description",
+        "GlobalId",
+        "Name",
+        "OwnerHistory",
+        "RelatedObjects",
+        "RelatingPropertyDefinition"
+      ],
+      "argument_types": [
+        "STRING",
+        "ENTITY INSTANCE",
+        "STRING",
+        "STRING",
+        "AGGREGATE OF ENTITY INSTANCE",
+        "ENTITY INSTANCE"
+      ],
+      "declaration_exists": true,
+      "forward_attributes": [
+        {
+          "argument_type": "STRING",
+          "index": 0,
+          "name": "GlobalId"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 1,
+          "name": "OwnerHistory"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 2,
+          "name": "Name"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 3,
+          "name": "Description"
+        },
+        {
+          "argument_type": "AGGREGATE OF ENTITY INSTANCE",
+          "index": 4,
+          "name": "RelatedObjects"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 5,
+          "name": "RelatingPropertyDefinition"
+        }
+      ],
+      "is_abstract": false,
+      "is_ifc_relationship": true,
+      "supertype_chain": [
+        "IfcRelDefinesByProperties",
+        "IfcRelDefines",
+        "IfcRelationship",
+        "IfcRoot"
+      ]
+    },
+    "IfcRelFillsElement": {
+      "all_attributes": [
+        "Description",
+        "GlobalId",
+        "Name",
+        "OwnerHistory",
+        "RelatedBuildingElement",
+        "RelatingOpeningElement"
+      ],
+      "argument_types": [
+        "STRING",
+        "ENTITY INSTANCE",
+        "STRING",
+        "STRING",
+        "ENTITY INSTANCE",
+        "ENTITY INSTANCE"
+      ],
+      "declaration_exists": true,
+      "forward_attributes": [
+        {
+          "argument_type": "STRING",
+          "index": 0,
+          "name": "GlobalId"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 1,
+          "name": "OwnerHistory"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 2,
+          "name": "Name"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 3,
+          "name": "Description"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 4,
+          "name": "RelatingOpeningElement"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 5,
+          "name": "RelatedBuildingElement"
+        }
+      ],
+      "is_abstract": false,
+      "is_ifc_relationship": true,
+      "supertype_chain": [
+        "IfcRelFillsElement",
+        "IfcRelConnects",
+        "IfcRelationship",
+        "IfcRoot"
+      ]
+    },
+    "IfcRelNests": {
+      "all_attributes": [
+        "Description",
+        "GlobalId",
+        "Name",
+        "OwnerHistory",
+        "RelatedObjects",
+        "RelatingObject"
+      ],
+      "argument_types": [
+        "STRING",
+        "ENTITY INSTANCE",
+        "STRING",
+        "STRING",
+        "ENTITY INSTANCE",
+        "AGGREGATE OF ENTITY INSTANCE"
+      ],
+      "declaration_exists": true,
+      "forward_attributes": [
+        {
+          "argument_type": "STRING",
+          "index": 0,
+          "name": "GlobalId"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 1,
+          "name": "OwnerHistory"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 2,
+          "name": "Name"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 3,
+          "name": "Description"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 4,
+          "name": "RelatingObject"
+        },
+        {
+          "argument_type": "AGGREGATE OF ENTITY INSTANCE",
+          "index": 5,
+          "name": "RelatedObjects"
+        }
+      ],
+      "is_abstract": false,
+      "is_ifc_relationship": true,
+      "supertype_chain": [
+        "IfcRelNests",
+        "IfcRelDecomposes",
+        "IfcRelationship",
+        "IfcRoot"
+      ]
+    },
+    "IfcRelSpaceBoundary": {
+      "all_attributes": [
+        "ConnectionGeometry",
+        "Description",
+        "GlobalId",
+        "InternalOrExternalBoundary",
+        "Name",
+        "OwnerHistory",
+        "PhysicalOrVirtualBoundary",
+        "RelatedBuildingElement",
+        "RelatingSpace"
+      ],
+      "argument_types": [
+        "STRING",
+        "ENTITY INSTANCE",
+        "STRING",
+        "STRING",
+        "ENTITY INSTANCE",
+        "ENTITY INSTANCE",
+        "ENTITY INSTANCE",
+        "ENUMERATION",
+        "ENUMERATION"
+      ],
+      "declaration_exists": true,
+      "forward_attributes": [
+        {
+          "argument_type": "STRING",
+          "index": 0,
+          "name": "GlobalId"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 1,
+          "name": "OwnerHistory"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 2,
+          "name": "Name"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 3,
+          "name": "Description"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 4,
+          "name": "RelatingSpace"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 5,
+          "name": "RelatedBuildingElement"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 6,
+          "name": "ConnectionGeometry"
+        },
+        {
+          "argument_type": "ENUMERATION",
+          "index": 7,
+          "name": "PhysicalOrVirtualBoundary"
+        },
+        {
+          "argument_type": "ENUMERATION",
+          "index": 8,
+          "name": "InternalOrExternalBoundary"
+        }
+      ],
+      "is_abstract": false,
+      "is_ifc_relationship": true,
+      "supertype_chain": [
+        "IfcRelSpaceBoundary",
+        "IfcRelConnects",
+        "IfcRelationship",
+        "IfcRoot"
+      ]
+    },
+    "IfcRelVoidsElement": {
+      "all_attributes": [
+        "Description",
+        "GlobalId",
+        "Name",
+        "OwnerHistory",
+        "RelatedOpeningElement",
+        "RelatingBuildingElement"
+      ],
+      "argument_types": [
+        "STRING",
+        "ENTITY INSTANCE",
+        "STRING",
+        "STRING",
+        "ENTITY INSTANCE",
+        "ENTITY INSTANCE"
+      ],
+      "declaration_exists": true,
+      "forward_attributes": [
+        {
+          "argument_type": "STRING",
+          "index": 0,
+          "name": "GlobalId"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 1,
+          "name": "OwnerHistory"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 2,
+          "name": "Name"
+        },
+        {
+          "argument_type": "STRING",
+          "index": 3,
+          "name": "Description"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 4,
+          "name": "RelatingBuildingElement"
+        },
+        {
+          "argument_type": "ENTITY INSTANCE",
+          "index": 5,
+          "name": "RelatedOpeningElement"
+        }
+      ],
+      "is_abstract": false,
+      "is_ifc_relationship": true,
+      "supertype_chain": [
+        "IfcRelVoidsElement",
+        "IfcRelDecomposes",
+        "IfcRelationship",
+        "IfcRoot"
+      ]
+    }
+  },
+  "summary": {
+    "evidence_relation_declared_count": 20,
+    "exact_inverse_endpoint_count": 31,
+    "expected_negative_count": 2,
+    "inherited_supertype_compatible_count": 5,
+    "positive_count": 18,
+    "record_count": 20,
+    "record_relationship_pair_count": 36,
+    "schema_compatible_count": 36,
+    "schema_incompatible_count": 0,
+    "unique_ifc_class_count": 11,
+    "unique_relationship_count": 10
+  }
+}

@@ -2,7 +2,12 @@
 
 ## Summary
 
-> [!NOTE]
+> [!IMPORTANT]
+> This is a historical repository note, not proof of a Git tag or GitHub
+> Release. Its commands, schemas, output tokens and XAI terminology have been
+> superseded. Use README.md, QUICKSTART.md, PUBLIC_EVIDENCE.md and the strict
+> sample20 v2 contract for the current public state.
+
 > The initial `schema_minimal.json` (minimal public contract) and validation rules referenced in this historical release have been replaced by the `strict public sample20 v2 contract using JSON Schema Draft 2020-12` (`sample20/schema_public_sample20_v2.json`).
 
 This release updates the public reproducibility package after `v0.1-public-sample20`.
@@ -35,6 +40,9 @@ python spaces/huggingface_harness/app.py --self-test
 
 ## Expected Outputs
 
+Historical output tokens retained below for documentary context; they are not
+the current CLI contract.
+
 * `status=REPLAY_OK`
 * `status=SCHEMA_VALIDATION_OK`
 * `status=FORBIDDEN_SCAN_OK`
@@ -56,7 +64,8 @@ python spaces/huggingface_harness/app.py --self-test
 * This release does not include model training.
 * This release does not publish private datasets, model weights, adapters, checkpoints, credentials or internal logs.
 * This release does not claim certification, production readiness or final benchmark results.
-* The public explainability claim remains evidence-grounded traceability, not full mathematical attribution.
+* The historical evidence-trace check covered field presence and stored structure. It did not verify external-source supportedness.
+* The public explainability claim remains evidence-trace auditability over stored records, not full mathematical attribution, external-source supportedness, or certification.
 
 ## Relation to v0.1-public-sample20
 

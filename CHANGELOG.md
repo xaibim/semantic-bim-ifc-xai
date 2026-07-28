@@ -1,5 +1,11 @@
 # Changelog
 
+Historical repository chronology notice: headings below describe repository
+development notes. They do not assert that corresponding Git tags or GitHub
+Releases exist. Current commands, output states and evidentiary terminology are
+defined by README.md, QUICKSTART.md, PUBLIC_EVIDENCE.md and the sample20 v2
+contract.
+
 ## Unreleased
 
 - Migrated public dataset to sample20 v2 format (schema_version = 2.0).
@@ -27,6 +33,6 @@
 
 - Added the public sample20 entrypoint and quickstart.
 - Added replay and schema validation for the public sample20 artifact.
-- Added benchmark sample20 public results and evidence-grounded wording.
+- Added benchmark sample20 public results and evidence-trace wording.
 - Clarified the public/private boundary for public review.
 - Confirmed that no private datasets, checkpoints, or adapters are included.

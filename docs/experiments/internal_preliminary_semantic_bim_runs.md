@@ -1,18 +1,37 @@
 # Internal preliminary semantic BIM experiments
 
+EVIDENCE_STATUS = HISTORICAL_REPORTED_AGGREGATES_NOT_PUBLICLY_RECOMPUTABLE
+
+Historical internal aggregate note. The underlying records, predictions and
+reports are not public; the aggregate values are not an independently
+reproducible public benchmark. Current public terminology and validation
+contracts are defined by README.md, PUBLIC_EVIDENCE.md and
+docs/methodology/xai_evaluation_position.md.
+
+The numerical values below are retained as historical reported aggregates.
+The underlying raw reports, prompts and per-case predictions are not
+distributed in this repository, so the values cannot be independently
+recomputed from the public artifact.
+
 ## Status
 
 This document summarizes internal preliminary experiments used to test whether
 the semantic BIM/IFC compilation protocol is technically measurable.
 
-The underlying internal report files are not part of this public release. The
+The underlying internal report files are not part of this public repository
+snapshot. The
 values below are aggregate internal feasibility indicators. They are included
 to document motivation and scope, not to provide an independently reproducible
 public benchmark.
 
-These experiments are internal preliminary experiments. They are feasibility
-evidence for the proposed benchmark workflow. They do not establish a final
-benchmark result, claim production readiness, or certify BIM/IFC compliance.
+These experiments are internal preliminary experiments. The historical report
+records feasibility evidence for the proposed benchmark workflow. They do not
+establish a final benchmark result, claim production readiness, or certify
+BIM/IFC compliance.
+
+This historical internal log is retained for methodology context only. It is
+superseded by the public Evidence-Trace boundary language in the repository's
+current public documentation.
 
 ## Research task
 
@@ -27,14 +46,14 @@ The experiments evaluate a structured task:
 natural-language BIM request
 + structured BIM/runtime context
 + safety and evidence constraints
-        →
+        ->
 IFC-aware semantic JSON record
-        →
+        ->
 schema validation
-        →
+        ->
 field-level comparison
-        →
-evidence and replay checks
+        ->
+evidence-trace structure and stored-record checks
 ```
 
 The target is not a generic BIM chatbot. The target is a prompt-to-IFC contract
@@ -43,7 +62,7 @@ comparison.
 
 ## Smoke20 diagnostic run
 
-The smoke20 run is a diagnostic smoke test. It demonstrates that the evaluation
+The smoke20 run is a diagnostic smoke test. It records that the evaluation
 pipeline can validate JSON, schema conformance, IFC class mapping and evidence
 trace completeness, while also exposing weaknesses in intent classification,
 missing-field handling and Pset recall.
@@ -65,6 +84,9 @@ missing-field handling and Pset recall.
 Interpretation: this smoke test should not be read as a performance claim. Its
 value is methodological: it confirms that the harness can both detect valid
 structured outputs and expose measurable failure modes.
+
+This historical metric counts stored evidence-trace field completeness. It does
+not establish external evidence grounding or supportedness.
 
 ## V4 5k preliminary run
 
@@ -108,9 +130,9 @@ The adapter is not presented as a public artifact or product.
 
 Public notebook: <https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai>
 
-## What these experiments demonstrate
+## What these historical reports were intended to measure
 
-The preliminary runs show that the proposed protocol can measure:
+The historical report records that the proposed protocol was intended to measure:
 
 * JSON parse validity;
 * schema conformance;
@@ -137,7 +159,7 @@ These runs do not claim that:
 
 ## Relation to future work
 
-The public repository provides a minimal reproducibility sample and replayable
+The public repository provides a minimal reproducibility sample and stored-record
 validation protocol. A systematic benchmark, a broader public dataset, and
 further adaptation experiments remain future work. These preliminary
-experiments are starting evidence for a controlled research workflow.
+experiments are methodological support for a controlled research workflow.

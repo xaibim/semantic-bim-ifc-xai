@@ -10,14 +10,13 @@ On active construction and engineering projects, communication is often unstruct
 
 ## 2. BIM as Information Management
 
-Under the global standards such as **ISO 19650**, Building Information Modeling (BIM) is defined not merely as a 3D CAD modeling process, but as a collaborative, structured framework for managing information over the entire lifecycle of a built asset. 
+ISO 19650-1 and ISO 19650-2 establish concepts, principles and delivery-phase
+information-management processes for managing information using BIM. The Common
+Data Environment (CDE) remains a management concept within that information
+workflow.
 
-ISO 19650 introduces concepts such as:
-- **Exchange Information Requirements (EIR)**: Defining exactly what data needs to be delivered at different phases.
-- **Common Data Environment (CDE)**: The single source of truth for all project information.
-- **Level of Information Need**: Specifying the quantity, quality, and granularity of geometric and non-geometric information.
-
-Semantic AI research aims to automate the translation of natural-language requirements directly into these regulated structures.
+The broader research investigates how natural-language requirements may be
+mapped into structured BIM information-management and IFC exchange contexts.
 
 ---
 
@@ -37,8 +36,11 @@ Key components of the IFC semantic infrastructure include:
 
 In this research context, "semantic" goes beyond simple word association or conversational AI. It refers to the systematic alignment of human natural language with standard technical schemas. 
 
-The complete translation pipeline operates as:
+The broader planned research target can be represented as:
 `natural language → engineering meaning → IFC candidate → information requirement → validation → evidence trace`.
+
+The current public executable boundary does not implement this complete
+prompt-to-output pipeline. It begins with committed stored records.
 
 Rather than acting as a creative text generator, a semantic parser behaves as a classifier and structurer, mapping unstructured prompts into explicit, typed entities governed by engineering schemas.
 
@@ -47,21 +49,25 @@ Rather than acting as a creative text generator, a semantic parser behaves as a 
 ## 5. Why JSON Contracts
 
 The research harness uses JSON (JavaScript Object Notation) and JSONL (JSON Lines) to structure predictions. This format is selected because it enables:
-- **Machine-readable outputs**: Standardized payloads can be ingested by any BIM authoring plugin or CDE system.
+- **Machine-readable outputs**: Standardized payloads support structured downstream use.
 - **Reproducible validation**: The structured format allows schema checkers to evaluate keys and data types programmatically.
-- **Model comparisons**: Enables researchers to run different LLMs on identical inputs and contrast their schema compliance rates.
-- **Auditing and Replay**: Simplifies tracing historical predictions, letting developers replay inputs and inspect output flags.
-- **Downstream CDE Integration**: Facilitates writing parameters directly back to active databases with high structural security.
+- **Future model comparisons**: A common structured format can support future
+  comparison of different methods over frozen inputs and metrics. No
+  comparative benchmark is executed by the current public artifact.
+- **Stored-Record Validation and Audit**: Simplifies tracing historical stored
+  records and inspecting output flags.
+- **Downstream CDE Integration**: Compatible downstream tools may ingest structured payloads when an explicit integration contract is implemented. No such CDE or BIM-authoring mutation is executed by the current public artifact.
 
 ---
 
 ## 6. Current Public Harness
 
 The public harness hosted in this repository is a reduced demonstration designed to review the core architecture of the research.
-- **Sanitized Dataset**: Uses a limited database of 20 hand-annotated, sanitized records.
+- **Sanitized Dataset**: Uses 20 stored synthetic or sanitized records.
 - **No Live Inference**: The web interface does not call live model servers or API keys.
-- **No 3D Generation**: It is designed to validate text metadata classification, not coordinate geometries.
-- **Focus**: Serves as a peer-review tool to audit matching mechanics, JSON contracts, and local verification runs.
+- **No 3D Generation**: It validates stored structured metadata and does not generate geometry or physical IFC files.
+- **Focus**: Serves as a public review aid for stored-record validation, JSON
+contract inspection and deterministic local verification.
 
 ---
 
@@ -71,4 +77,14 @@ The public harness hosted in this repository is a reduced demonstration designed
 - **No live public model**: There is no live neural network running inference in the public web app.
 - **No SHAP/LIME feature attribution**: Mathematical explanation metrics are not implemented in this public release.
 - **No technical certification**: The system does not certify BIM models for compliance or regulatory review.
-- **No replacement for human review**: All AI predictions are preview-only and must be audited by qualified civil engineers before model insertion.
+- **No replacement for human review**: The stored fixture uses PREVIEW,
+  PROPOSAL and GUIDED_RECOVERY states. EXECUTE is absent from the current
+  public sample.
+
+## 8. Positioning Sources
+
+- [Literature capability matrix](../benchmark/literature_capability_matrix.md)
+- [Curated positioning bibliography](literature/semantic_bim_ifc_bibliography_ieee.md)
+- [Research positioning and originality boundary](methodology/research_positioning_and_originality.md)
+
+These sources support public positioning. They are not a completed systematic or scoping review.

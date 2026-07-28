@@ -10,7 +10,7 @@ There are three key layers of validation and schema contracts in this repository
 2. **Semantic BIM Output Contract**: The inner fields of the semantic translation contained within `canonical_output`.
 3. **Illustrative Demo Validation Contract**: The validation logic embedded in the interactive Hugging Face demo.
 
-PR10 aligns the public executable checks with the **Public Record Envelope** to guarantee reproducible and clean public-sample validation.
+The current schema revision aligns the public executable checks with the **Public Record Envelope** to guarantee reproducible and clean public-sample validation.
 
 ## Layer Mapping Table
 
