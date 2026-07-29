@@ -70,7 +70,7 @@ class ResourceMicrobenchmarkTest(unittest.TestCase):
         data = json.loads(ARTIFACT_JSON.read_text(encoding="utf-8"))
         text = ARTIFACT_JSON.read_text(encoding="utf-8") + "\n" + ARTIFACT_MD.read_text(encoding="utf-8")
         self.assertEqual(canonical_hash(data), data["artifact_sha256"])
-        self.assertNotIn("C:\\", text)
+        self.assertNotIn("C:" + "\\", text)
         self.assertNotIn("/home/", text)
         self.assertNotIn(getpass.getuser().lower(), text.lower())
         self.assertNotIn(platform.node().lower(), text.lower())
