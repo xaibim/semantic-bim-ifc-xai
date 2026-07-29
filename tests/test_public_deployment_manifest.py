@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-import pathlib
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -67,7 +67,15 @@ def load_manifest() -> dict:
 
 
 def sha256_file(rel_path: str) -> str:
-    return hashlib.sha256((ROOT / rel_path).read_bytes()).hexdigest()
+    """Calculate SHA-256 from the canonical Git index blob."""
+    result = subprocess.run(
+        ["git", "show", f":{rel_path}"],
+        cwd=ROOT,
+        check=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    return hashlib.sha256(result.stdout).hexdigest()
 
 
 class TestPublicDeploymentManifest(unittest.TestCase):
