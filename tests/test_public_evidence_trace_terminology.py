@@ -42,7 +42,17 @@ def reconstruct_reference_json(current: dict) -> dict:
     reference["scope"]["purpose"] = REF_JSON_PURPOSE
     reference["corrected_held_out_results"].pop("evidence_trace_metric_boundary", None)
     reference.pop("verification_boundary", None)
-    if "verification_boundary" in current:
+    has_ref_commit = (
+        subprocess.run(
+            ["git", "rev-parse", "--verify", f"{REF_SHA}^{{commit}}"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        ).returncode
+        == 0
+    )
+    if has_ref_commit and "verification_boundary" in current:
         reference["verification_boundary"] = current["verification_boundary"]
     return reference
 
