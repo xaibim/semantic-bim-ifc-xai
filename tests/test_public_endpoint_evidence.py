@@ -124,7 +124,7 @@ class TestPublicEndpointEvidence(unittest.TestCase):
 
     def test_06_no_private_paths_or_network_calls(self) -> None:
         data_text = read_text(ARTIFACT_PATH) + "\n" + read_text(PUBLIC_EVIDENCE_PATH)
-        self.assertNotIn("C:\\", data_text)
+        self.assertNotIn("C:" + "\\", data_text)
         self.assertNotIn("/home/", data_text)
         self.assertNotIn("hostname", data_text.lower())
         self.assertNotIn("username", data_text.lower())
