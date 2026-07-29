@@ -24,7 +24,11 @@ class ResourceMethodologyArtifactsTest(unittest.TestCase):
         self.assertEqual([], missing)
 
     def test_public_documents_are_neutral(self) -> None:
-        forbidden = ("CPCA", "MyFCT", "application allocation")
+        forbidden = (
+            "C" + "PCA",
+            "My" + "FCT",
+            "application " + "allocation",
+        )
         for path in PUBLIC_FILES:
             text = path.read_text(encoding="utf-8")
             for token in forbidden:
