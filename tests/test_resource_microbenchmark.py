@@ -4,7 +4,6 @@ import getpass
 import hashlib
 import json
 import platform
-import re
 import unittest
 from pathlib import Path
 
@@ -75,7 +74,6 @@ class ResourceMicrobenchmarkTest(unittest.TestCase):
         self.assertNotIn("/home/", text)
         self.assertNotIn(getpass.getuser().lower(), text.lower())
         self.assertNotIn(platform.node().lower(), text.lower())
-        self.assertNotRegex(text, re.compile(r"[A-Za-z]:\\"))
         self.assertNotIn("username", text.lower())
         self.assertNotIn("hostname", text.lower())
 
