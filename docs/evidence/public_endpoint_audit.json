@@ -1,1 +1,76 @@
-{"artifact_type": "public_endpoint_verification_snapshot", "artifact_version": "1.1", "audited_at_utc": "2026-07-29T09:25:13.6197648Z", "audit_mode": "ANONYMOUS_PUBLIC_PAGE_INSPECTION", "canonical_link_registry": "public_runtime_links.json", "deployment_manifest": "public_deployment_manifest.json", "endpoints": {"repository": {"url": "https://github.com/xaibim/semantic-bim-ifc-xai", "identity_status": "VALID", "availability_status": "PUBLIC_PAGE_ACCESSIBLE", "artifact_equivalence_status": "NOT_APPLICABLE_CANONICAL_SOURCE", "checked_anonymously": true, "content_recovered": true, "limitation": "Public repository page accessible anonymously; no private administrative data or credentials were recovered."}, "replay_gateway": {"url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay", "identity_status": "VALID", "availability_status": "RUNNING", "artifact_equivalence_status": "NOT_EVALUATED_STATIC_GATEWAY", "checked_anonymously": true, "content_recovered": true, "limitation": "Gateway identity was observed publicly; runtime availability may still vary with platform conditions."}, "replay_runtime": {"url": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay", "identity_status": "VALID", "availability_status": "RUNNING", "artifact_equivalence_status": "PENDING_REMOTE_DEPLOYMENT_AUDIT", "checked_anonymously": true, "content_recovered": true, "limitation": "Public runtime identity is distinct from availability; this snapshot does not guarantee continuous uptime."}, "harness_gateway": {"url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness", "identity_status": "VALID", "availability_status": "RUNNING", "artifact_equivalence_status": "NOT_EVALUATED_STATIC_GATEWAY", "checked_anonymously": true, "content_recovered": true, "limitation": "Gateway identity was observed publicly; runtime availability may still vary with platform conditions."}, "harness_runtime": {"url": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness", "identity_status": "VALID", "availability_status": "RUNNING", "artifact_equivalence_status": "PENDING_REMOTE_DEPLOYMENT_AUDIT", "checked_anonymously": true, "content_recovered": true, "limitation": "Public runtime identity is distinct from availability; this snapshot does not guarantee continuous uptime."}, "kaggle_notebook": {"url": "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai", "identity_status": "VALID", "availability_status": "URL_RESOLVABLE", "artifact_equivalence_status": "NOT_APPLICABLE_SUPPLEMENTARY_NOTEBOOK", "checked_anonymously": true, "content_recovered": false, "limitation": "The notebook URL resolves, but the anonymous automated audit did not recover notebook cells, outputs or run metadata."}}, "interpretation_boundary": {"identity_distinct_from_availability": true, "snapshot_not_availability_guarantee": true, "kaggle_content_independently_reproduced": false, "professional_or_normative_validation": false, "deployment_equivalence_distinct_from_identity_and_availability": true}, "limitations": ["This is a dated snapshot, not a live availability monitor.", "Anonymous inspection cannot recover private notebook or runtime internals.", "Identity confirmation does not imply guaranteed uptime or production status."]}
+{
+  "artifact_type": "public_endpoint_verification_snapshot",
+  "artifact_version": "1.1",
+  "audited_at_utc": "2026-07-29T09:25:13.6197648Z",
+  "audit_mode": "ANONYMOUS_PUBLIC_PAGE_INSPECTION",
+  "canonical_link_registry": "public_runtime_links.json",
+  "deployment_manifest": "public_deployment_manifest.json",
+  "endpoints": {
+    "repository": {
+      "url": "https://github.com/xaibim/semantic-bim-ifc-xai",
+      "identity_status": "VALID",
+      "availability_status": "PUBLIC_PAGE_ACCESSIBLE",
+      "artifact_equivalence_status": "NOT_APPLICABLE_CANONICAL_SOURCE",
+      "checked_anonymously": true,
+      "content_recovered": true,
+      "limitation": "Public repository page accessible anonymously; no private administrative data or credentials were recovered."
+    },
+    "replay_gateway": {
+      "url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
+      "identity_status": "VALID",
+      "availability_status": "RUNNING",
+      "artifact_equivalence_status": "NOT_EVALUATED_STATIC_GATEWAY",
+      "checked_anonymously": true,
+      "content_recovered": true,
+      "limitation": "Gateway identity was observed publicly; runtime availability may still vary with platform conditions."
+    },
+    "replay_runtime": {
+      "url": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay",
+      "identity_status": "VALID",
+      "availability_status": "RUNNING",
+      "artifact_equivalence_status": "PENDING_REMOTE_DEPLOYMENT_AUDIT",
+      "checked_anonymously": true,
+      "content_recovered": true,
+      "limitation": "Public runtime identity is distinct from availability; this snapshot does not guarantee continuous uptime."
+    },
+    "harness_gateway": {
+      "url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
+      "identity_status": "VALID",
+      "availability_status": "RUNNING",
+      "artifact_equivalence_status": "NOT_EVALUATED_STATIC_GATEWAY",
+      "checked_anonymously": true,
+      "content_recovered": true,
+      "limitation": "Gateway identity was observed publicly; runtime availability may still vary with platform conditions."
+    },
+    "harness_runtime": {
+      "url": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness",
+      "identity_status": "VALID",
+      "availability_status": "RUNNING",
+      "artifact_equivalence_status": "PENDING_REMOTE_DEPLOYMENT_AUDIT",
+      "checked_anonymously": true,
+      "content_recovered": true,
+      "limitation": "Public runtime identity is distinct from availability; this snapshot does not guarantee continuous uptime."
+    },
+    "kaggle_notebook": {
+      "url": "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai",
+      "identity_status": "VALID",
+      "availability_status": "URL_RESOLVABLE",
+      "artifact_equivalence_status": "NOT_APPLICABLE_SUPPLEMENTARY_NOTEBOOK",
+      "checked_anonymously": true,
+      "content_recovered": false,
+      "limitation": "The notebook URL resolves, but the anonymous automated audit did not recover notebook cells, outputs or run metadata."
+    }
+  },
+  "interpretation_boundary": {
+    "identity_distinct_from_availability": true,
+    "snapshot_not_availability_guarantee": true,
+    "kaggle_content_independently_reproduced": false,
+    "professional_or_normative_validation": false,
+    "deployment_equivalence_distinct_from_identity_and_availability": true
+  },
+  "limitations": [
+    "This is a dated snapshot, not a live availability monitor.",
+    "Anonymous inspection cannot recover private notebook or runtime internals.",
+    "Identity confirmation does not imply guaranteed uptime or production status."
+  ]
+}

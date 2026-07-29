@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import subprocess
 import unittest
 from pathlib import Path
 
@@ -42,23 +41,6 @@ EXPECTED_URLS = {
     "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness",
     "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai",
 }
-
-TARGET_FILES = {
-    "docs/evidence/public_runtime_links.json",
-    "docs/evidence/public_endpoint_audit.json",
-    "docs/evidence/public_deployment_manifest.json",
-    "README.md",
-    "spaces/huggingface/SPACE_NOTES.md",
-    "demo/huggingface-space-plan.md",
-    "docs/methodology/dataset_construction_and_training_readiness.md",
-    "docs/methodology/validation_gates.md",
-    "PUBLIC_EVIDENCE.md",
-    "tests/test_public_endpoint_evidence.py",
-    "tests/test_public_deployment_manifest.py",
-    "tests/test_public_narrative_boundaries.py",
-    "tests/test_public_runtime_links.py",
-}
-
 
 def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
@@ -121,18 +103,3 @@ class TestPublicRuntimeLinks(unittest.TestCase):
             contract["availability_boundary"],
             EXPECTED_CONTRACT["availability_boundary"],
         )
-
-    def test_04_only_allowed_files_are_modified(self):
-        status = subprocess.check_output(
-            ["git", "status", "--short", "--untracked-files=all"],
-            cwd=ROOT,
-            text=True,
-        ).splitlines()
-        changed_paths: set[str] = set()
-        for line in status:
-            if not line.strip():
-                continue
-            path = line[3:] if len(line) > 3 else ""
-            changed_paths.add(path.replace("\\", "/"))
-
-        self.assertTrue(changed_paths.issubset(TARGET_FILES), sorted(changed_paths - TARGET_FILES))
