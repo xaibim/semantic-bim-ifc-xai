@@ -1,0 +1,362 @@
+{
+  "artifact_sha256": "90a235768eb27fac16290c2dd0d9ff33cbc516f3d092f767d2892afb3241deef",
+  "artifact_type": "local_proxy_resource_microbenchmark",
+  "artifact_version": "1.0",
+  "cpu_results": {
+    "logical_records": 20000,
+    "measured_rounds": 10,
+    "operations": {
+      "cpu_pipeline_combined": {
+        "bytes_processed": 49330000,
+        "logical_records": 20000,
+        "mean_seconds": 17.51421005,
+        "measured_round_seconds": [
+          19.0846998,
+          16.014118,
+          16.1197151,
+          17.3655161,
+          17.184148,
+          17.1912885,
+          17.4822106,
+          17.4470419,
+          18.2017107,
+          19.0516518
+        ],
+        "measured_rounds": 10,
+        "median_seconds": 17.406278999999998,
+        "p95_seconds": 19.0846998,
+        "records_per_second": 1141.9298925217583,
+        "repetitions": 1000,
+        "total_seconds": [
+          19.0846998,
+          16.014118,
+          16.1197151,
+          17.3655161,
+          17.184148,
+          17.1912885,
+          17.4822106,
+          17.4470419,
+          18.2017107,
+          19.0516518
+        ],
+        "warmup_round_seconds": [
+          20.5149774,
+          20.8735033,
+          19.7749834,
+          20.48058,
+          20.2307011
+        ],
+        "warmup_rounds": 5
+      },
+      "dedup_key_construction": {
+        "bytes_processed": 49330000,
+        "logical_records": 20000,
+        "mean_seconds": 0.00813484,
+        "measured_round_seconds": [
+          0.0108729,
+          0.0098355,
+          0.0059045,
+          0.0051862,
+          0.0053728,
+          0.0098791,
+          0.0081632,
+          0.0080328,
+          0.0088349,
+          0.0092665
+        ],
+        "measured_rounds": 10,
+        "median_seconds": 0.008499050000000001,
+        "p95_seconds": 0.0108729,
+        "records_per_second": 2458560.9551017596,
+        "repetitions": 1000,
+        "total_seconds": [
+          0.0108729,
+          0.0098355,
+          0.0059045,
+          0.0051862,
+          0.0053728,
+          0.0098791,
+          0.0081632,
+          0.0080328,
+          0.0088349,
+          0.0092665
+        ],
+        "warmup_round_seconds": [
+          0.0091875,
+          0.0098136,
+          0.0087007,
+          0.0094121,
+          0.0100589
+        ],
+        "warmup_rounds": 5
+      },
+      "deterministic_serialization": {
+        "bytes_processed": 49330000,
+        "logical_records": 20000,
+        "mean_seconds": 0.67503796,
+        "measured_round_seconds": [
+          0.6789582,
+          0.6727304,
+          0.7002494,
+          0.6764728,
+          0.657305,
+          0.6447983,
+          0.6654136,
+          0.6757304,
+          0.6654171,
+          0.7133044
+        ],
+        "measured_rounds": 10,
+        "median_seconds": 0.6742303999999999,
+        "p95_seconds": 0.7133044,
+        "records_per_second": 29627.96344075228,
+        "repetitions": 1000,
+        "total_seconds": [
+          0.6789582,
+          0.6727304,
+          0.7002494,
+          0.6764728,
+          0.657305,
+          0.6447983,
+          0.6654136,
+          0.6757304,
+          0.6654171,
+          0.7133044
+        ],
+        "warmup_round_seconds": [
+          0.7455589,
+          0.6878166,
+          0.7466653,
+          0.6901239,
+          0.644566
+        ],
+        "warmup_rounds": 5
+      },
+      "json_parsing": {
+        "bytes_processed": 49330000,
+        "logical_records": 20000,
+        "mean_seconds": 0.23878901,
+        "measured_round_seconds": [
+          0.2294722,
+          0.2352559,
+          0.2400842,
+          0.2493941,
+          0.2363035,
+          0.2322049,
+          0.2281803,
+          0.2324675,
+          0.2256221,
+          0.2789054
+        ],
+        "measured_rounds": 10,
+        "median_seconds": 0.2338617,
+        "p95_seconds": 0.2789054,
+        "records_per_second": 83755.94839980283,
+        "repetitions": 1000,
+        "total_seconds": [
+          0.2294722,
+          0.2352559,
+          0.2400842,
+          0.2493941,
+          0.2363035,
+          0.2322049,
+          0.2281803,
+          0.2324675,
+          0.2256221,
+          0.2789054
+        ],
+        "warmup_round_seconds": [
+          0.2263727,
+          0.2239376,
+          0.2269916,
+          0.225953,
+          0.2292557
+        ],
+        "warmup_rounds": 5
+      },
+      "json_schema_validation": {
+        "bytes_processed": 49330000,
+        "logical_records": 20000,
+        "mean_seconds": 16.93561272,
+        "measured_round_seconds": [
+          16.1680424,
+          15.8477384,
+          15.0169147,
+          14.8017704,
+          15.3434393,
+          17.6529922,
+          18.7960226,
+          18.7093992,
+          18.3474062,
+          18.6724018
+        ],
+        "measured_rounds": 10,
+        "median_seconds": 16.910517300000002,
+        "p95_seconds": 18.7960226,
+        "records_per_second": 1180.9433960650936,
+        "repetitions": 1000,
+        "total_seconds": [
+          16.1680424,
+          15.8477384,
+          15.0169147,
+          14.8017704,
+          15.3434393,
+          17.6529922,
+          18.7960226,
+          18.7093992,
+          18.3474062,
+          18.6724018
+        ],
+        "warmup_round_seconds": [
+          14.0537469,
+          15.3624264,
+          15.4725035,
+          16.1893419,
+          15.3260098
+        ],
+        "warmup_rounds": 5
+      },
+      "root_case_grouping": {
+        "bytes_processed": 49330000,
+        "logical_records": 20000,
+        "mean_seconds": 0.00905953,
+        "measured_round_seconds": [
+          0.0072444,
+          0.010387,
+          0.0106121,
+          0.0094874,
+          0.009663,
+          0.0079192,
+          0.0088034,
+          0.0089302,
+          0.0072587,
+          0.0102899
+        ],
+        "measured_rounds": 10,
+        "median_seconds": 0.0092088,
+        "p95_seconds": 0.0106121,
+        "records_per_second": 2207620.0420993143,
+        "repetitions": 1000,
+        "total_seconds": [
+          0.0072444,
+          0.010387,
+          0.0106121,
+          0.0094874,
+          0.009663,
+          0.0079192,
+          0.0088034,
+          0.0089302,
+          0.0072587,
+          0.0102899
+        ],
+        "warmup_round_seconds": [
+          0.0070293,
+          0.0097217,
+          0.0086288,
+          0.0054623,
+          0.011295
+        ],
+        "warmup_rounds": 5
+      },
+      "sha256": {
+        "bytes_processed": 49330000,
+        "logical_records": 20000,
+        "mean_seconds": 0.72926796,
+        "measured_round_seconds": [
+          0.7626434,
+          0.795803,
+          0.7680789,
+          0.6838134,
+          0.7346678,
+          0.6716884,
+          0.7348519,
+          0.7172906,
+          0.7420592,
+          0.681783
+        ],
+        "measured_rounds": 10,
+        "median_seconds": 0.73475985,
+        "p95_seconds": 0.795803,
+        "records_per_second": 27424.76167470733,
+        "repetitions": 1000,
+        "total_seconds": [
+          0.7626434,
+          0.795803,
+          0.7680789,
+          0.6838134,
+          0.7346678,
+          0.6716884,
+          0.7348519,
+          0.7172906,
+          0.7420592,
+          0.681783
+        ],
+        "warmup_round_seconds": [
+          0.8517383,
+          0.8591249,
+          0.7556677,
+          0.8349784,
+          0.7929377
+        ],
+        "warmup_rounds": 5
+      }
+    },
+    "repetitions": 1000,
+    "warmup_rounds": 5
+  },
+  "environment": {
+    "architecture": "AMD64",
+    "cuda_available": true,
+    "cuda_runtime_version": "12.8",
+    "generic_gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "operating_system_family": "Windows",
+    "processor_logical_count": 22,
+    "python_version": "3.14.2",
+    "torch_version": "2.11.0+cu128"
+  },
+  "generated_at_utc": "2026-07-29T02:04:15.768363+00:00",
+  "gpu_results": {
+    "status": "NOT_EXECUTED_MODEL_NOT_PROVIDED",
+    "used_for_capacity_recalculation": false
+  },
+  "interpretation": {
+    "cpu_summary": {
+      "fastest_operation": "dedup_key_construction",
+      "local_proxy": true,
+      "measured_operation_count": 7,
+      "proxy_only": "This is a local proxy measurement only.",
+      "slowest_operation": "cpu_pipeline_combined"
+    },
+    "gpu_summary": {
+      "boundary": "GPU execution is optional and requires an explicit local model path.",
+      "status": "NOT_EXECUTED_MODEL_NOT_PROVIDED",
+      "used_for_capacity_recalculation": false
+    }
+  },
+  "limitations": [
+    "This artifact is a local proxy measurement and not a Deucalion run.",
+    "This artifact does not measure A100 performance.",
+    "The on-platform M1 measurement remains mandatory.",
+    "The CPU workload uses in-memory repetition only and does not write an expanded dataset.",
+    "GPU execution is skipped unless an explicit local model path is provided."
+  ],
+  "scope_boundary": {
+    "a100_measurement": false,
+    "capacity_values_changed": false,
+    "deucalion_measurement": false,
+    "m1_on_platform_measurement_required": true
+  },
+  "status": "LOCAL_PROXY_MEASUREMENT_NOT_DEUCALION",
+  "workload": {
+    "gpu_cases": null,
+    "gpu_requested": false,
+    "logical_records": 20000,
+    "max_new_tokens": null,
+    "measured_rounds": 10,
+    "repetitions": 1000,
+    "source_records": "sample20\\sample20_public_records.jsonl",
+    "source_schema": "sample20\\schema_public_sample20_v2.json",
+    "synthetic_grouping_key": "sample_id + \"-iteration-\" + index",
+    "warmup_rounds": 5
+  }
+}

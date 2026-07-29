@@ -74,6 +74,10 @@ The 30-second input is not a measured A100 value. It must be replaced by a 100-2
 
 Percentages are scheduling envelopes and are updated after M1 measurement.
 
+The local proxy microbenchmark artifact in `benchmark/resource_microbenchmark_local.json`
+is available for CPU-only proxy measurement. It is not an on-platform replacement,
+the current planning envelopes remain unchanged, and the M1 measurement remains mandatory.
+
 ## Stop and reduction rules
 
 1. Required dataset-quality gates have priority over all optional model work.
