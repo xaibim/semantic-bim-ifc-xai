@@ -17,19 +17,19 @@
       "local_source": {
         "app": {
           "path": "spaces/huggingface/app.py",
-          "sha256": "87fd85f0be2fb827bc3d545ee09393863b09a6cb0b6d89d531cf542eb5779b1b"
+          "sha256": "4f4090b07614a8884e4b8148c87bbfe8677d6c0de84021e16a870fc354db332d"
         },
         "records": {
           "path": "spaces/huggingface/sample20_public_predictions.jsonl",
-          "sha256": "4f670146a4860e96fa820805e0f6d3db19fd3490e9db74a595bf33589aee9de1"
+          "sha256": "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
         },
         "schema": {
           "path": "spaces/huggingface/schema_public_sample20_v2.json",
-          "sha256": "358fb35742f40574ef08c8301cd5bd3865bb446cb2e809ad9d15c91ef12e344d"
+          "sha256": "8e4de7f560ef24dac0404c45b8d62661dd52c538876e17b7ad975a254306f7f9"
         },
         "requirements": {
           "path": "spaces/huggingface/requirements.txt",
-          "sha256": "3846b71d278469909472878c497e8c9f7f61ee4de8ec2736b39069a61fb8b86d"
+          "sha256": "559974941f66e1af1594769474e379bf4c0789508a22532069e53d5addf7ae8c"
         }
       },
       "remote_deployment": {
@@ -50,19 +50,19 @@
       "local_source": {
         "app": {
           "path": "spaces/huggingface_harness/app.py",
-          "sha256": "e714cec04a3a561e0f93e1ac31e28185befd09b83b1fb8c671f58a7d2afbde3f"
+          "sha256": "436b7d156925a5079417f58e20159b662b1e48fae53fdd12f6fee3c47bac2b1d"
         },
         "records": {
           "path": "spaces/huggingface_harness/sample20_public_predictions.jsonl",
-          "sha256": "4f670146a4860e96fa820805e0f6d3db19fd3490e9db74a595bf33589aee9de1"
+          "sha256": "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
         },
         "schema": {
           "path": "spaces/huggingface_harness/schema_public_sample20_v2.json",
-          "sha256": "358fb35742f40574ef08c8301cd5bd3865bb446cb2e809ad9d15c91ef12e344d"
+          "sha256": "8e4de7f560ef24dac0404c45b8d62661dd52c538876e17b7ad975a254306f7f9"
         },
         "requirements": {
           "path": "spaces/huggingface_harness/requirements.txt",
-          "sha256": "32f3fd2d0352524bc53ca72b3342245d558d860057041c1bc9b37798bb514e24"
+          "sha256": "c5caeed56a111b1ed6b609218614bcd14294a874eba709a6a26ee6b9fe060c47"
         }
       },
       "remote_deployment": {
