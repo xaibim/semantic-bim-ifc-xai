@@ -8,7 +8,7 @@ This folder contains the source package for the Replay runtime Gradio app.
 
 https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay
 
-## Verified runtime
+## Registered runtime endpoint
 
 https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay
 
@@ -21,7 +21,4 @@ https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay
 
 ## Boundary
 
-The XAIBIM Space URL is the canonical public gateway. The verified Gradio
-runtime is hosted under the `bimaiblend` namespace. This gateway/runtime
-separation is an infrastructure arrangement; the canonical public entry point
-remains the XAIBIM URL.
+The XAIBIM Space URL is the canonical public gateway. The bimaiblend URL is the registered interactive runtime endpoint. This gateway/runtime separation is an infrastructure arrangement. Link identity and dated availability do not establish deployment equivalence with this repository package. Equivalence remains PENDING_REMOTE_DEPLOYMENT_AUDIT until the deployment manifest records matching commit, file hashes and a post-deployment self-test.

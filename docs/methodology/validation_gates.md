@@ -72,8 +72,10 @@ These checks run against the public sample using the public harness and CI.
    arithmetic. It does not rerun training, access raw predictions or
    independently recompute empirical held-out scores. It does not prove
    superiority. It does not prove generalization.
-10. **Replay Space self-test** - the Replay Space `--self-test` passes.
-11. **Harness Space self-test** - the Harness Space `--self-test` passes.
+10. Replay source-package self-test - the repository Replay source package passes `python spaces/huggingface/app.py --self-test`.
+11. Harness source-package self-test - the repository Harness source package passes `python spaces/huggingface_harness/app.py --self-test`.
+
+These source-package self-tests do not establish that a remote Hugging Face deployment is byte-equivalent to the repository package.
 
 The evidence-trace check in Layer A is structural and internal only; external
 source supportedness is not evaluated.

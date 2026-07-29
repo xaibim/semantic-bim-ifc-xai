@@ -107,7 +107,7 @@ The dataset and pipeline infrastructure is governed by several key concepts:
 | 4. IFC4 Pset audit | Class applicability only. |
 | 5. IFC4 relationship audit | Schema compatibility only; no task-suitability conclusion. |
 | 6. Preliminary QLoRA evidence | One private controlled feasibility pilot; aggregate evidence only. |
-| 7. Public gateways | Canonical XAIBIM gateways and verified bimaiblend Gradio runtimes. |
+| 7. Public gateways and runtime endpoints | Canonical XAIBIM gateways and registered bimaiblend runtime endpoints; remote artifact equivalence remains pending the deployment-manifest audit. |
 | 8. Planned work | Larger dataset and comparative benchmark. |
 
 No tag or release state is claimed by this methodology document.

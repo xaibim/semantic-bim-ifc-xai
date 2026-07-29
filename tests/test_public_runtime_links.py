@@ -45,9 +45,17 @@ EXPECTED_URLS = {
 
 TARGET_FILES = {
     "docs/evidence/public_runtime_links.json",
+    "docs/evidence/public_endpoint_audit.json",
+    "docs/evidence/public_deployment_manifest.json",
     "README.md",
     "spaces/huggingface/SPACE_NOTES.md",
     "demo/huggingface-space-plan.md",
+    "docs/methodology/dataset_construction_and_training_readiness.md",
+    "docs/methodology/validation_gates.md",
+    "PUBLIC_EVIDENCE.md",
+    "tests/test_public_endpoint_evidence.py",
+    "tests/test_public_deployment_manifest.py",
+    "tests/test_public_narrative_boundaries.py",
     "tests/test_public_runtime_links.py",
 }
 

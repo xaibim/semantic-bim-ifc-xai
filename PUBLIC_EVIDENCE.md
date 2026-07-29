@@ -8,10 +8,23 @@ This repository contains a public, reduced, and sanitized evidence layer for the
 
 ## Public Evidence Index
 
+### Public link identity and dated endpoint evidence
+
+- [Runtime links registry](docs/evidence/public_runtime_links.json)
+- [Endpoint verification snapshot](docs/evidence/public_endpoint_audit.json)
+- [Public deployment manifest](docs/evidence/public_deployment_manifest.json)
+
 ### Public executable evidence
 
-- [Runtime-link registry](docs/evidence/public_runtime_links.json)
-- [Endpoint verification snapshot](docs/evidence/public_endpoint_audit.json)
+- [sample20 validation summary](sample20/VALIDATION_SUMMARY.md)
+- [Replay harness](harness/replay.py)
+- [Schema validator](harness/schema_validator.py)
+- [sample20 integrity verifier](scripts/verify_public_sample20_integrity.py)
+- [Forbidden pattern scanner](scripts/public_forbidden_scan.py)
+- [Replay Space source package](spaces/huggingface/app.py)
+- [Harness Space source package](spaces/huggingface_harness/app.py)
+
+The runtime-link registry records link identity. The endpoint verification snapshot is a dated availability snapshot. The deployment manifest records local source hashes and remote equivalence status; while the manifest status is PENDING_REMOTE_EQUIVALENCE_AUDIT, no remote equivalence claim is made. The self-tests listed above are for the GitHub source packages only.
 
 ### Limited external verification
 

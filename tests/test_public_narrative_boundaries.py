@@ -7,6 +7,23 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
+FORBIDDEN_RUNTIME_PHRASES = [
+    "verified runtime",
+    "verified runtimes",
+    "verified gradio runtime",
+    "verified gradio runtimes",
+    "verified bimaiblend",
+    "runtimes verified and synchronized",
+]
+
+NARRATIVE_FILES = [
+    ROOT / "README.md",
+    ROOT / "docs" / "methodology" / "dataset_construction_and_training_readiness.md",
+    ROOT / "demo" / "huggingface-space-plan.md",
+    ROOT / "spaces" / "huggingface" / "SPACE_NOTES.md",
+    ROOT / "PUBLIC_EVIDENCE.md",
+]
+
 
 def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
@@ -271,5 +288,22 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
         self.assertNotIn("these results show", text)
 
 
-if __name__ == "__main__":
-    unittest.main()
+    def test_19_runtime_terminology_not_verified(self) -> None:
+        for path in NARRATIVE_FILES:
+            text = lower_text(path)
+            for phrase in FORBIDDEN_RUNTIME_PHRASES:
+                self.assertNotIn(phrase, text, f"{phrase} found in {path.relative_to(ROOT)}")
+
+    def test_20_readme_registered_runtime_terminology(self) -> None:
+        text = normalized_lower_text(ROOT / "README.md")
+        self.assertIn("registered interactive runtime endpoints", text)
+
+    def test_21_readme_references_deployment_manifest(self) -> None:
+        text = read_text(ROOT / "README.md")
+        self.assertIn("docs/evidence/public_deployment_manifest.json", text)
+
+    def test_22_validation_gates_source_package_self_tests(self) -> None:
+        text = normalized_lower_text(ROOT / "docs" / "methodology" / "validation_gates.md")
+        self.assertIn("replay source-package self-test", text)
+        self.assertIn("harness source-package self-test", text)
+        self.assertIn("do not establish that a remote hugging face deployment is byte-equivalent", text)

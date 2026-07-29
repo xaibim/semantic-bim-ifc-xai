@@ -1,0 +1,87 @@
+{
+  "artifact_type": "public_runtime_deployment_manifest",
+  "artifact_version": "1.0",
+  "source_commit": "8a37e3b3f1c0206521b1a92221da3329f6f8f971",
+  "status": "PENDING_REMOTE_EQUIVALENCE_AUDIT",
+  "scope_boundary": {
+    "link_identity_recorded": true,
+    "availability_is_dated_snapshot": true,
+    "remote_artifact_equivalence_verified": false,
+    "production_readiness": false
+  },
+  "packages": {
+    "replay": {
+      "source_directory": "spaces/huggingface",
+      "gateway_url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
+      "runtime_url": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay",
+      "local_source": {
+        "app": {
+          "path": "spaces/huggingface/app.py",
+          "sha256": "87fd85f0be2fb827bc3d545ee09393863b09a6cb0b6d89d531cf542eb5779b1b"
+        },
+        "records": {
+          "path": "spaces/huggingface/sample20_public_predictions.jsonl",
+          "sha256": "4f670146a4860e96fa820805e0f6d3db19fd3490e9db74a595bf33589aee9de1"
+        },
+        "schema": {
+          "path": "spaces/huggingface/schema_public_sample20_v2.json",
+          "sha256": "358fb35742f40574ef08c8301cd5bd3865bb446cb2e809ad9d15c91ef12e344d"
+        },
+        "requirements": {
+          "path": "spaces/huggingface/requirements.txt",
+          "sha256": "3846b71d278469909472878c497e8c9f7f61ee4de8ec2736b39069a61fb8b86d"
+        }
+      },
+      "remote_deployment": {
+        "commit": null,
+        "app_sha256": null,
+        "records_sha256": null,
+        "schema_sha256": null,
+        "requirements_sha256": null,
+        "self_test_status": "NOT_EXECUTED_AFTER_CANONICAL_SYNC",
+        "artifact_equivalence_status": "PENDING_REMOTE_DEPLOYMENT_AUDIT",
+        "audited_at_utc": null
+      }
+    },
+    "harness": {
+      "source_directory": "spaces/huggingface_harness",
+      "gateway_url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
+      "runtime_url": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness",
+      "local_source": {
+        "app": {
+          "path": "spaces/huggingface_harness/app.py",
+          "sha256": "e714cec04a3a561e0f93e1ac31e28185befd09b83b1fb8c671f58a7d2afbde3f"
+        },
+        "records": {
+          "path": "spaces/huggingface_harness/sample20_public_predictions.jsonl",
+          "sha256": "4f670146a4860e96fa820805e0f6d3db19fd3490e9db74a595bf33589aee9de1"
+        },
+        "schema": {
+          "path": "spaces/huggingface_harness/schema_public_sample20_v2.json",
+          "sha256": "358fb35742f40574ef08c8301cd5bd3865bb446cb2e809ad9d15c91ef12e344d"
+        },
+        "requirements": {
+          "path": "spaces/huggingface_harness/requirements.txt",
+          "sha256": "32f3fd2d0352524bc53ca72b3342245d558d860057041c1bc9b37798bb514e24"
+        }
+      },
+      "remote_deployment": {
+        "commit": null,
+        "app_sha256": null,
+        "records_sha256": null,
+        "schema_sha256": null,
+        "requirements_sha256": null,
+        "self_test_status": "NOT_EXECUTED_AFTER_CANONICAL_SYNC",
+        "artifact_equivalence_status": "PENDING_REMOTE_DEPLOYMENT_AUDIT",
+        "audited_at_utc": null
+      }
+    }
+  },
+  "limitations": [
+    "Registered runtime endpoint identity does not establish file equivalence.",
+    "Availability is observed separately and may change.",
+    "Remote commits and file hashes remain null until the controlled deployment audit.",
+    "Source-package self-tests do not prove remote deployment equivalence.",
+    "No production-readiness or certification claim is made."
+  ]
+}

@@ -230,10 +230,7 @@ scientific evidence, peer review, or institutional endorsement.
 artefact it means loading and validating committed records, not rerunning a
 model or the original prompt-to-output pipeline.
 
-The `XAIBIM` Space URLs are the canonical public gateways. The verified Gradio
-runtime implementations are currently hosted under the `bimaiblend` namespace.
-The gateway/runtime separation is an infrastructure arrangement; the canonical
-public entry points remain the `XAIBIM` URLs.
+The `XAIBIM` Space URLs are the canonical public gateways. The `bimaiblend` URLs identify registered interactive runtime endpoints. Link identity and dated availability do not establish artifact equivalence with the GitHub source packages. Remote equivalence is claimed only after commit, file-hash and post-deployment self-test evidence is recorded in docs/evidence/public_deployment_manifest.json. The gateway/runtime separation is an infrastructure arrangement; the canonical public entry points remain the `XAIBIM` URLs.
 
 ## Quickstart
 
