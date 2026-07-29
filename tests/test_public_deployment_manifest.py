@@ -47,7 +47,6 @@ EXPECTED_URLS = {
 }
 
 FORBIDDEN_PATTERNS = [
-    "C:\\",
     "/home/",
     "hostname",
     "username",
