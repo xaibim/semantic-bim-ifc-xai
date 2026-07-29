@@ -17,7 +17,8 @@
     "interpretation": "Preliminary compute-feasibility anchor only; no theoretical conversion to other GPU architectures."
   },
   "formulae": {
-    "cpu_core_hours": "sum(job_walltime_hours * allocated_cpu_cores)",
+    "cpu_core_hours_planning": "sum(job_walltime_hours * requested_cores_per_job)",
+    "cpu_core_hours_measured": "sum(actual_job_walltime_hours * allocated_cpu_cores)",
     "gpu_hours": "sum(cases * model_cells * configurations * seeds * variants * seconds_per_case * gpus_per_job / 3600)",
     "storage_tb": "sum(component_bytes) / 10^12"
   },
@@ -30,7 +31,7 @@
       "cpu_core_hours_planning_envelope": 10000,
       "gpu_hours_planning_envelope": 700,
       "storage_tb_planning_envelope": 1.0,
-      "purpose": "Required dataset, QA and minimum A/B/C baselines."
+      "purpose": "Required bounded test corpus, QA and minimum A/B/C performance tests."
     },
     "planned": {
       "dataset_records": 20000,
@@ -63,7 +64,7 @@
       "gpu": {
         "assumed_seconds_per_case": 30,
         "evidence_class": "PLANNING_ASSUMPTION",
-        "source": "PROPOSED_JOB_PROFILE_PENDING_PLATFORM_CONFIRMATION",
+        "source": "CONSERVATIVE_LATENCY_ASSUMPTION_NO_A100_MEASUREMENT",
         "verification_status": "TO_BE_REPLACED_BY_M1_LATENCY_MEASUREMENT",
         "core_benchmark_gpu_hours": 133.33333333333334,
         "robustness_subset_gpu_hours": 800,

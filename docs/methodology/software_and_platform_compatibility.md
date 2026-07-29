@@ -23,10 +23,10 @@ CUDA = YES
 
 - Architecture: Linux `x86_64` on the assigned Deucalion GPU/x86 platform.
 - Scheduler: assigned platform Slurm version, recorded at M1.
-- GPU target: CUDA-capable NVIDIA GPU; one GPU per default inference job.
+- GPU target: NVIDIA A100 40 GB or 80 GB on Deucalion GPU; one GPU per default inference job.
 - CPU target: assigned x86 CPU allocation for CPU-only pipelines when a CPU phase is scheduled.
 - Container: Singularity/Apptainer SIF built from a versioned definition file.
-- Fallback: Cirrus or another compatible NVIDIA GPU platform with sufficient VRAM, after the same smoke tests.
+- Fallback: Cirrus, only if assigned, after the same compatibility and smoke tests.
 
 ARM64 is not a default target. It may be enabled only after all compiled dependencies, wheels, containers, schemas, IFC fixtures and tests pass on the assigned ARM environment.
 

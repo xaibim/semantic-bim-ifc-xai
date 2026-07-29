@@ -8,9 +8,13 @@ The corpus is intended for development, portability, benchmarking, scalability a
 
 ## Formulae
 
-CPU core-hours are calculated from actual allocations and requested cores per job:
+Planned CPU core-hours use the proposed job profile:
 
-`CPU core-hours = sum(job wall-time hours x requested CPU cores per job)`
+`CPU core-hours (planning) = sum(job wall-time hours x requested CPU cores per job)`
+
+After allocation, measured accounting uses scheduler-reported values:
+
+`CPU core-hours (measured) = sum(actual job wall-time hours x allocated CPU cores)`
 
 GPU-hours are calculated by experimental cell:
 
@@ -20,9 +24,9 @@ Storage is the sum of source, dataset-version, model/container-cache, output, lo
 
 ## Scenarios
 
-| Scenario | Dataset records | Root cases | Evaluation cases | CPU envelope | GPU envelope | Storage envelope | Activation |
+| Scenario | Bounded benchmark/test-corpus records | Root cases | Evaluation cases | CPU envelope | GPU envelope | Storage envelope | Activation |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| Minimum | 10,000 | 1,000 | 1,000 | 10,000 core.h | 700 GPU.h | 1.0 TB | Required dataset and A/B/C baselines |
+| Minimum | 10,000 | 1,000 | 1,000 | 10,000 core.h | 700 GPU.h | 1.0 TB | Required bounded test corpus and A/B/C baselines |
 | Planned | 20,000 | 2,000 | 2,000 | 20,000 core.h | 1,500 GPU.h | 2.0 TB | Main controlled benchmark/test corpus |
 | Ceiling | up to 50,000 | up to 5,000 | gate-dependent | 50,000 core.h | 3,000 GPU.h | 4.0 TB | Only after planned-scenario QA and efficiency gates |
 
@@ -76,7 +80,7 @@ The 30-second input is not a measured A100 value. It must be replaced by a 100-2
 ## Monthly execution profile
 
 - M1: environment and microbenchmarks; approximately 10% of planned capacity.
-- M2: dataset production and QA; approximately 15% CPU, 5% GPU.
+- M2: bounded test-corpus construction and QA; approximately 15% CPU, 5% GPU.
 - M3: review, deduplication, leakage and split freeze; approximately 25% CPU, 5% GPU.
 - M4: required baselines; approximately 25% CPU, 35% GPU.
 - M5: robustness and error analysis; approximately 15% CPU, 45% GPU.

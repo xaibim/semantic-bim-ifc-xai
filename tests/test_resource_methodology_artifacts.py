@@ -40,12 +40,30 @@ class ResourceMethodologyArtifactsTest(unittest.TestCase):
         self.assertIn("minimum", data["scenarios"])
         self.assertIn("planned", data["scenarios"])
         self.assertIn("ceiling", data["scenarios"])
+        formulae = data["formulae"]
+        self.assertEqual(
+            "sum(job_walltime_hours * requested_cores_per_job)",
+            formulae["cpu_core_hours_planning"],
+        )
+        self.assertEqual(
+            "sum(actual_job_walltime_hours * allocated_cpu_cores)",
+            formulae["cpu_core_hours_measured"],
+        )
+        self.assertNotIn("cpu_core_hours", formulae)
         planned = data["scenarios"]["planned"]
         self.assertEqual(20_000, planned["dataset_records"])
         self.assertEqual(20_000, planned["cpu"]["total_core_hours"])
         self.assertEqual(1_500, planned["gpu"]["rounded_planning_envelope_gpu_hours"])
         self.assertEqual(2.0, planned["storage"]["total_tb"])
         self.assertIn("UNMEASURED", planned["gpu"]["assumption_status"])
+        self.assertEqual(
+            "CONSERVATIVE_LATENCY_ASSUMPTION_NO_A100_MEASUREMENT",
+            planned["gpu"]["source"],
+        )
+        self.assertEqual(
+            "Required bounded test corpus, QA and minimum A/B/C performance tests.",
+            data["scenarios"]["minimum"]["purpose"],
+        )
 
     def test_optional_adaptation_is_not_core(self) -> None:
         capacity = (ROOT / "docs/methodology/resource_capacity_plan.md").read_text(encoding="utf-8").lower()
@@ -58,11 +76,14 @@ class ResourceMethodologyArtifactsTest(unittest.TestCase):
         self.assertIn("MPI = NO", text)
         self.assertIn("OPENMP = NO_EXPLICIT_USE", text)
         self.assertIn("CUDA = YES", text)
+        self.assertIn("NVIDIA A100 40 GB or 80 GB on Deucalion GPU", text)
+        self.assertIn("Fallback: Cirrus, only if assigned", text)
         self.assertIn("Deucalion GPU/x86", text)
         self.assertIn("Cirrus", text)
         self.assertIn("Navigator", text)
         self.assertIn("Oblivion", text)
         self.assertIn("ARM64 remains disabled", text)
+        self.assertNotIn("another compatible NVIDIA GPU platform", text)
         self.assertNotIn("Slurm 23.11.4", text)
         self.assertNotIn("load the platform CUDA, compiler and MPI modules", text)
         self.assertNotIn("32 CPUs per task", text)
@@ -73,6 +94,8 @@ class ResourceMethodologyArtifactsTest(unittest.TestCase):
         lower = text.lower()
         self.assertIn("requested cores per job", lower)
         self.assertIn("proposed_job_profile", lower)
+        self.assertIn("cpu core-hours (planning)", lower)
+        self.assertIn("cpu core-hours (measured)", lower)
         self.assertIn("15,360 core.h", text)
         self.assertIn("4,096 core.h", text)
         self.assertIn("20,000 core.h", text)
@@ -96,7 +119,7 @@ class ResourceMethodologyArtifactsTest(unittest.TestCase):
         self.assertEqual("TO_BE_REPLACED_BY_M1_ALLOCATED_CORES_MEASUREMENT", cpu_jobs["verification_status"])
         self.assertEqual(30, gpu["assumed_seconds_per_case"])
         self.assertEqual("PLANNING_ASSUMPTION", gpu["evidence_class"])
-        self.assertEqual("PROPOSED_JOB_PROFILE_PENDING_PLATFORM_CONFIRMATION", gpu["source"])
+        self.assertEqual("CONSERVATIVE_LATENCY_ASSUMPTION_NO_A100_MEASUREMENT", gpu["source"])
         self.assertEqual("TO_BE_REPLACED_BY_M1_LATENCY_MEASUREMENT", gpu["verification_status"])
         self.assertEqual([15, 30, 60], gpu["sensitivity_seconds_per_case"])
         self.assertEqual(916.6666666666666, gpu["sensitivity_gpu_hours"]["15"])
