@@ -37,29 +37,49 @@
       "root_cases": 2000,
       "evaluation_cases": 2000,
       "model_cells": 4,
+      "purpose": "Bounded benchmark/test corpus, pipeline QA, portability, scalability and required A/B/C performance tests.",
       "cpu": {
         "full_x86_pipeline_runs": {
           "runs": 12,
           "walltime_hours": 10,
-          "cores": 128,
-          "core_hours": 15360
+          "requested_cores_per_job": 128,
+          "core_hours": 15360,
+          "evidence_class": "PLANNING_ASSUMPTION",
+          "source": "PROPOSED_JOB_PROFILE_PENDING_PLATFORM_CONFIRMATION",
+          "verification_status": "TO_BE_REPLACED_BY_M1_ALLOCATED_CORES_MEASUREMENT"
         },
         "calibration_qa_jobs": {
           "jobs": 16,
           "walltime_hours": 8,
-          "cores": 32,
-          "core_hours": 4096
+          "requested_cores_per_job": 32,
+          "core_hours": 4096,
+          "evidence_class": "PLANNING_ASSUMPTION",
+          "source": "PROPOSED_JOB_PROFILE_PENDING_PLATFORM_CONFIRMATION",
+          "verification_status": "TO_BE_REPLACED_BY_M1_ALLOCATED_CORES_MEASUREMENT"
         },
         "controlled_reruns_reporting_core_hours": 544,
         "total_core_hours": 20000
       },
       "gpu": {
         "assumed_seconds_per_case": 30,
+        "evidence_class": "PLANNING_ASSUMPTION",
+        "source": "PROPOSED_JOB_PROFILE_PENDING_PLATFORM_CONFIRMATION",
+        "verification_status": "TO_BE_REPLACED_BY_M1_LATENCY_MEASUREMENT",
         "core_benchmark_gpu_hours": 133.33333333333334,
         "robustness_subset_gpu_hours": 800,
         "repeated_evaluation_subset_gpu_hours": 200,
         "calibration_model_load_retries_gpu_hours": 250,
         "optional_post_gate_adaptation_gpu_hours": 100,
+        "sensitivity_seconds_per_case": [
+          15,
+          30,
+          60
+        ],
+        "sensitivity_gpu_hours": {
+          "15": 916.6666666666666,
+          "30": 1483.3333333333333,
+          "60": 2616.6666666666665
+        },
         "total_unrounded_gpu_hours": 1483.3333333333333,
         "rounded_planning_envelope_gpu_hours": 1500,
         "assumption_status": "UNMEASURED_CONSERVATIVE_INPUT_TO_BE_REPLACED_BY_M1_MEASUREMENT"
@@ -72,8 +92,7 @@
         "optional_checkpoints_and_temporary_tb": 0.3,
         "backup_and_retry_margin_tb": 0.3,
         "total_tb": 2.0
-      },
-      "purpose": "Main controlled dataset and benchmark matrix with bounded robustness subsets."
+      }
     },
     "ceiling": {
       "dataset_records": 50000,
@@ -95,6 +114,8 @@
   ],
   "stop_rules": [
     "Do not execute optional adaptation before dataset and required baseline gates pass.",
+    "If p95 exceeds 30 seconds per case, remove optional adaptation first, then optional variants and non-essential repeats.",
+    "If p95 approaches or exceeds 60 seconds per case, reduce optional cells or models before proposing any envelope change.",
     "Do not expand to the ceiling scenario when review capacity or QA gates fail.",
     "Do not hide failed runs or remove them from denominators.",
     "Do not infer A100 runtime from T4 theoretical FLOPS."
