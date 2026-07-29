@@ -105,7 +105,7 @@ class TestPublicEvidenceTraceTerminology(unittest.TestCase):
             ROOT / "RELEASE_NOTES_v0.1.1-public-validation.md",
             ROOT / "benchmark" / "qlora" / "XAIBIM_QWEN25_7B_QLORA_PRELIMINARY_RESULTS.md",
             ROOT / "benchmark" / "qlora" / "xaibim_qwen25_7b_qlora_preliminary_public_results.json",
-            ROOT / "docs" / "methodology" / "dataset_construction_and_training_readiness.md",
+            ROOT / "docs" / "methodology" / "dataset_construction_and_benchmark_readiness.md",
             ROOT / "docs" / "methodology" / "xai_evidence_positioning.md",
             ROOT / "docs" / "experiments" / "internal_preliminary_semantic_bim_runs.md",
         ]
@@ -222,7 +222,7 @@ class TestPublicEvidenceTraceTerminology(unittest.TestCase):
         self.assertIn("the historical evidence-trace check covered field presence and stored structure. it did not verify external-source supportedness.", notes)
 
     def test_06_dataset_methodology_statuses(self):
-        text = " ".join(read_text(ROOT / "docs" / "methodology" / "dataset_construction_and_training_readiness.md").lower().split())
+        text = " ".join(read_text(ROOT / "docs" / "methodology" / "dataset_construction_and_benchmark_readiness.md").lower().split())
         self.assertIn("do not by themselves guarantee alignment with canonical catalogues or structured contracts", text)
         self.assertIn("broader / private or planned", text)
         self.assertIn("current public executable", text)

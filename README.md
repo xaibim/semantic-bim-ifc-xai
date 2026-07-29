@@ -305,7 +305,7 @@ is not a final benchmark.
 
 - Canonical repository: <https://github.com/xaibim/semantic-bim-ifc-xai>
 - Methodology: [validation_gates.md](docs/methodology/validation_gates.md),
-  [dataset_construction_and_training_readiness.md](docs/methodology/dataset_construction_and_training_readiness.md),
+  [dataset_construction_and_benchmark_readiness.md](docs/methodology/dataset_construction_and_benchmark_readiness.md),
   [dataset_scope_and_compute_scaling.md](docs/methodology/dataset_scope_and_compute_scaling.md)
 - End-to-end example: [docs/examples/end_to_end_public_example.md](docs/examples/end_to_end_public_example.md)
 - Baseline matrix (planned): [benchmark/baseline_matrix.md](benchmark/baseline_matrix.md)

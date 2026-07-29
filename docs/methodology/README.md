@@ -8,7 +8,7 @@ This folder explains the methodologies behind validation gates, dataset construc
 
 - `validation_gates.md`: criteria used to qualify records.
 - `dataset_scope_and_compute_scaling.md`: public fixture, private pilot boundary, optional QLoRA and compute-scaling context.
-- `dataset_construction_and_training_readiness.md`: structured dataset construction and readiness boundary.
+- `dataset_construction_and_benchmark_readiness.md`: structured dataset construction and benchmark-readiness boundary.
 - `dataset_governance_split_and_leakage_protocol.md`: grouped splits, leakage and governance rules.
 - `semantic_bim_compilation_task.md`: overview of the prompt-to-IFC compilation task.
 - `xai_evaluation_position.md` / `xai_evidence_positioning.md`: evidence-trace evaluation boundaries.

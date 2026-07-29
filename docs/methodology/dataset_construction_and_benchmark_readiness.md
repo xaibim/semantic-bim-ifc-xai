@@ -1,4 +1,4 @@
-# Dataset Construction and Training-Readiness Methodology
+# Dataset Construction and Benchmark-Readiness Methodology
 
 ## 1. Scientific Motivation
 
@@ -30,10 +30,10 @@ resolve an external source.
 
 ---
 
-## 2. Rejection of Plain Instruction-Output Training
+## 2. Benchmark Representation Boundary
 
-Conventional LLM fine-tuning on plain `instruction/context/output` text pairs
-was rejected for several critical reasons:
+Plain `instruction/context/output` pairs are insufficient as the sole
+representation for this benchmark task for several reasons:
 
 1. **Lack of Schema Enforcement**: Standard token-generation models do not
    inherently respect the strict syntax and schema requirements of formats like
@@ -47,8 +47,12 @@ was rejected for several critical reasons:
    queries (read-only preview) and destructive mutations (model alterations),
    presenting risks to the integrity of Common Data Environments (CDE).
 
-Dataset design therefore centers on structured, schema-validated runtime
-payloads mapped to canonical catalogues.
+Benchmark-dataset design therefore centers on structured, schema-validated
+records mapped to canonical catalogues. Model adaptation, if evaluated later,
+remains optional and conditional on dataset-quality, baseline and resource
+gates; it is not a prerequisite or current deliverable.
+
+---
 
 ---
 
@@ -65,7 +69,7 @@ locations are resolved, external-source supportedness is not evaluated,
 source-to-claim review belongs to future methodology, and no professional or
 normative certification is inferred.
 
-The dataset and pipeline infrastructure is governed by several key concepts:
+The dataset and benchmark infrastructure is governed by several key concepts:
 
 - **Runtime Payload / SSOT**: BROADER / PRIVATE OR PLANNED. A structured
   payload encapsulates the input request, the active database schema, and the
@@ -106,9 +110,9 @@ The dataset and pipeline infrastructure is governed by several key concepts:
 | 3. Stored-record validation | Parsing, schema, fixture contract and integrity. |
 | 4. IFC4 Pset audit | Class applicability only. |
 | 5. IFC4 relationship audit | Schema compatibility only; no task-suitability conclusion. |
-| 6. Preliminary QLoRA evidence | One private controlled feasibility pilot; aggregate evidence only. |
+| 6. Preliminary QLoRA evidence | One private controlled feasibility pilot; aggregate evidence only; not a required benchmark work package. |
 | 7. Public gateways and runtime endpoints | Canonical XAIBIM gateways and registered bimaiblend runtime endpoints; remote artifact equivalence remains pending the deployment-manifest audit. |
-| 8. Planned work | Larger dataset and comparative benchmark. |
+| 8. Planned work | Larger governed dataset and comparative benchmark; optional adaptation only after prerequisite gates. |
 
 No tag or release state is claimed by this methodology document.
 
@@ -146,5 +150,7 @@ demonstrative research surface:
   and the public Harness Space provides a constrained conceptual demonstration.
   No private weights or custom adapters are published.
 - **Research Orientation**: This repository demonstrates feasibility of the
-  semantic contract and stored-record validation protocol. It does not provide
-  certified commercial deliverables or professional engineering signatures.
+  semantic contract, stored-record validation protocol, and benchmark-readiness
+  boundary. It does not provide certified commercial deliverables,
+  professional engineering signatures, or a required model-adaptation work
+  package.

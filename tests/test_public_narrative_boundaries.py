@@ -18,7 +18,7 @@ FORBIDDEN_RUNTIME_PHRASES = [
 
 NARRATIVE_FILES = [
     ROOT / "README.md",
-    ROOT / "docs" / "methodology" / "dataset_construction_and_training_readiness.md",
+    ROOT / "docs" / "methodology" / "dataset_construction_and_benchmark_readiness.md",
     ROOT / "demo" / "huggingface-space-plan.md",
     ROOT / "spaces" / "huggingface" / "SPACE_NOTES.md",
     ROOT / "PUBLIC_EVIDENCE.md",
@@ -139,7 +139,21 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
         self.assertIn("professional evidence sufficiency", text)
 
     def test_09_dataset_methodology_boundary(self):
-        text = normalized_lower_text(ROOT / "docs" / "methodology" / "dataset_construction_and_training_readiness.md")
+        old_path = (
+            ROOT
+            / "docs"
+            / "methodology"
+            / ("dataset_construction_and_" + "training_readiness.md")
+        )
+        new_path = (
+            ROOT
+            / "docs"
+            / "methodology"
+            / "dataset_construction_and_benchmark_readiness.md"
+        )
+        self.assertFalse(old_path.exists())
+        self.assertTrue(new_path.is_file())
+        text = normalized_lower_text(new_path)
         self.assertNotIn("v0.1", text)
         self.assertNotIn("v0.1.1", text)
         self.assertNotIn("v0.2 final public research artifact", text)
@@ -153,6 +167,11 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
         self.assertIn("current public executable", text)
         self.assertNotIn("fail to maintain alignments", text)
         self.assertIn("external-source supportedness is not evaluated", text)
+        self.assertIn("dataset construction and benchmark-readiness methodology", text)
+        self.assertIn("benchmark representation boundary", text)
+        self.assertNotIn("training-readiness", text)
+        self.assertIn("not a required benchmark work package", text)
+        self.assertIn("optional adaptation only after prerequisite gates", text)
 
     def test_10_pset_audit_boundary_language(self):
         text = normalized_lower_text(ROOT / "benchmark" / "public_sample20_ifc4_pset_audit.md")
