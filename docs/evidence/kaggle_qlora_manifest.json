@@ -1,0 +1,26 @@
+{
+  "artifact_type": "supplementary_public_evidence_manifest",
+  "artifact_version": "1.0",
+  "platform": "Kaggle",
+  "url": "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai",
+  "verification_status": "URL_RESOLVABLE_CONTENT_NOT_ANONYMOUSLY_RECOVERED_BY_AUTOMATED_AUDIT",
+  "audited_at_utc": "2026-07-29T00:08:22.834094+00:00",
+  "scope": "Preliminary bounded QLoRA compute-feasibility evidence; not a final benchmark.",
+  "canonical_aggregate_record": "../../benchmark/qlora/xaibim_qwen25_7b_qlora_preliminary_public_results.json",
+  "dataset_sha256": "16c9b8b03a6dc897557183ac1457dfb00c9c4b36183a813d26f21b477de3fd12",
+  "adapter_sha256": "682a9dc9fc1719f8cff9bcc113eecac7f2b6aba9336f79838f0d0e6168c52392",
+  "measured_effective_gpu_hours": 2.1106986869706046,
+  "measured_allocated_gpu_hours": 4.221397373941209,
+  "peak_allocated_vram_gb": 6.628742218017578,
+  "limitations": [
+    "Automated anonymous audit did not recover notebook cells, outputs or metrics.",
+    "Single model, single seed and one epoch.",
+    "Private controlled dataset and predictions are not public.",
+    "Aggregate repository evidence does not independently reproduce held-out metrics."
+  ],
+  "manual_gate": [
+    "Open the notebook in a private browser session.",
+    "Confirm title, owner, public version, visible source, outputs and successful run metadata.",
+    "Record the visible version/date and archive a permitted static export or screenshot hash."
+  ]
+}

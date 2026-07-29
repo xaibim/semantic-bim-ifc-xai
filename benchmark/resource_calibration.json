@@ -1,0 +1,102 @@
+{
+  "artifact_type": "resource_capacity_calibration",
+  "artifact_version": "1.0",
+  "status": "PLANNING_CALIBRATION_REQUIRES_M1_ON_PLATFORM_MEASUREMENT",
+  "scope_boundary": "Neutral scientific capacity model. It does not state or determine an administrative allocation.",
+  "measured_prior_evidence": {
+    "source": "benchmark/qlora/xaibim_qwen25_7b_qlora_preliminary_public_results.json",
+    "dataset_records": 1000,
+    "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit",
+    "effective_gpu_count": 1,
+    "allocated_gpu_count": 2,
+    "training_runtime_seconds": 3890.2480099201202,
+    "end_to_end_runtime_seconds": 7598.515273094177,
+    "effective_gpu_hours": 2.1106986869706046,
+    "allocated_gpu_hours": 4.221397373941209,
+    "peak_allocated_vram_gb": 6.628742218017578,
+    "interpretation": "Preliminary compute-feasibility anchor only; no theoretical conversion to other GPU architectures."
+  },
+  "formulae": {
+    "cpu_core_hours": "sum(job_walltime_hours * allocated_cpu_cores)",
+    "gpu_hours": "sum(cases * model_cells * configurations * seeds * variants * seconds_per_case * gpus_per_job / 3600)",
+    "storage_tb": "sum(component_bytes) / 10^12"
+  },
+  "scenarios": {
+    "minimum": {
+      "dataset_records": 10000,
+      "root_cases": 1000,
+      "evaluation_cases": 1000,
+      "model_cells": 3,
+      "cpu_core_hours_planning_envelope": 10000,
+      "gpu_hours_planning_envelope": 700,
+      "storage_tb_planning_envelope": 1.0,
+      "purpose": "Required dataset, QA and minimum A/B/C baselines."
+    },
+    "planned": {
+      "dataset_records": 20000,
+      "root_cases": 2000,
+      "evaluation_cases": 2000,
+      "model_cells": 4,
+      "cpu": {
+        "full_x86_pipeline_runs": {
+          "runs": 12,
+          "walltime_hours": 10,
+          "cores": 128,
+          "core_hours": 15360
+        },
+        "calibration_qa_jobs": {
+          "jobs": 16,
+          "walltime_hours": 8,
+          "cores": 32,
+          "core_hours": 4096
+        },
+        "controlled_reruns_reporting_core_hours": 544,
+        "total_core_hours": 20000
+      },
+      "gpu": {
+        "assumed_seconds_per_case": 30,
+        "core_benchmark_gpu_hours": 133.33333333333334,
+        "robustness_subset_gpu_hours": 800,
+        "repeated_evaluation_subset_gpu_hours": 200,
+        "calibration_model_load_retries_gpu_hours": 250,
+        "optional_post_gate_adaptation_gpu_hours": 100,
+        "total_unrounded_gpu_hours": 1483.3333333333333,
+        "rounded_planning_envelope_gpu_hours": 1500,
+        "assumption_status": "UNMEASURED_CONSERVATIVE_INPUT_TO_BE_REPLACED_BY_M1_MEASUREMENT"
+      },
+      "storage": {
+        "controlled_sources_and_normalized_versions_tb": 0.3,
+        "model_and_container_cache_tb": 0.6,
+        "benchmark_outputs_tb": 0.35,
+        "logs_manifests_reports_tb": 0.15,
+        "optional_checkpoints_and_temporary_tb": 0.3,
+        "backup_and_retry_margin_tb": 0.3,
+        "total_tb": 2.0
+      },
+      "purpose": "Main controlled dataset and benchmark matrix with bounded robustness subsets."
+    },
+    "ceiling": {
+      "dataset_records": 50000,
+      "root_cases": 5000,
+      "cpu_core_hours_planning_envelope": 50000,
+      "gpu_hours_planning_envelope": 3000,
+      "storage_tb_planning_envelope": 4.0,
+      "activation_gate": "Only after planned-scenario QA, review-capacity and compute-efficiency gates pass.",
+      "purpose": "Non-default expansion ceiling; not an automatic target."
+    }
+  },
+  "required_m1_measurements": [
+    "CPU parsing, normalization, schema/catalogue validation, deduplication and leakage wall time",
+    "CPU allocated cores, peak RAM and I/O size",
+    "GPU mean, median and p95 latency over 100-200 cases per relevant configuration",
+    "GPU tokens/s, peak VRAM, batch size, input/output length and failure/retry rate",
+    "model loading and cache footprint",
+    "storage growth per dataset version and per benchmark run"
+  ],
+  "stop_rules": [
+    "Do not execute optional adaptation before dataset and required baseline gates pass.",
+    "Do not expand to the ceiling scenario when review capacity or QA gates fail.",
+    "Do not hide failed runs or remove them from denominators.",
+    "Do not infer A100 runtime from T4 theoretical FLOPS."
+  ]
+}

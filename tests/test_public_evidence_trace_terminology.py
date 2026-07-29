@@ -41,6 +41,16 @@ def reconstruct_reference_json(current: dict) -> dict:
     reference["title"] = REF_JSON_TITLE
     reference["scope"]["purpose"] = REF_JSON_PURPOSE
     reference["corrected_held_out_results"].pop("evidence_trace_metric_boundary", None)
+    reference.pop("verification_boundary", None)
+    try:
+        subprocess.check_output(
+            ["git", "rev-parse", "--is-inside-work-tree"],
+            cwd=ROOT,
+            text=True,
+        )
+    except subprocess.CalledProcessError:
+        if "verification_boundary" in current:
+            reference["verification_boundary"] = current["verification_boundary"]
     return reference
 
 

@@ -6,6 +6,38 @@ This repository contains a public, reduced, and sanitized evidence layer for the
 
 `PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`
 
+## Public Evidence Index
+
+### Public executable evidence
+
+- [Runtime-link registry](docs/evidence/public_runtime_links.json)
+- [Endpoint verification snapshot](docs/evidence/public_endpoint_audit.json)
+
+### Limited external verification
+
+- [Kaggle QLoRA manifest](docs/evidence/kaggle_qlora_manifest.json)
+
+### Preliminary aggregate evidence
+
+- [Resource calibration](benchmark/resource_calibration.json)
+
+### Local proxy evidence
+
+- [Local resource microbenchmark](benchmark/resource_microbenchmark_local.json)
+
+### Planning and governance
+
+- [Resource capacity plan](docs/methodology/resource_capacity_plan.md)
+- [Software and platform compatibility](docs/methodology/software_and_platform_compatibility.md)
+- [Human review and operational risk](docs/methodology/human_review_and_operational_risk.md)
+- [Data governance and release](docs/methodology/data_governance_and_release.md)
+- [Dataset governance, split and leakage protocol](docs/methodology/dataset_governance_split_and_leakage_protocol.md)
+- [Experimental scale and freeze manifest](docs/methodology/experimental_scale_and_freeze_manifest.md)
+
+The public executable evidence files are the canonical public index for the runtime-link registry and the endpoint snapshot. The Kaggle manifest is a limited external verification note, not a recovered notebook export.
+The resource calibration is preliminary aggregate evidence from the bounded QLoRA pilot. The local microbenchmark is a sanitized proxy measurement and does not replace the on-platform M1 measurement.
+The planning and governance documents remain planning material only; they do not convert assumptions into measured capacity values.
+
 ## Public Executable Checks
 
 | Check | Public executable? | Command/path | Status | Notes |
@@ -63,4 +95,3 @@ The public `sample20` dataset contains 20 records: 18 valid cases and 2 expected
 - All 1.0 metrics indicate consistency within this reduced sample, not general model performance or generalization.
 - The `sample20` dataset is not a complete corpus and is not a final benchmark.
 - No private datasets, checkpoints, adapters or secrets are included.
-
