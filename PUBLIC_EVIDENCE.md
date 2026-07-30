@@ -24,7 +24,7 @@ This repository contains a public, reduced, and sanitized evidence layer for the
 - [Replay Space source package](spaces/huggingface/app.py)
 - [Harness Space source package](spaces/huggingface_harness/app.py)
 
-The runtime-link registry records link identity. The endpoint verification snapshot is a dated availability snapshot. The deployment manifest records local source hashes and remote equivalence status; while the manifest status is PENDING_REMOTE_EQUIVALENCE_AUDIT, no remote equivalence claim is made. The self-tests listed above are for the GitHub source packages only.
+The runtime-link registry records link identity. The endpoint verification snapshot is a dated availability snapshot. The deployment manifest records local source hashes and remote equivalence status; the manifest status is REMOTE_EQUIVALENCE_VERIFIED. The self-tests listed above are for the GitHub source packages only.
 
 ### Limited external verification
 

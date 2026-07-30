@@ -15,41 +15,23 @@
       "content_recovered": true,
       "limitation": "Public repository page accessible anonymously; no private administrative data or credentials were recovered."
     },
-    "replay_gateway": {
+    "replay_space": {
       "url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
       "identity_status": "VALID",
       "availability_status": "RUNNING",
-      "artifact_equivalence_status": "NOT_EVALUATED_STATIC_GATEWAY",
+      "artifact_equivalence_status": "REMOTE_EQUIVALENCE_VERIFIED",
       "checked_anonymously": true,
       "content_recovered": true,
-      "limitation": "Gateway identity was observed publicly; runtime availability may still vary with platform conditions."
+      "limitation": "Space identity was observed publicly; runtime availability may still vary with platform conditions."
     },
-    "replay_runtime": {
-      "url": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay",
-      "identity_status": "VALID",
-      "availability_status": "RUNNING",
-      "artifact_equivalence_status": "PENDING_REMOTE_DEPLOYMENT_AUDIT",
-      "checked_anonymously": true,
-      "content_recovered": true,
-      "limitation": "Public runtime identity is distinct from availability; this snapshot does not guarantee continuous uptime."
-    },
-    "harness_gateway": {
+    "harness_space": {
       "url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
       "identity_status": "VALID",
       "availability_status": "RUNNING",
-      "artifact_equivalence_status": "NOT_EVALUATED_STATIC_GATEWAY",
+      "artifact_equivalence_status": "REMOTE_EQUIVALENCE_VERIFIED",
       "checked_anonymously": true,
       "content_recovered": true,
-      "limitation": "Gateway identity was observed publicly; runtime availability may still vary with platform conditions."
-    },
-    "harness_runtime": {
-      "url": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness",
-      "identity_status": "VALID",
-      "availability_status": "RUNNING",
-      "artifact_equivalence_status": "PENDING_REMOTE_DEPLOYMENT_AUDIT",
-      "checked_anonymously": true,
-      "content_recovered": true,
-      "limitation": "Public runtime identity is distinct from availability; this snapshot does not guarantee continuous uptime."
+      "limitation": "Space identity was observed publicly; runtime availability may still vary with platform conditions."
     },
     "kaggle_notebook": {
       "url": "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai",

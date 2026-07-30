@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import ast
 import json
-import re
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
@@ -36,10 +35,8 @@ ALLOWED_AVAILABILITY = {
 
 EXPECTED_URLS = {
     "repository": "https://github.com/xaibim/semantic-bim-ifc-xai",
-    "replay_gateway": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
-    "replay_runtime": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay",
-    "harness_gateway": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
-    "harness_runtime": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness",
+    "replay_space": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
+    "harness_space": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
     "kaggle_notebook": "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai",
 }
 
@@ -99,10 +96,8 @@ class TestPublicEndpointEvidence(unittest.TestCase):
         data = load_json(ARTIFACT_PATH)
         endpoints = data["endpoints"]
         self.assertEqual(EXPECTED_URLS["repository"], endpoints["repository"]["url"])
-        self.assertEqual(EXPECTED_URLS["replay_gateway"], endpoints["replay_gateway"]["url"])
-        self.assertEqual(EXPECTED_URLS["replay_runtime"], endpoints["replay_runtime"]["url"])
-        self.assertEqual(EXPECTED_URLS["harness_gateway"], endpoints["harness_gateway"]["url"])
-        self.assertEqual(EXPECTED_URLS["harness_runtime"], endpoints["harness_runtime"]["url"])
+        self.assertEqual(EXPECTED_URLS["replay_space"], endpoints["replay_space"]["url"])
+        self.assertEqual(EXPECTED_URLS["harness_space"], endpoints["harness_space"]["url"])
         self.assertEqual(EXPECTED_URLS["kaggle_notebook"], endpoints["kaggle_notebook"]["url"])
         self.assertEqual(set(EXPECTED_URLS.values()), {entry["url"] for entry in endpoints.values()})
 
@@ -122,36 +117,20 @@ class TestPublicEndpointEvidence(unittest.TestCase):
             endpoints["repository"]["artifact_equivalence_status"],
         )
         self.assertIn(
-            endpoints["replay_gateway"]["availability_status"],
+            endpoints["replay_space"]["availability_status"],
             ALLOWED_AVAILABILITY,
         )
         self.assertEqual(
-            "NOT_EVALUATED_STATIC_GATEWAY",
-            endpoints["replay_gateway"]["artifact_equivalence_status"],
+            "REMOTE_EQUIVALENCE_VERIFIED",
+            endpoints["replay_space"]["artifact_equivalence_status"],
         )
         self.assertIn(
-            endpoints["replay_runtime"]["availability_status"],
+            endpoints["harness_space"]["availability_status"],
             ALLOWED_AVAILABILITY,
         )
         self.assertEqual(
-            "PENDING_REMOTE_DEPLOYMENT_AUDIT",
-            endpoints["replay_runtime"]["artifact_equivalence_status"],
-        )
-        self.assertIn(
-            endpoints["harness_gateway"]["availability_status"],
-            ALLOWED_AVAILABILITY,
-        )
-        self.assertEqual(
-            "NOT_EVALUATED_STATIC_GATEWAY",
-            endpoints["harness_gateway"]["artifact_equivalence_status"],
-        )
-        self.assertIn(
-            endpoints["harness_runtime"]["availability_status"],
-            ALLOWED_AVAILABILITY,
-        )
-        self.assertEqual(
-            "PENDING_REMOTE_DEPLOYMENT_AUDIT",
-            endpoints["harness_runtime"]["artifact_equivalence_status"],
+            "REMOTE_EQUIVALENCE_VERIFIED",
+            endpoints["harness_space"]["artifact_equivalence_status"],
         )
         self.assertIn(
             endpoints["kaggle_notebook"]["availability_status"],
@@ -161,8 +140,8 @@ class TestPublicEndpointEvidence(unittest.TestCase):
             "NOT_APPLICABLE_SUPPLEMENTARY_NOTEBOOK",
             endpoints["kaggle_notebook"]["artifact_equivalence_status"],
         )
-        self.assertTrue(endpoints["replay_runtime"]["checked_anonymously"])
-        self.assertTrue(endpoints["harness_runtime"]["checked_anonymously"])
+        self.assertTrue(endpoints["replay_space"]["checked_anonymously"])
+        self.assertTrue(endpoints["harness_space"]["checked_anonymously"])
         self.assertFalse(endpoints["kaggle_notebook"]["content_recovered"])
         self.assertTrue(data["interpretation_boundary"]["snapshot_not_availability_guarantee"])
         self.assertTrue(
@@ -181,7 +160,7 @@ class TestPublicEndpointEvidence(unittest.TestCase):
         self.assertIn("Local proxy evidence", text)
         self.assertIn("Planning and governance", text)
         self.assertIn("public_deployment_manifest.json", text)
-        self.assertIn("PENDING_REMOTE_EQUIVALENCE_AUDIT", text)
+        self.assertIn("REMOTE_EQUIVALENCE_VERIFIED", text)
 
     def test_06_no_private_paths_or_network_calls(self) -> None:
         data_text = read_text(ARTIFACT_PATH) + "\n" + read_text(PUBLIC_EVIDENCE_PATH)

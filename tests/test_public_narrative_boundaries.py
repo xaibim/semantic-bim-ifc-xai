@@ -12,7 +12,6 @@ FORBIDDEN_RUNTIME_PHRASES = [
     "verified runtimes",
     "verified gradio runtime",
     "verified gradio runtimes",
-    "verified bimaiblend",
     "runtimes verified and synchronized",
 ]
 
@@ -313,9 +312,9 @@ class TestPublicNarrativeBoundaries(unittest.TestCase):
             for phrase in FORBIDDEN_RUNTIME_PHRASES:
                 self.assertNotIn(phrase, text, f"{phrase} found in {path.relative_to(ROOT)}")
 
-    def test_20_readme_registered_runtime_terminology(self) -> None:
+    def test_20_readme_canonical_space_terminology(self) -> None:
         text = normalized_lower_text(ROOT / "README.md")
-        self.assertIn("registered interactive runtime endpoints", text)
+        self.assertIn("canonical public gateways", text)
 
     def test_21_readme_references_deployment_manifest(self) -> None:
         text = read_text(ROOT / "README.md")

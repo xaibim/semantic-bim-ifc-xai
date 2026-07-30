@@ -37,12 +37,10 @@ HARNESS_PATHS = {
 
 EXPECTED_URLS = {
     "replay": {
-        "gateway": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
-        "runtime": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay",
+        "canonical_space_url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
     },
     "harness": {
-        "gateway": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
-        "runtime": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness",
+        "canonical_space_url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
     },
 }
 
@@ -54,6 +52,7 @@ FORBIDDEN_PATTERNS = [
     "token",
     "cookie",
     "@",
+    "bimaiblend",
 ]
 
 
@@ -69,13 +68,22 @@ def load_manifest() -> dict:
 def sha256_file(rel_path: str) -> str:
     """Calculate SHA-256 from the canonical Git index blob."""
     result = subprocess.run(
-        ["git", "show", f":{rel_path}"],
+        ["git", "ls-tree", "HEAD", rel_path],
+        cwd=ROOT,
+        check=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    blob_hash = result.stdout.strip().split()[2]
+    blob = subprocess.run(
+        ["git", "cat-file", "-p", blob_hash],
         cwd=ROOT,
         check=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
-    return hashlib.sha256(result.stdout).hexdigest()
+    return hashlib.sha256(blob.stdout).hexdigest()
 
 
 class TestPublicDeploymentManifest(unittest.TestCase):
@@ -89,16 +97,16 @@ class TestPublicDeploymentManifest(unittest.TestCase):
         self.assertEqual("public_runtime_deployment_manifest", data["artifact_type"])
         self.assertEqual("1.0", data["artifact_version"])
         self.assertEqual(
-            "8a37e3b3f1c0206521b1a92221da3329f6f8f971", data["source_commit"]
+            "4970d7c99abcb1bfd244ea42c6d4295cccf812b5", data["source_commit"]
         )
-        self.assertEqual("PENDING_REMOTE_EQUIVALENCE_AUDIT", data["status"])
+        self.assertEqual("REMOTE_EQUIVALENCE_VERIFIED", data["status"])
 
     def test_03_scope_boundary(self) -> None:
         data = load_manifest()
         boundary = data["scope_boundary"]
         self.assertTrue(boundary["link_identity_recorded"])
         self.assertTrue(boundary["availability_is_dated_snapshot"])
-        self.assertFalse(boundary["remote_artifact_equivalence_verified"])
+        self.assertTrue(boundary["remote_artifact_equivalence_verified"])
         self.assertFalse(boundary["production_readiness"])
 
     def test_04_replay_paths_exist(self) -> None:
@@ -138,40 +146,38 @@ class TestPublicDeploymentManifest(unittest.TestCase):
     def test_08_replay_urls_exact(self) -> None:
         data = load_manifest()
         replay = data["packages"]["replay"]
-        self.assertEqual(EXPECTED_URLS["replay"]["gateway"], replay["gateway_url"])
-        self.assertEqual(EXPECTED_URLS["replay"]["runtime"], replay["runtime_url"])
+        self.assertEqual(EXPECTED_URLS["replay"]["canonical_space_url"], replay["canonical_space_url"])
 
     def test_09_harness_urls_exact(self) -> None:
         data = load_manifest()
         harness = data["packages"]["harness"]
-        self.assertEqual(EXPECTED_URLS["harness"]["gateway"], harness["gateway_url"])
-        self.assertEqual(EXPECTED_URLS["harness"]["runtime"], harness["runtime_url"])
+        self.assertEqual(EXPECTED_URLS["harness"]["canonical_space_url"], harness["canonical_space_url"])
 
-    def test_10_remote_fields_are_null(self) -> None:
+    def test_10_remote_fields_populated(self) -> None:
         data = load_manifest()
         for pkg_name in ("replay", "harness"):
             pkg = data["packages"][pkg_name]
             remote = pkg["remote_deployment"]
-            self.assertIsNone(remote["commit"])
-            self.assertIsNone(remote["app_sha256"])
-            self.assertIsNone(remote["records_sha256"])
-            self.assertIsNone(remote["schema_sha256"])
-            self.assertIsNone(remote["requirements_sha256"])
-            self.assertIsNone(remote["audited_at_utc"])
+            self.assertIsNotNone(remote["commit"])
+            self.assertIsNotNone(remote["app_sha256"])
+            self.assertIsNotNone(remote["records_sha256"])
+            self.assertIsNotNone(remote["schema_sha256"])
+            self.assertIsNotNone(remote["requirements_sha256"])
+            self.assertIsNotNone(remote["audited_at_utc"])
 
-    def test_11_artifact_equivalence_pending(self) -> None:
+    def test_11_artifact_equivalence_verified(self) -> None:
         data = load_manifest()
         for pkg_name in ("replay", "harness"):
             pkg = data["packages"][pkg_name]
             remote = pkg["remote_deployment"]
             self.assertEqual(
-                "PENDING_REMOTE_DEPLOYMENT_AUDIT",
+                "VERIFIED",
                 remote["artifact_equivalence_status"],
             )
 
-    def test_12_remote_equivalence_not_verified(self) -> None:
+    def test_12_remote_equivalence_verified(self) -> None:
         data = load_manifest()
-        self.assertFalse(data["scope_boundary"]["remote_artifact_equivalence_verified"])
+        self.assertTrue(data["scope_boundary"]["remote_artifact_equivalence_verified"])
 
     def test_13_no_private_paths_or_credentials(self) -> None:
         text = read_text(MANIFEST_PATH)
@@ -197,13 +203,13 @@ class TestPublicDeploymentManifest(unittest.TestCase):
                 if isinstance(func, ast.Attribute):
                     self.assertNotIn(func.attr.lower(), forbidden_calls)
 
-    def test_15_self_test_status_not_executed(self) -> None:
+    def test_15_self_test_status_executed(self) -> None:
         data = load_manifest()
         for pkg_name in ("replay", "harness"):
             pkg = data["packages"][pkg_name]
             remote = pkg["remote_deployment"]
             self.assertEqual(
-                "NOT_EXECUTED_AFTER_CANONICAL_SYNC",
+                "PASS",
                 remote["self_test_status"],
             )
 

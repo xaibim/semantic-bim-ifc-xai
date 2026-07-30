@@ -111,7 +111,7 @@ The dataset and benchmark infrastructure is governed by several key concepts:
 | 4. IFC4 Pset audit | Class applicability only. |
 | 5. IFC4 relationship audit | Schema compatibility only; no task-suitability conclusion. |
 | 6. Preliminary QLoRA evidence | One private controlled feasibility pilot; aggregate evidence only; not a required benchmark work package. |
-| 7. Public gateways and runtime endpoints | Canonical XAIBIM gateways and registered bimaiblend runtime endpoints; remote artifact equivalence remains pending the deployment-manifest audit. |
+| 7. Public Spaces | Canonical XAIBIM Spaces; remote artifact equivalence remains pending the deployment-manifest audit. |
 | 8. Planned work | Larger governed dataset and comparative benchmark; optional adaptation only after prerequisite gates. |
 
 No tag or release state is claimed by this methodology document.

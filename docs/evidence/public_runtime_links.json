@@ -4,14 +4,14 @@
   "canonical_repository": "https://github.com/xaibim/semantic-bim-ifc-xai",
   "huggingface": {
     "replay": {
-      "official_gateway": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
-      "interactive_runtime": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay",
-      "runtime_maintainer_namespace": "bimaiblend"
+      "canonical_space_url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
+      "namespace": "XAIBIM",
+      "role": "CANONICAL_PUBLIC_RUNTIME"
     },
     "harness": {
-      "official_gateway": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
-      "interactive_runtime": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness",
-      "runtime_maintainer_namespace": "bimaiblend"
+      "canonical_space_url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
+      "namespace": "XAIBIM",
+      "role": "CANONICAL_PUBLIC_RUNTIME"
     }
   },
   "kaggle_notebook": "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai",
