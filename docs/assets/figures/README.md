@@ -12,4 +12,4 @@ This folder hosts the image assets and diagrams embedded in the documentation.
 - It does not contain raw CAD or 3D model files (IFC, RVT).
 
 ## Related files
-- `docs/methodology/dataset_construction_and_training_readiness.md`: References the prompt figure.
+- `docs/methodology/dataset_construction_and_benchmark_readiness.md`: References the prompt figure.

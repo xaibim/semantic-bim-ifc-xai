@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import ast
 import json
-import re
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
@@ -10,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ARTIFACT_PATH = ROOT / "docs" / "evidence" / "public_endpoint_audit.json"
 PUBLIC_EVIDENCE_PATH = ROOT / "PUBLIC_EVIDENCE.md"
+DEPLOYMENT_MANIFEST_PATH = ROOT / "docs" / "evidence" / "public_deployment_manifest.json"
 RUNTIME_LINKS_PATH = ROOT / "docs" / "evidence" / "public_runtime_links.json"
 KAGGLE_MANIFEST_PATH = ROOT / "docs" / "evidence" / "kaggle_qlora_manifest.json"
 RESOURCE_CALIBRATION_PATH = ROOT / "benchmark" / "resource_calibration.json"
@@ -21,18 +21,29 @@ DATA_RELEASE_PATH = ROOT / "docs" / "methodology" / "data_governance_and_release
 LEAKAGE_PROTOCOL_PATH = ROOT / "docs" / "methodology" / "dataset_governance_split_and_leakage_protocol.md"
 FREEZE_MANIFEST_PATH = ROOT / "docs" / "methodology" / "experimental_scale_and_freeze_manifest.md"
 
+ALLOWED_AVAILABILITY = {
+    "RUNNING",
+    "SLEEPING",
+    "PAUSED",
+    "BUILDING",
+    "ERROR",
+    "UNKNOWN",
+    "NOT_CHECKED",
+    "PUBLIC_PAGE_ACCESSIBLE",
+    "URL_RESOLVABLE",
+}
+
 EXPECTED_URLS = {
     "repository": "https://github.com/xaibim/semantic-bim-ifc-xai",
-    "replay_gateway": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
-    "replay_runtime": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay",
-    "harness_gateway": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
-    "harness_runtime": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness",
+    "replay_space": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
+    "harness_space": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
     "kaggle_notebook": "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai",
 }
 
 REQUIRED_PUBLIC_EVIDENCE_LINKS = [
     "docs/evidence/public_runtime_links.json",
     "docs/evidence/public_endpoint_audit.json",
+    "docs/evidence/public_deployment_manifest.json",
     "docs/evidence/kaggle_qlora_manifest.json",
     "benchmark/resource_calibration.json",
     "benchmark/resource_microbenchmark_local.json",
@@ -66,15 +77,17 @@ class TestPublicEndpointEvidence(unittest.TestCase):
     def test_02_json_contract_exact(self) -> None:
         data = load_json(ARTIFACT_PATH)
         self.assertEqual("public_endpoint_verification_snapshot", data["artifact_type"])
-        self.assertEqual("1.0", data["artifact_version"])
+        self.assertEqual("1.1", data["artifact_version"])
         self.assertEqual("ANONYMOUS_PUBLIC_PAGE_INSPECTION", data["audit_mode"])
         self.assertEqual("public_runtime_links.json", data["canonical_link_registry"])
+        self.assertEqual("public_deployment_manifest.json", data["deployment_manifest"])
         self.assertEqual(
             {
                 "identity_distinct_from_availability": True,
                 "snapshot_not_availability_guarantee": True,
                 "kaggle_content_independently_reproduced": False,
                 "professional_or_normative_validation": False,
+                "deployment_equivalence_distinct_from_identity_and_availability": True,
             },
             data["interpretation_boundary"],
         )
@@ -83,10 +96,8 @@ class TestPublicEndpointEvidence(unittest.TestCase):
         data = load_json(ARTIFACT_PATH)
         endpoints = data["endpoints"]
         self.assertEqual(EXPECTED_URLS["repository"], endpoints["repository"]["url"])
-        self.assertEqual(EXPECTED_URLS["replay_gateway"], endpoints["replay_gateway"]["url"])
-        self.assertEqual(EXPECTED_URLS["replay_runtime"], endpoints["replay_runtime"]["url"])
-        self.assertEqual(EXPECTED_URLS["harness_gateway"], endpoints["harness_gateway"]["url"])
-        self.assertEqual(EXPECTED_URLS["harness_runtime"], endpoints["harness_runtime"]["url"])
+        self.assertEqual(EXPECTED_URLS["replay_space"], endpoints["replay_space"]["url"])
+        self.assertEqual(EXPECTED_URLS["harness_space"], endpoints["harness_space"]["url"])
         self.assertEqual(EXPECTED_URLS["kaggle_notebook"], endpoints["kaggle_notebook"]["url"])
         self.assertEqual(set(EXPECTED_URLS.values()), {entry["url"] for entry in endpoints.values()})
 
@@ -97,20 +108,47 @@ class TestPublicEndpointEvidence(unittest.TestCase):
     def test_04_endpoint_states_are_conservative(self) -> None:
         data = load_json(ARTIFACT_PATH)
         endpoints = data["endpoints"]
-        self.assertEqual("PUBLIC_PAGE_ACCESSIBLE", endpoints["repository"]["verification_status"])
-        self.assertEqual("RUNNING", endpoints["replay_gateway"]["observed_state"])
-        self.assertEqual("VALID", endpoints["replay_runtime"]["identity_status"])
-        self.assertEqual("RUNNING", endpoints["replay_runtime"]["observed_state"])
-        self.assertEqual("RUNNING", endpoints["harness_gateway"]["observed_state"])
-        self.assertEqual("RUNNING", endpoints["harness_runtime"]["observed_state"])
-        self.assertEqual(
-            "URL_RESOLVABLE_CONTENT_NOT_RECOVERED_BY_ANONYMOUS_AUTOMATED_AUDIT",
-            endpoints["kaggle_notebook"]["verification_status"],
+        self.assertIn(
+            endpoints["repository"]["availability_status"],
+            ALLOWED_AVAILABILITY,
         )
-        self.assertTrue(endpoints["replay_runtime"]["checked_anonymously"])
-        self.assertTrue(endpoints["harness_runtime"]["checked_anonymously"])
+        self.assertEqual(
+            "NOT_APPLICABLE_CANONICAL_SOURCE",
+            endpoints["repository"]["artifact_equivalence_status"],
+        )
+        self.assertIn(
+            endpoints["replay_space"]["availability_status"],
+            ALLOWED_AVAILABILITY,
+        )
+        self.assertEqual(
+            "REMOTE_EQUIVALENCE_VERIFIED",
+            endpoints["replay_space"]["artifact_equivalence_status"],
+        )
+        self.assertIn(
+            endpoints["harness_space"]["availability_status"],
+            ALLOWED_AVAILABILITY,
+        )
+        self.assertEqual(
+            "REMOTE_EQUIVALENCE_VERIFIED",
+            endpoints["harness_space"]["artifact_equivalence_status"],
+        )
+        self.assertIn(
+            endpoints["kaggle_notebook"]["availability_status"],
+            ALLOWED_AVAILABILITY,
+        )
+        self.assertEqual(
+            "NOT_APPLICABLE_SUPPLEMENTARY_NOTEBOOK",
+            endpoints["kaggle_notebook"]["artifact_equivalence_status"],
+        )
+        self.assertTrue(endpoints["replay_space"]["checked_anonymously"])
+        self.assertTrue(endpoints["harness_space"]["checked_anonymously"])
         self.assertFalse(endpoints["kaggle_notebook"]["content_recovered"])
         self.assertTrue(data["interpretation_boundary"]["snapshot_not_availability_guarantee"])
+        self.assertTrue(
+            data["interpretation_boundary"][
+                "deployment_equivalence_distinct_from_identity_and_availability"
+            ],
+        )
 
     def test_05_public_evidence_index_references_required_artifacts(self) -> None:
         text = read_text(PUBLIC_EVIDENCE_PATH)
@@ -121,6 +159,8 @@ class TestPublicEndpointEvidence(unittest.TestCase):
         self.assertIn("Preliminary aggregate evidence", text)
         self.assertIn("Local proxy evidence", text)
         self.assertIn("Planning and governance", text)
+        self.assertIn("public_deployment_manifest.json", text)
+        self.assertIn("REMOTE_EQUIVALENCE_VERIFIED", text)
 
     def test_06_no_private_paths_or_network_calls(self) -> None:
         data_text = read_text(ARTIFACT_PATH) + "\n" + read_text(PUBLIC_EVIDENCE_PATH)

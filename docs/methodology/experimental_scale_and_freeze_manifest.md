@@ -4,16 +4,21 @@ STATUS = PRE_EXECUTION_METHOD_FREEZE
 
 This manifest fixes the planning scope used for dataset construction and resource calibration. Content hashes and exact model revisions remain `PENDING_DATA_FREEZE` until the corresponding artifacts exist. It does not prove IFC4 coverage or implementation readiness.
 
+The corpus exists for development, benchmarking, scalability, portability and optimization. It is a bounded benchmark/test corpus, not mass scientific production.
+
 ## Scale scenarios
 
 | Dimension | Minimum | Planned | Ceiling |
 | --- | ---: | ---: | ---: |
-| Records | 10,000 | 20,000 | 50,000 |
+| Bounded benchmark/test-corpus records | 10,000 | 20,000 | 50,000 |
 | Root cases | 1,000 | 2,000 | 5,000 |
 | Average controlled variants per root case | 10 | 10 | up to 10 |
 | Frozen evaluation records | 1,000 | 2,000 | gate-dependent |
 
 The ceiling is conditional and not an automatic target.
+The ceiling of 50,000 records is not part of the initial request.
+It activates only after QA, review capacity and efficiency gates pass.
+It is not activated to consume residual resources.
 
 ## Primary technical scope
 

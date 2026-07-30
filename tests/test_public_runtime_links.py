@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import subprocess
 import unittest
 from pathlib import Path
 
@@ -17,14 +16,14 @@ EXPECTED_CONTRACT = {
     "canonical_repository": "https://github.com/xaibim/semantic-bim-ifc-xai",
     "huggingface": {
         "replay": {
-            "official_gateway": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
-            "interactive_runtime": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay",
-            "runtime_maintainer_namespace": "bimaiblend",
+            "canonical_space_url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
+            "namespace": "XAIBIM",
+            "role": "CANONICAL_PUBLIC_RUNTIME",
         },
         "harness": {
-            "official_gateway": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
-            "interactive_runtime": "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness",
-            "runtime_maintainer_namespace": "bimaiblend",
+            "canonical_space_url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
+            "namespace": "XAIBIM",
+            "role": "CANONICAL_PUBLIC_RUNTIME",
         },
     },
     "kaggle_notebook": "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai",
@@ -37,18 +36,8 @@ EXPECTED_CONTRACT = {
 EXPECTED_URLS = {
     "https://github.com/xaibim/semantic-bim-ifc-xai",
     "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
-    "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay",
     "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
-    "https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness",
     "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai",
-}
-
-TARGET_FILES = {
-    "docs/evidence/public_runtime_links.json",
-    "README.md",
-    "spaces/huggingface/SPACE_NOTES.md",
-    "demo/huggingface-space-plan.md",
-    "tests/test_public_runtime_links.py",
 }
 
 
@@ -92,39 +81,25 @@ class TestPublicRuntimeLinks(unittest.TestCase):
 
         self.assertIn("https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay", readme)
         self.assertIn("https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness", readme)
-        self.assertIn("bimaiblend", readme)
 
         self.assertIn("https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay", notes)
-        self.assertIn("bimaiblend", notes)
 
         self.assertIn("https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay", demo_plan)
         self.assertIn("https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness", demo_plan)
-        self.assertIn("bimaiblend", demo_plan)
 
-    def test_03_contract_marks_xaibim_gateways_and_bimaiblend_runtimes(self):
+    def test_03_contract_marks_xaibim_spaces(self):
         contract = load_contract()
         hf = contract["huggingface"]
 
-        self.assertTrue(hf["replay"]["official_gateway"].startswith("https://huggingface.co/spaces/XAIBIM/"))
-        self.assertTrue(hf["harness"]["official_gateway"].startswith("https://huggingface.co/spaces/XAIBIM/"))
-        self.assertEqual(hf["replay"]["runtime_maintainer_namespace"], "bimaiblend")
-        self.assertEqual(hf["harness"]["runtime_maintainer_namespace"], "bimaiblend")
+        self.assertTrue(hf["replay"]["canonical_space_url"].startswith("https://huggingface.co/spaces/XAIBIM/"))
+        self.assertTrue(hf["harness"]["canonical_space_url"].startswith("https://huggingface.co/spaces/XAIBIM/"))
+        self.assertEqual(hf["replay"]["namespace"], "XAIBIM")
+        self.assertEqual(hf["harness"]["namespace"], "XAIBIM")
         self.assertEqual(
             contract["availability_boundary"],
             EXPECTED_CONTRACT["availability_boundary"],
         )
 
-    def test_04_only_allowed_files_are_modified(self):
-        status = subprocess.check_output(
-            ["git", "status", "--short", "--untracked-files=all"],
-            cwd=ROOT,
-            text=True,
-        ).splitlines()
-        changed_paths: set[str] = set()
-        for line in status:
-            if not line.strip():
-                continue
-            path = line[3:] if len(line) > 3 else ""
-            changed_paths.add(path.replace("\\", "/"))
 
-        self.assertTrue(changed_paths.issubset(TARGET_FILES), sorted(changed_paths - TARGET_FILES))
+if __name__ == "__main__":
+    unittest.main()

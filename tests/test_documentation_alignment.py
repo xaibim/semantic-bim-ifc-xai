@@ -22,7 +22,7 @@ SCHEMA_PATHS = [
 # Forbidden substrings are built by concatenation so this test file never
 # contains the literal old/deprecated tokens (keeps the repository grep clean).
 GH_OLD = "BIMAIBlend" + "gineer/semantic-bim-ifc-xai"
-HF_OLD = "huggingface.co/spaces/bima" + "blend"
+HF_OLD = "huggingface.co/spaces/XAIBIM" + "/legacy-"
 MIN_CONTRACT = "minimal public schema " + "contract"
 LEGACY_CLASS_FIELD = "suggested_ifc_" + "class"
 LOI_FIELD = "loi_" + "table"

@@ -1,0 +1,85 @@
+{
+  "artifact_type": "public_runtime_deployment_manifest",
+  "artifact_version": "1.0",
+  "source_commit": "4970d7c99abcb1bfd244ea42c6d4295cccf812b5",
+  "status": "REMOTE_EQUIVALENCE_VERIFIED",
+  "scope_boundary": {
+    "link_identity_recorded": true,
+    "availability_is_dated_snapshot": true,
+    "remote_artifact_equivalence_verified": true,
+    "production_readiness": false
+  },
+  "packages": {
+    "replay": {
+      "source_directory": "spaces/huggingface",
+      "canonical_space_url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-replay",
+      "local_source": {
+        "app": {
+          "path": "spaces/huggingface/app.py",
+          "sha256": "4f4090b07614a8884e4b8148c87bbfe8677d6c0de84021e16a870fc354db332d"
+        },
+        "records": {
+          "path": "spaces/huggingface/sample20_public_predictions.jsonl",
+          "sha256": "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
+        },
+        "schema": {
+          "path": "spaces/huggingface/schema_public_sample20_v2.json",
+          "sha256": "8e4de7f560ef24dac0404c45b8d62661dd52c538876e17b7ad975a254306f7f9"
+        },
+        "requirements": {
+          "path": "spaces/huggingface/requirements.txt",
+          "sha256": "559974941f66e1af1594769474e379bf4c0789508a22532069e53d5addf7ae8c"
+        }
+      },
+      "remote_deployment": {
+        "commit": "0dbc875b51bc280b76377f3ad906e5df8be0e6b9",
+        "app_sha256": "4f4090b07614a8884e4b8148c87bbfe8677d6c0de84021e16a870fc354db332d",
+        "records_sha256": "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa",
+        "schema_sha256": "8e4de7f560ef24dac0404c45b8d62661dd52c538876e17b7ad975a254306f7f9",
+        "requirements_sha256": "559974941f66e1af1594769474e379bf4c0789508a22532069e53d5addf7ae8c",
+        "self_test_status": "PASS",
+        "artifact_equivalence_status": "VERIFIED",
+        "audited_at_utc": "2026-07-30T00:16:00.221526Z"
+      }
+    },
+    "harness": {
+      "source_directory": "spaces/huggingface_harness",
+      "canonical_space_url": "https://huggingface.co/spaces/XAIBIM/semantic-xaibim-harness",
+      "local_source": {
+        "app": {
+          "path": "spaces/huggingface_harness/app.py",
+          "sha256": "436b7d156925a5079417f58e20159b662b1e48fae53fdd12f6fee3c47bac2b1d"
+        },
+        "records": {
+          "path": "spaces/huggingface_harness/sample20_public_predictions.jsonl",
+          "sha256": "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa"
+        },
+        "schema": {
+          "path": "spaces/huggingface_harness/schema_public_sample20_v2.json",
+          "sha256": "8e4de7f560ef24dac0404c45b8d62661dd52c538876e17b7ad975a254306f7f9"
+        },
+        "requirements": {
+          "path": "spaces/huggingface_harness/requirements.txt",
+          "sha256": "c5caeed56a111b1ed6b609218614bcd14294a874eba709a6a26ee6b9fe060c47"
+        }
+      },
+      "remote_deployment": {
+        "commit": "e20dc611519cf115cd92481534d8d9094adc714d",
+        "app_sha256": "436b7d156925a5079417f58e20159b662b1e48fae53fdd12f6fee3c47bac2b1d",
+        "records_sha256": "2c0f0c331e79924700e58e2579d35facc65d86ef76e971dbc9593641b98455aa",
+        "schema_sha256": "8e4de7f560ef24dac0404c45b8d62661dd52c538876e17b7ad975a254306f7f9",
+        "requirements_sha256": "c5caeed56a111b1ed6b609218614bcd14294a874eba709a6a26ee6b9fe060c47",
+        "self_test_status": "PASS",
+        "artifact_equivalence_status": "VERIFIED",
+        "audited_at_utc": "2026-07-30T00:16:00.221526Z"
+      }
+    }
+  },
+  "limitations": [
+    "Link identity does not establish file equivalence.",
+    "Availability is observed separately and may change.",
+    "Remote commits and file hashes are recorded after controlled deployment audit.",
+    "Source-package self-tests do not prove remote deployment equivalence.",
+    "No production-readiness or certification claim is made."
+  ]
+}

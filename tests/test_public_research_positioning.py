@@ -15,6 +15,7 @@ REQUIRED_FILES = [
     ROOT / "benchmark" / "baseline_matrix.md",
     ROOT / "benchmark" / "literature_capability_matrix.md",
     ROOT / "docs" / "methodology" / "research_positioning_and_originality.md",
+    ROOT / "docs" / "methodology" / "dataset_construction_and_benchmark_readiness.md",
     ROOT / "tests" / "test_public_research_positioning.py",
 ]
 
@@ -43,7 +44,7 @@ POSITIVES_CORE_DOCS = [
     ROOT / "README.md",
     ROOT / "PUBLIC_EVIDENCE.md",
     ROOT / "benchmark" / "baseline_matrix.md",
-    ROOT / "docs" / "methodology" / "dataset_construction_and_training_readiness.md",
+    ROOT / "docs" / "methodology" / "dataset_construction_and_benchmark_readiness.md",
     ROOT / "docs" / "methodology" / "dataset_scope_and_compute_scaling.md",
     ROOT / "docs" / "methodology" / "xai_evaluation_position.md",
     ROOT / "docs" / "methodology" / "xai_evidence_positioning.md",
@@ -72,6 +73,13 @@ def lower_normalized(path: Path) -> str:
 
 class TestPublicResearchPositioning(unittest.TestCase):
     def test_01_required_files_exist(self):
+        old_path = (
+            ROOT
+            / "docs"
+            / "methodology"
+            / ("dataset_construction_and_" + "training_readiness.md")
+        )
+        self.assertFalse(old_path.exists())
         for path in REQUIRED_FILES:
             with self.subTest(path=path):
                 self.assertTrue(path.exists(), msg=str(path))

@@ -76,11 +76,30 @@ class TestPublicContextNeutrality(unittest.TestCase):
         self.assertIn("broader future research dataset", text)
 
     def test_03_dataset_methodology_public_boundary(self):
-        text = " ".join((ROOT / "docs" / "methodology" / "dataset_construction_and_training_readiness.md").read_text(encoding="utf-8").lower().split())
+        old_path = (
+            ROOT
+            / "docs"
+            / "methodology"
+            / ("dataset_construction_and_" + "training_readiness.md")
+        )
+        new_path = (
+            ROOT
+            / "docs"
+            / "methodology"
+            / "dataset_construction_and_benchmark_readiness.md"
+        )
+        self.assertFalse(old_path.exists())
+        self.assertTrue(new_path.is_file())
+        text = " ".join(new_path.read_text(encoding="utf-8").lower().split())
         self.assertIn("plain text outputs do not by themselves guarantee alignment with canonical catalogues or structured contracts.", text)
         self.assertIn("broader / private or planned", text)
         self.assertIn("current public executable", text)
         self.assertIn("external-source supportedness is not evaluated", text)
+        self.assertIn("benchmark representation boundary", text)
+        self.assertIn(
+            "model adaptation, if evaluated later, remains optional and conditional",
+            text,
+        )
 
     def test_04_readme_public_qlora_wording(self):
         text = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
